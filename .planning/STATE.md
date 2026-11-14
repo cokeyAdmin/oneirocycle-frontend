@@ -1,50 +1,41 @@
 ---
 current_phase: '02'
-current_plan: '03'
+current_plan: 'rework'
 status: human_needed
 last_updated: '2026-11-14'
 ---
 
 # 工作状态
 
-## Project Reference
+## 当前阶段
 
-项目：环梦篇章 AIGC 前端；当前任务 [CAR-5](https://linear.app/cardof/issue/CAR-5)（首页实现）。
+Phase 2 — CAR-5 首页返工已本地完成，等待用户重新视觉验收及真机验收。
+分支：feat/car-6-frontend-foundation。未推送、合并、部署，未修改后端。
 
-## Current Position
+## 已完成
 
-Phase: 2 of 2 — Implement Stitch homepage (desktop and mobile)
-Plan: 3 of 3 — completed local delivery
-Status: human_needed — 工程及自动化完成，待真实手机/视觉 UAT。
-分支：feat/car-6-frontend-foundation。未推送、合并或部署。
+- 用户否决首轮视觉实现；首轮自订替代素材、字号及布局规则不是用户批准，已撤销。
+- 按指定 Stitch 桌面/移动原始 HTML 恢复原素材、字体、文案、布局及收起/展开交互；删除擅自新增内容。
+- 本地代码 45bf9f1；返工摘要 7962945。旧提交、截图与验收记录仅作被否决版本历史。
+- 最终应用 npm run check PASS（7 文件 / 17 测试），production build PASS。
+- 375/390/768/1280/1440 及页面交互、触控/焦点、短视口代理通过；无页面错误、外部素材或业务请求。
+- 同视口同状态四组原稿/实现对照及细节裁切已归档。静态 UI 审计 0 项，不代替视觉验收。
+- 当前证据：docs/verification-homepage-rework.md、design-qa.md、docs/assets/rework/。
 
-## 当前完成情况
+## 待验收
 
-- Phase 01 工程已完成并本地验收，CAR-6 的 In Review 同步已在历史记录中确认。
-- Phase 02 三个计划均已实现并提交摘要：桌面/移动独立首页、本地交互、VisualViewport 适配、截图与验收文档。
-- npm run check PASS：format、lint、strict TS，8 个文件 / 19 项测试；最终应用 production build PASS，根 HTTP 200。
-- Chromium 五宽度 375/390/768/1280/1440 全部通过，未发现页面横向溢出；焦点循环/返回、触控、搜索空态、短视口代理和无服务调用通过。
-- 本地代码提交 c4e437f；证据 4cb18c3；阶段摘要 a2d2007。后续状态/审查记录在本地提交中追踪。
-- 证据：docs/verification-homepage.md；原始 JSON 与实际截图在 docs/assets；脚本 scripts/verify-homepage.mjs。
-
-## 待人工验收
-
-Physical mobile OS keyboard UAT: PENDING。Visual UAT: PENDING。
-请在物理 iOS/Android 测试键盘出现时长输入、滚动、旋转和主 CTA 可达性，并确认与 Stitch 的已记录差异。HOME-04/HOME-05 不因 Chromium 代理通过就标为最终完成。
+用户视觉复验 PENDING；物理 iOS/Android 软键盘、安全区、长输入、滚动与旋转 UAT PENDING。
+作者内联 QA 不是独立审查或用户批准；桌面仍记录轻微栅格合成差异，不宣称像素完全一致。
+下一检查点为 $gsd-verify-work 2，不重复实现，不新增产品 UI。
 
 ## Linear 同步
 
-CAR-5 已更新为 In Review，读回确认；验收评论 56dd1cf8-249f-49fd-bc8b-62c00e410200 已单独读回。不是 Done。
-首次状态更新工具返回 user cancelled MCP tool call，不推断用户实际点过拒绝；用户要求重发后，先读回 In Progress，再重发同一更新成功。未改权限或绕过审批。
-用户随后明确授予未来所有 Linear MCP 调用常驻同意、不逐次通知审批；已记录在 telegram-gsd-workflow。客户端强制 gate 是否关闭未作虚假声明。
+CAR-5 In Review，状态与返工评论均已读回确认；不是 Done。
+最新评论：f1ddc0f6-ebc0-40c7-ac6c-c9a70d8775c5。
+历史否决评论：618ba8ab-f2a8-41df-a1ec-7765f029f0a3。
+用户已常驻授权 Linear MCP 调用，不逐次请求会话批准；未修改或绕过客户端权限机制。
 
-## 工作流实况
+## 执行与范围
 
-当前代理按已安装 GSD execute-plan 的两任务小计划路径内联执行，三个 SUMMARY 已提交；没有独立开发 worker 或后台执行器。本轮代码核对为作者内联审查，不宣称独立复审或完整多代理链。
-GSD CLI init 已实际运行；未改全局工作流、运行时或权限设置。Linear 同一任务单写与读回完成，历史拒绝/重试只保留为历史，不是当前阻塞。
-
-## 尚未接通 / 后续边界
-
-真实认证/API/模型、任务实时传输、项目持久化、完整编辑器与 Agent 服务未实现；不在 CAR-5 范围。OpenAPI、认证、实时协议仍待协商。后端仓库未改。
-
-GSD state.json 已刷新阶段投影；当前项目缺少 config.json，自动分类器仍返回初始 discuss-phase，故仅将 next 检查点显式纠正为 `$gsd-verify-work 2`，未修改全局配置。以本文件与 02-VERIFICATION.md 的待人工状态为准。
+本轮为已授权任务的内联验收返工，不宣称后台 worker、独立复审或多代理执行。
+Phase 1 工程完成；真实认证/API/模型、持久化、完整编辑器及 Agent 服务仍未接通，不属 CAR-5 范围。

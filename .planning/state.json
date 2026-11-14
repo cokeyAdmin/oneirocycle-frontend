@@ -17,7 +17,7 @@
   "next": {
     "command": "$gsd-verify-work 2",
     "label": "Review homepage visuals and physical mobile keyboard",
-    "reason": "Three plans delivered and automated checks passed; final human/device UAT pending, CAR-5 In Review"
+    "reason": "Rejected first submission reworked against canonical source; local checks passed; user visual re-review and physical keyboard UAT pending. CAR-5 In Review read back."
   },
-  "updated_at": "2026-11-14T09:28:08.353Z"
+  "updated_at": "2026-11-14T10:36:20.891005+00:00"
 }

@@ -4,23 +4,21 @@ status: human_needed
 verified: '2026-11-14'
 ---
 
-# CAR-5 — Verification
+# CAR-5 — 返工复验
 
-工程、自动化、证据交付完成；最终用户验收尚未完成。Linear 为 In Review，不能标记 Done。
+首轮视觉交付被用户否决，其检查与截图仅是历史；当前返工代码 45bf9f1，摘要 7962945。
 
-| Requirement | Automated/local evidence                                  | Final status                      |
-| ----------- | --------------------------------------------------------- | --------------------------------- |
-| HOME-01     | 桌面独立组合，canonical HTML 核对，1440/1280 截图         | 实现完成；视觉差异待确认          |
-| HOME-02     | 移动独立组合，触控/键盘 dock 生命周期、390/375 截图       | 实现完成；真机键盘待验收          |
-| HOME-03     | 本地控件/筛选/空态、不可用反馈；无服务请求                | 本地验证通过                      |
-| HOME-04     | 五宽度无页面横溢，dock/nav 避让，短视口代理通过           | 真机软键盘/安全区 PENDING         |
-| HOME-05     | 控件命名、焦点可见、循环、归还、44px 目标、reduced-motion | 自动化通过；人工/设备验收 PENDING |
-| HOME-06     | README、截图、原始 JSON、可复跑脚本、差异记录             | 交付完成                          |
+- HOME-01 / HOME-02：恢复原稿桌面与移动布局/素材/字体/文案/收起展开；同状态并排图作者核对完成，用户复验 PENDING。
+- HOME-03：原稿菜单、搜索、侧栏、主题、设置与不可用反馈通过；无业务请求或假成功。
+- HOME-04：375/390/768/1280/1440 无页面横溢，600/440/360 短视口代理通过；真机软键盘/安全区 PENDING。
+- HOME-05：触控/键盘、焦点归还、Escape、断点清理与 reduced-motion 通过；物理设备 UAT PENDING。
+- HOME-06：当前运行说明、截图、JSON、对照与差异记录已归档。
 
-证据：[verification-homepage.md](../../../docs/verification-homepage.md)。`npm run check` PASS（19 tests），最终应用 `npm run build` PASS，生产 HTTP 200，浏览器脚本 exit 0。作者内联核对见 02-REVIEW.md，不冒充独立审查。
+最终应用 npm run check PASS（7 文件 / 17 测试），production build PASS，浏览器矩阵 PASS，无页面错误、外部素材或业务 fetch/XHR；静态 UI 审计 0 项。
 
-Chromium VisualViewport proxy: PASS
+当前证据：[返工报告](../../../docs/verification-homepage-rework.md)、[视觉 QA](../../../design-qa.md)、docs/assets/rework/。
 
-Physical mobile OS keyboard UAT: PENDING
+作者内联核对，不冒充独立审查；轻微桌面栅格差异已记录，不宣称像素完全一致。
+用户视觉复验及物理 iOS/Android 软键盘、安全区、长输入、滚动、旋转仍待完成。
 
-必须在物理 iOS Safari/Android Chrome 输入长 prompt、唤起软键盘、滚动与旋转，记录型号/OS/浏览器及结果；另请对照 Stitch 确认媒体/字体/布局差异。当前未发布公共预览、未 push/merge/deploy。
+Linear In Review 和评论 f1ddc0f6-ebc0-40c7-ac6c-c9a70d8775c5 已读回；不是 Done。未推送、合并、部署或修改后端。

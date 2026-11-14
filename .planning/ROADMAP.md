@@ -34,7 +34,7 @@
 4. `npm run check`、`npm run build` 和实际浏览器断点核验通过；桌面/移动截图与偏差记录归档。
 5. 验收证据同步到 CAR-5；不修改后端，不推送、合并或部署。
 
-**Status:** 工程与自动化完成，CAR-5 In Review；真实设备与视觉 UAT 待人工，未标记 Done。
+**Status:** 首轮视觉被用户否决，已按原稿返工（45bf9f1）；17 测试、构建、五宽度及原稿/实现对照已完成。CAR-5 In Review 已读回，待用户重新视觉复验及真机 UAT，未标记 Done。
 
 **Plans:** 3 plans
 
