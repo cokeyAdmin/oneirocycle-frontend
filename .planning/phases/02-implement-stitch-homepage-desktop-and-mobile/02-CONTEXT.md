@@ -1,3 +1,5 @@
+> 2026-11-14 用户视觉验收否决：本文件中由代理自行加入、与 canonical Stitch 原稿不一致的规则（本地自绘 SVG 替代、四档字号统一、新增文案/布局等）全部撤销。用户原始设计优先；返工以 DESIGN.md 与 REWORK.md 为当前合同。以下保留为首轮历史，不代表用户批准。
+
 # Phase 02: Implement Stitch homepage (desktop and mobile) — Context
 
 **Gathered:** 2026-11-14

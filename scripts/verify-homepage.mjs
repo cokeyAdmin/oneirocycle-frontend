@@ -1,435 +1,242 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { fileURLToPath } from 'node:url';
 const { chromium } = await import(
   process.env.PLAYWRIGHT_MODULE || 'playwright'
 );
-import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
-const out = fileURLToPath(new URL('../docs/assets/', import.meta.url));
+const out = fileURLToPath(new URL('../docs/assets/rework/', import.meta.url));
 fs.mkdirSync(out, { recursive: true });
 const base = (process.env.HOMEPAGE_URL || 'http://127.0.0.1:3102').replace(
   /\/$/,
   '',
 );
-(async () => {
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
-    viewport: { width: 1440, height: 900 },
-    hasTouch: true,
-  });
-  const page = await context.newPage();
-  const errors = [],
-    failed = [],
-    external = [],
-    serviceRequests = [];
-  page.on('pageerror', (e) => errors.push(e.message));
-  page.on('requestfailed', (r) => failed.push(r.url()));
-  page.on('request', (r) => {
-    if (!r.url().startsWith(`${base}/`)) external.push(r.url());
-    if (['fetch', 'xhr'].includes(r.resourceType()))
-      serviceRequests.push(r.url());
-  });
-  const evidence = {
-    browser: browser.version(),
-    widths: [],
-    interactions: [],
-    viewportProxy: [],
-    physicalKeyboard: 'PENDING',
-  };
-  const check = (ok, label) => {
-    assert(ok, label);
-    evidence.interactions.push(label);
-  };
-  try {
-    await page.goto(`${base}/`);
-    const desktop = page.locator('.desktop-homepage'),
-      mobile = page.locator('.mobile-homepage');
-    for (const width of [375, 390, 768, 1280, 1440]) {
-      await page.setViewportSize({ width, height: 900 });
-      await page.evaluate(() => window.scrollTo(0, 0));
-      await page.waitForTimeout(150);
-      const geometry = await page.evaluate(() => {
-        const root = document.querySelector(
-          innerWidth < 768 ? '.mobile-homepage' : '.desktop-homepage',
-        );
-        const controls = [
-          ...root.querySelectorAll('button,input,select,textarea'),
-        ].filter(
-          (e) => e.getClientRects().length && !e.closest('dialog:not([open])'),
-        );
-        const outside = controls
-          .filter((e) => !e.closest('.feature-rail'))
-          .filter((e) => {
-            const r = e.getBoundingClientRect();
-            return r.left < -0.5 || r.right > innerWidth + 0.5;
-          })
-          .map((e) => e.getAttribute('aria-label') || e.textContent);
-        const undersized = controls
-          .filter((e) => !e.closest('.marquee'))
-          .filter((e) => {
-            const r = e.getBoundingClientRect();
-            return r.width < 43.5 || r.height < 43.5;
-          })
-          .map((e) => ({
-            name: e.getAttribute('aria-label') || e.textContent,
-            w: e.getBoundingClientRect().width,
-            h: e.getBoundingClientRect().height,
-          }));
-        const nav = root
-            .querySelector('.mobile-bottom-nav')
-            ?.getBoundingClientRect(),
-          dock = root
-            .querySelector('.mobile-prompt-trigger')
-            ?.getBoundingClientRect();
-        return {
-          width: innerWidth,
-          scrollWidth: document.documentElement.scrollWidth,
-          composition:
-            getComputedStyle(document.querySelector('.mobile-homepage'))
-              .display === 'none'
-              ? 'desktop'
-              : 'mobile',
-          outside,
-          undersized,
-          dockNavGap: nav && dock ? nav.top - dock.bottom : null,
-        };
-      });
-      assert.equal(
-        geometry.width,
-        geometry.scrollWidth,
-        `overflow at ${width}`,
-      );
-      assert.equal(geometry.outside.length, 0, JSON.stringify(geometry));
-      assert.equal(geometry.undersized.length, 0, JSON.stringify(geometry));
-      assert.equal(geometry.composition, width < 768 ? 'mobile' : 'desktop');
-      if (width < 768) assert(geometry.dockNavGap >= 0);
-      evidence.widths.push(geometry);
-      await page.screenshot({
-        path: `${out}/homepage-${width}.png`,
-        fullPage: true,
-      });
-      if (width === 390)
-        await page.screenshot({
-          path: `${out}/homepage-mobile-390.png`,
-          fullPage: true,
-        });
-      if (width === 1440)
-        await page.screenshot({
-          path: `${out}/homepage-desktop-1440.png`,
-          fullPage: true,
-        });
-    }
-    await desktop
-      .getByLabel('创作想法或剧本')
-      .fill('雨夜的城市，与一段未完成的梦');
-    await desktop
-      .getByLabel('创作类型', { exact: true })
-      .selectOption('视频生成');
-    await desktop
-      .getByLabel('模型', { exact: true })
-      .selectOption('Seedance 2.5 Cinema');
-    await desktop.getByLabel('画幅', { exact: true }).selectOption('16:9');
-    await desktop.getByLabel('分辨率', { exact: true }).selectOption('4K');
-    await desktop.getByLabel('生成数量', { exact: true }).selectOption('1 张');
-    await desktop
-      .getByRole('button', { name: '开始创作', exact: true })
-      .click();
-    check(
-      (await desktop.getByRole('status').textContent()).includes('尚未接入'),
-      'desktop creation reports unavailable, retaining prompt and choices',
-    );
-    await desktop
-      .getByRole('button', { name: '关闭提示', exact: true })
-      .click();
-    await desktop
-      .getByRole('button', { name: '收起侧边栏', exact: true })
-      .click();
-    check(
-      await desktop.evaluate((e) => e.classList.contains('sidebar-collapsed')),
-      'sidebar collapses',
-    );
-    await desktop
-      .getByRole('button', { name: '展开侧边栏', exact: true })
-      .click();
-    await desktop
-      .getByRole('button', { name: '切换亮暗主题', exact: true })
-      .click();
-    check(
-      await desktop.evaluate((e) => e.classList.contains('light-theme')),
-      'theme changes locally',
-    );
-    await desktop
-      .getByRole('button', { name: '切换亮暗主题', exact: true })
-      .click();
-    await desktop
-      .getByRole('button', { name: '偏好设置', exact: true })
-      .click();
-    const settings = page.getByRole('dialog', { name: '创作平台偏好设置' });
-    assert(await settings.isVisible());
-    for (let i = 0; i < 12; i++) {
-      await page.keyboard.press('Tab');
-      assert(
-        await settings.evaluate((e) => e.contains(document.activeElement)),
-        'settings focus escaped',
-      );
-    }
-    check(
-      await page.evaluate(
-        () => getComputedStyle(document.activeElement).outlineStyle !== 'none',
-      ),
-      'keyboard focus has visible outline',
-    );
-    await page.keyboard.press('Escape');
-    check(
-      await desktop
-        .getByRole('button', { name: '偏好设置', exact: true })
-        .evaluate((e) => e === document.activeElement),
-      'settings focus trap, Escape and restore',
-    );
-    await desktop
-      .getByRole('button', { name: '关闭福利横幅', exact: true })
-      .click();
-    check(
-      (await desktop.locator('.promotion').count()) === 0,
-      'promotion dismisses locally',
-    );
-    const search = desktop.getByRole('searchbox', { name: '搜索灵感作品' });
-    await search.fill('不存在的作品');
-    check(
-      await desktop
-        .getByText('还没有找到灵感作品', { exact: true })
-        .isVisible(),
-      'search empty state',
-    );
-    await desktop
-      .getByRole('button', { name: '清空搜索', exact: true })
-      .click();
-    check(
-      (await desktop.locator('.inspiration-card').count()) === 4,
-      'clear restores four illustrative works',
-    );
-    await desktop.getByRole('button', { name: '科幻', exact: true }).click();
-    check(
-      (await desktop.locator('.inspiration-card').count()) === 1,
-      'category produces one matching work',
-    );
-    await desktop
-      .getByRole('button', { name: '全部作品', exact: true })
-      .click();
-    const rail = desktop.locator('.feature-rail');
-    const before = await rail.evaluate((e) => e.scrollLeft);
-    await desktop
-      .getByRole('button', { name: '向右滚动功能', exact: true })
-      .click();
-    await page.waitForTimeout(500);
-    check(
-      (await rail.evaluate((e) => e.scrollLeft)) > before,
-      'desktop feature rail scroll',
-    );
-    await desktop.locator('.marquee').hover();
-    check(
-      (await desktop
-        .locator('.marquee-track')
-        .evaluate((e) => getComputedStyle(e).animationPlayState)) === 'paused',
-      'marquee pauses on hover',
-    );
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    check(
-      (await desktop
-        .locator('.marquee-track')
-        .evaluate((e) => getComputedStyle(e).animationName)) === 'none',
-      'reduced-motion disables marquee animation',
-    );
-    await page.emulateMedia({ reducedMotion: 'no-preference' });
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.evaluate(() => window.scrollTo(0, 0));
-    const mrail = mobile.locator('.feature-rail');
-    const mbefore = await mrail.evaluate((e) => e.scrollLeft);
-    await mobile
-      .getByRole('button', { name: '向右滚动功能', exact: true })
-      .tap();
-    await page.waitForTimeout(500);
-    check(
-      (await mrail.evaluate((e) => e.scrollLeft)) > mbefore,
-      'mobile rail touch scroll control',
-    );
-    const trigger = mobile.getByRole('button', {
-      name: '展开创作面板',
-      exact: true,
-    });
-    await trigger.tap();
-    const dock = page.getByRole('dialog', { name: '创作灵感', exact: true }),
-      input = page.locator('#mobile-prompt');
-    check(
-      await input.evaluate((e) => e === document.activeElement),
-      'touch opens dock and focuses textarea',
-    );
-    await input.fill('本地输入，不提交真实任务');
-    await dock.getByRole('button', { name: '视频生成', exact: true }).tap();
-    check(
-      (await dock
-        .getByRole('button', { name: '视频生成', exact: true })
-        .getAttribute('aria-pressed')) === 'true',
-      'mobile mode selection announced',
-    );
-    await dock.getByRole('button', { name: '风格', exact: true }).tap();
-    check(
-      (await dock.getByRole('status').textContent()).includes('尚未接入'),
-      'mobile tool unavailable feedback',
-    );
-    await dock.getByRole('button', { name: '开始创作', exact: true }).tap();
-    check(
-      (await dock.getByRole('status').textContent()).includes('尚未接入'),
-      'mobile creation unavailable feedback',
-    );
-    for (let i = 0; i < 20; i++) {
-      await page.keyboard.press('Tab');
-      assert(
-        await dock.evaluate((e) => e.contains(document.activeElement)),
-        'dock focus escaped',
-      );
-    }
-    await input.focus();
-    for (const height of [600, 440, 360]) {
-      await page.setViewportSize({ width: 390, height });
-      await page.waitForTimeout(150);
-      const viewport = await dock.evaluate((e) => ({
-        derived: e.style.getPropertyValue('--visual-height'),
-        offset: e.style.getPropertyValue('--visual-offset'),
-        keyboard: e.style.getPropertyValue('--keyboard-inset'),
-        actual: visualViewport.height,
-        top: visualViewport.offsetTop,
-      }));
-      assert.equal(
-        parseFloat(viewport.derived),
-        viewport.actual,
-        'viewport resize not propagated',
-      );
-      for (const locator of [
-        input,
-        dock.getByRole('button', { name: '开始创作', exact: true }),
-      ]) {
-        await locator.scrollIntoViewIfNeeded();
-        const r = await locator.boundingBox();
-        assert(
-          r &&
-            r.y >= viewport.top - 0.5 &&
-            r.y + r.height <= viewport.top + viewport.actual + 0.5,
-          'input/CTA not reachable',
-        );
-      }
-      const panel = await dock.locator('.mobile-prompt-panel').boundingBox();
-      assert(
-        panel.y >= viewport.top - 0.5 &&
-          panel.y + panel.height <= viewport.top + viewport.actual + 0.5,
-        'panel outside viewport',
-      );
-      evidence.viewportProxy.push({ ...viewport, height, panel });
-    }
-    await page.setViewportSize({ width: 390, height: 844 });
-    await input.focus();
-    await page.waitForTimeout(150);
-    // Controlled offset/inset injection exercises the scroll handler; not a native keyboard test.
-    await page.evaluate(() => {
-      Object.defineProperty(visualViewport, 'height', {
-        configurable: true,
-        value: 460,
-      });
-      Object.defineProperty(visualViewport, 'offsetTop', {
-        configurable: true,
-        value: 80,
-      });
-      visualViewport.dispatchEvent(new Event('scroll'));
-    });
-    await page.waitForTimeout(150);
-    evidence.syntheticViewport = await dock.evaluate((e) => ({
-      derived: e.style.getPropertyValue('--visual-height'),
-      offset: e.style.getPropertyValue('--visual-offset'),
-      keyboard: e.style.getPropertyValue('--keyboard-inset'),
-    }));
-    assert.equal(evidence.syntheticViewport.derived, '460px');
-    assert.equal(evidence.syntheticViewport.offset, '80px');
-    assert.equal(evidence.syntheticViewport.keyboard, '304px');
-    const injectedPanel = await dock
-      .locator('.mobile-prompt-panel')
-      .boundingBox();
-    assert(
-      injectedPanel.y >= 80 && injectedPanel.y + injectedPanel.height <= 540,
-    );
-    await page.evaluate(() => {
-      delete visualViewport.height;
-      delete visualViewport.offsetTop;
-      visualViewport.dispatchEvent(new Event('resize'));
-    });
-    await page.waitForTimeout(150);
-    check(
-      true,
-      'synthetic VisualViewport scroll offset/inset propagates (not native device evidence)',
-    );
-    await page.screenshot({ path: `${out}/homepage-mobile-dock.png` });
-    await page.keyboard.press('Escape');
-    check(
-      await trigger.evaluate((e) => e === document.activeElement),
-      'mobile Escape closes and restores focus',
-    );
-    await trigger.focus();
-    await page.keyboard.press('Enter');
-    assert(await dock.isVisible());
-    await page.mouse.click(3, 80);
-    check(
-      !(await dock.isVisible()) &&
-        (await trigger.evaluate((e) => e === document.activeElement)),
-      'keyboard open and backdrop close restore focus',
-    );
-    for (let i = 0; i < 3; i++) {
-      await trigger.tap();
-      await dock
-        .getByRole('button', { name: '收起创作面板', exact: true })
-        .tap();
-    }
-    check(
-      (await page.locator('dialog[open]').count()) === 0,
-      'rapid reopen closes without leaked modal',
-    );
-    await trigger.tap();
-    await page.setViewportSize({ width: 768, height: 900 });
-    await page.waitForTimeout(150);
-    check(
-      (await page.locator('dialog[open]').count()) === 0,
-      'mobile dock closes across desktop breakpoint',
-    );
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await desktop
-      .getByRole('button', { name: '偏好设置', exact: true })
-      .click();
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.waitForTimeout(150);
-    check(
-      (await page.locator('dialog[open]').count()) === 0,
-      'desktop settings close across mobile breakpoint',
-    );
-    await mobile.getByRole('button', { name: '资产', exact: true }).tap();
-    check(
-      (await mobile.getByRole('status').textContent()).includes('尚未接入'),
-      'unavailable mobile destinations do not navigate',
-    );
-    check(errors.length === 0, 'no runtime page errors');
-    check(failed.length === 0, 'no failed resource requests');
-    check(external.length === 0, 'no external media/font requests');
-    check(serviceRequests.length === 0, 'no fetch/XHR requests from local UI');
-    evidence.errors = errors;
-    evidence.failed = failed;
-    evidence.external = external;
-    evidence.serviceRequests = serviceRequests;
-    evidence.result = 'PASS';
-    fs.writeFileSync(
-      `${out}/homepage-browser-results.json`,
-      JSON.stringify(evidence, null, 2) + '\n',
-    );
-    console.log(JSON.stringify(evidence, null, 2));
-  } finally {
-    await browser.close();
-  }
-})().catch((e) => {
-  console.error(e);
-  process.exitCode = 1;
+const browser = await chromium.launch();
+const context = await browser.newContext({
+  hasTouch: true,
+  viewport: { width: 1440, height: 1060 },
 });
+const page = await context.newPage();
+const results = {
+  widths: [],
+  interactions: [],
+  viewportProxy: [],
+  runtimeErrors: [],
+  externalRequests: [],
+  serviceRequests: [],
+  physicalKeyboard: 'PENDING',
+  userVisualAcceptance: 'PENDING',
+};
+page.on('pageerror', (e) => results.runtimeErrors.push(e.message));
+page.on('request', (r) => {
+  if (!r.url().startsWith(base)) results.externalRequests.push(r.url());
+  if (['xhr', 'fetch'].includes(r.resourceType()))
+    results.serviceRequests.push(r.url());
+});
+const check = (condition, label) => {
+  assert(condition, label);
+  results.interactions.push(label);
+};
+try {
+  await page.goto(`${base}/`);
+  await page.evaluate(() => document.fonts.ready);
+  const desktop = page.locator('.stitch-desktop'),
+    mobile = page.locator('.stitch-mobile');
+  for (const width of [375, 390, 768, 1280, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.waitForTimeout(350);
+    const geometry = await page.evaluate(() => {
+      const root = document.querySelector(
+        innerWidth < 768 ? '.stitch-mobile' : '.stitch-desktop',
+      );
+      return {
+        width: innerWidth,
+        scrollWidth: document.documentElement.scrollWidth,
+        composition: getComputedStyle(root).display,
+        bodyText: root.innerText,
+        mainWidth: root.querySelector('main').clientWidth,
+      };
+    });
+    assert.equal(
+      geometry.width,
+      geometry.scrollWidth,
+      `unexpected horizontal page overflow at ${width}`,
+    );
+    for (const extra of [
+      'FROM A SPARK',
+      'IMAGE TO STORY',
+      'INSPIRATION',
+      '当前内容为本地示例',
+      '一站式 AIGC 创作平台',
+      '服务未接入',
+      '示例视觉 / 01',
+    ])
+      assert(!geometry.bodyText.includes(extra), `unauthorized copy: ${extra}`);
+    delete geometry.bodyText;
+    results.widths.push(geometry);
+    await page.screenshot({
+      path: `${out}homepage-${width}.png`,
+      fullPage: true,
+    });
+  }
+  await desktop
+    .getByRole('button', { name: '展开创作面板', exact: true })
+    .focus();
+  await page.keyboard.press('Enter');
+  const dInput = desktop
+    .getByRole('textbox', { name: '创作想法', exact: true })
+    .first();
+  check(await dInput.isVisible(), 'desktop source pill expands');
+  await dInput.fill('城市雨夜中的故事');
+  await desktop.locator('#desktop-creation-type-trigger').click();
+  await desktop
+    .locator('.creation-opt')
+    .filter({ hasText: '视频生成' })
+    .click();
+  check(
+    (
+      await desktop.locator('#desktop-current-creation-label').textContent()
+    ).includes('视频生成'),
+    'authored source type menu selects',
+  );
+  await desktop.locator('#desktop-model-selector-trigger').click();
+  await desktop.locator('[data-model="FLUX.1 Ultra"]').click();
+  check(
+    (await desktop.locator('#desktop-current-model-label').textContent()) ===
+      'FLUX.1 Ultra',
+    'authored source model menu selects',
+  );
+  await desktop.locator('#desktop-main-submit-btn').click();
+  check(
+    (await desktop.locator('[role=status]').textContent()).includes('尚未接入'),
+    'no false generation success',
+  );
+  await desktop.getByRole('button', { name: '关闭提示' }).click();
+  await desktop.locator('#desktop-collapse-prompt-btn').click();
+  check(
+    await desktop.locator('#desktop-prompt-collapsed-pill').isVisible(),
+    'desktop returns to original collapsed state',
+  );
+  await desktop.locator('#desktop-sidebar-collapse-toggle').click();
+  await page.waitForTimeout(350);
+  check(
+    await desktop
+      .locator('#desktop-main-sidebar')
+      .evaluate((e) => e.getBoundingClientRect().width <= 80),
+    'sidebar collapses',
+  );
+  await desktop.locator('#desktop-sidebar-collapse-toggle').click();
+  await desktop.locator('#desktop-theme-toggle-btn').click();
+  check(
+    await desktop.evaluate((e) => e.classList.contains('light-theme')),
+    'source theme toggles',
+  );
+  await desktop.locator('#desktop-theme-toggle-btn').click();
+  await desktop
+    .getByRole('button', { name: '账户与偏好设置', exact: true })
+    .click();
+  const dialog = desktop.getByRole('dialog', { name: '创作平台偏好设置' });
+  check(
+    await dialog.isVisible(),
+    'source settings opens through account surface',
+  );
+  await page.keyboard.press('Escape');
+  check(!(await dialog.isVisible()), 'settings Escape closes');
+  await desktop.locator('#desktop-inspiration-search-wrapper').click();
+  await desktop
+    .getByRole('searchbox', { name: '搜索灵感作品' })
+    .fill('神秘室友');
+  check(
+    (await desktop.locator('[data-stitch-card]:visible').count()) === 1,
+    'source search filters one work',
+  );
+  await desktop.getByRole('searchbox', { name: '搜索灵感作品' }).fill('');
+  await page.setViewportSize({ width: 390, height: 844 });
+  const trigger = mobile.locator('#mobile-prompt-dock-collapsed');
+  await trigger.tap();
+  const panel = mobile.getByRole('dialog', { name: '创作灵感' });
+  const input = panel.getByRole('textbox', { name: '创作想法' });
+  check(
+    await input.evaluate((e) => e === document.activeElement),
+    'mobile source pill touch focus',
+  );
+  await input.fill('保留原稿输入布局');
+  for (let i = 0; i < 14; i++) {
+    await page.keyboard.press('Tab');
+    assert(
+      await panel.evaluate((e) => e.contains(document.activeElement)),
+      'mobile modal focus escaped',
+    );
+  }
+  await panel.getByRole('button', { name: '生成', exact: true }).tap();
+  check(
+    (await mobile.locator('[role=status]').textContent()).includes('尚未接入'),
+    'mobile submit unavailable feedback',
+  );
+  await mobile.getByRole('button', { name: '关闭提示' }).click();
+  for (const height of [600, 440, 360]) {
+    await input.focus();
+    await page.setViewportSize({ width: 390, height });
+    await page.waitForTimeout(100);
+    const r = await panel.boundingBox();
+    assert(
+      r && r.y >= 0 && r.y + r.height <= height,
+      `dock outside reduced visual viewport: ${height}`,
+    );
+    await input.scrollIntoViewIfNeeded();
+    await panel
+      .getByRole('button', { name: '生成', exact: true })
+      .scrollIntoViewIfNeeded();
+    results.viewportProxy.push({ height, panel: r });
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(
+    () => document.activeElement?.id === 'mobile-prompt-dock-collapsed',
+  );
+  check(
+    await trigger.evaluate((e) => e === document.activeElement),
+    'mobile Escape restores focus',
+  );
+  await trigger.tap();
+  await page.mouse.click(3, 90);
+  check(!(await panel.isVisible()), 'mobile backdrop closes');
+  await mobile.locator('nav button[data-stitch-action="open-prompt"]').tap();
+  check(await panel.isVisible(), 'source bottom create action opens same dock');
+  await page.keyboard.press('Escape');
+  await mobile.locator('#mobile-inspiration-search-btn').tap();
+  await mobile.getByRole('searchbox', { name: '搜索灵感作品' }).fill('机械姬');
+  check(
+    (await mobile.locator('[data-stitch-card]:visible').count()) === 1,
+    'mobile source compact search filters',
+  );
+  await mobile.locator('#mobile-inspiration-search-close').tap();
+  check(
+    (await mobile.locator('[data-stitch-card]:visible').count()) === 4,
+    'mobile clear restores original masonry',
+  );
+  await trigger.tap();
+  await page.setViewportSize({ width: 768, height: 900 });
+  await page.waitForTimeout(100);
+  check(
+    !(await panel.isVisible()),
+    'mobile dock dismisses at desktop breakpoint',
+  );
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  check(
+    (await desktop
+      .locator('.auto-scroll-track')
+      .evaluate((e) => getComputedStyle(e).animationName)) === 'none',
+    'reduced-motion disables source stream',
+  );
+  check(results.runtimeErrors.length === 0, 'no runtime page errors');
+  check(results.externalRequests.length === 0, 'all media/fonts stay local');
+  check(results.serviceRequests.length === 0, 'no business fetch/XHR');
+  results.result = 'PASS';
+  fs.writeFileSync(
+    `${out}browser-results.json`,
+    JSON.stringify(results, null, 2) + '\n',
+  );
+  console.log(JSON.stringify(results, null, 2));
+} finally {
+  await browser.close();
+}

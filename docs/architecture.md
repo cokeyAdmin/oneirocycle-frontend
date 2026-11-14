@@ -5,7 +5,7 @@
 ## 目录边界
 
 - `src/app`：App Router、最小根布局、已授权 CAR-5 首页及技术健康入口。
-- `src/components/homepage`：独立桌面/移动组合，共用本地示例数据与语义控件。状态留在 React，不使用服务器缓存或编辑器 store；未接服务动作只提示不可用。移动输入以原生 dialog 管理模态状态，VisualViewport resize/scroll 调整面板几何。
+- `src/components/homepage`：独立桌面/移动组合，以 Stitch 原稿的独立组合和本地化原始素材为视觉依据，共用本地行为 hook。状态留在 React，不使用服务器缓存或编辑器 store；未接服务动作只在激活后提示不可用。移动输入保留原稿面板外观，通过 role/dialog、inert 和焦点循环管理模态状态；桌面设置沿用原稿 native dialog。VisualViewport resize/scroll 调整移动面板几何。
 - `src/modules/account`：会话读取/登出/权限接口，实际认证适配待协商。
 - `src/modules/projects`：可序列化文档、schemaVersion、服务端 revision、保存/恢复接口。
 - `src/modules/assets`：资产身份与元数据类型，上传协议列入待确认清单，不将临时 blob URL 当持久地址。
@@ -48,3 +48,7 @@
 - [TanStack Query 重试](https://tanstack.com/query/latest/docs/framework/react/guides/query-retries)：读请求策略与有副作用提交重试分离。
 
 2026-11-13 npm registry 查询候选：Next 16.4.6、React 19.3.1、R3F 9.8.2、React Flow 12.12.1、Tailwind 4.3.5、Zustand 5.1.0、Query 5.107.1。上述运行依赖已按这些版本安装并锁定；安装、类型检查及构建通过。TypeScript 固定 6.0.3、ESLint 固定 9.39.5，以符合当前 Next lint 插件的兼容范围。实际验收见 verification.md。
+
+## CAR-5 源设计样式隔离
+
+用户否决了首轮自绘媒体与自订 UI 规范，当前 `DESIGN.md` 以 canonical Stitch 为准。原稿的 Tailwind v3 几何与 token 被预编译并限定在 `.stitch-desktop` / `.stitch-mobile` 下，旧工具变量另加命名空间，避免 v4 同名 `space-y` 规则和已注册渐变变量改变源稿。生产不加载 CDN 或原稿 inline scripts；React 组件保留源 DOM/类名层级，交互显式连接到 `use-stitch-homepage.ts`。其他模块/端口和依赖锁文件未变。

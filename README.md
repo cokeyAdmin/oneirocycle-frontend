@@ -64,11 +64,11 @@ TanStack Query 保存服务器快照；Zustand 保存编辑器临时状态及本
 开发预览：`npm run dev -- --port 3102`，打开 `http://localhost:3102/`。
 生产预览：`npm run build` 后运行 `npm start -- --port 3102`。
 
-桌面侧栏、创作类型/模型/画幅、作品搜索/分类、设置预览，以及移动悬浮输入框可在当前页面操作。生成、复刻、资产、登录和账户保存均未接入，只提示不可用；刷新后本地界面状态不保留。首页不加载画布或 3D 引擎，不请求远程示例图片/字体。
+桌面侧栏、原稿收起/展开创作器、创作类型/模型、紧凑搜索、设置预览，以及移动原稿悬浮输入框可在当前页面操作。生成、复刻、资产、登录和账户保存均未接入，只提示不可用；刷新后本地界面状态不保留。首页不加载画布或 3D 引擎。Stitch 原图、原 logo 和原字体已本地化，不依赖远程图片、字体或 Tailwind CDN。
 
 - [验收记录与设计差异](docs/verification-homepage.md)
 - [桌面截图](docs/assets/homepage-desktop-1440.png)、[移动截图](docs/assets/homepage-mobile-390.png)、[移动展开面板](docs/assets/homepage-mobile-dock.png)
-- 五宽度和 Chromium 可视视口代理检查已通过；**真实手机 OS 软键盘/安全区及最终视觉验收尚待人工确认**，不等于已部署。
+- 首轮视觉版本已被用户否决。当前返工恢复原稿内容，五宽度和 Chromium 可视视口代理检查已通过；**真实手机 OS 软键盘/安全区及最终视觉验收尚待人工确认**，不等于已部署。
 
 可选复跑浏览器证据（另一个终端保持上述生产服务运行）：
 
@@ -78,3 +78,9 @@ PLAYWRIGHT_MODULE=/opt/data/home/.local/lib/node_modules/@playwright/cli/node_mo
 ```
 
 其他环境可安装/使用自己的 Playwright，省略此变量时从 `playwright` 包解析；`HOMEPAGE_URL` 可覆盖默认 `http://127.0.0.1:3102`。脚本会更新 `docs/assets` 的实际截图和 JSON 结果，需要系统中文字体才能生成可读中文截图。
+
+### 视觉返工与对照
+
+2026-11-14 用户否决首轮擅自改稿；旧 `docs/assets/homepage-*.png` 及旧验收记录仅保留为历史，不代表当前设计验收。
+
+当前来源与约束见 [DESIGN.md](DESIGN.md)，当前记录见 [返工验收](docs/verification-homepage-rework.md) 与 [并排 QA](design-qa.md)。[桌面对照](docs/assets/rework/desktop-closed-comparison.png)、[移动对照](docs/assets/rework/mobile-closed-comparison.png) 均为同一视口左原稿、右实现；展开态也有独立证据。不会用编译/断点通过替代用户视觉验收。

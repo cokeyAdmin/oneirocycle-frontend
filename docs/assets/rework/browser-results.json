@@ -1,0 +1,93 @@
+{
+  "widths": [
+    {
+      "width": 375,
+      "scrollWidth": 375,
+      "composition": "flex",
+      "mainWidth": 375
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "composition": "flex",
+      "mainWidth": 390
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "composition": "flex",
+      "mainWidth": 688
+    },
+    {
+      "width": 1280,
+      "scrollWidth": 1280,
+      "composition": "flex",
+      "mainWidth": 1024
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "composition": "flex",
+      "mainWidth": 1184
+    }
+  ],
+  "interactions": [
+    "desktop source pill expands",
+    "authored source type menu selects",
+    "authored source model menu selects",
+    "no false generation success",
+    "desktop returns to original collapsed state",
+    "sidebar collapses",
+    "source theme toggles",
+    "source settings opens through account surface",
+    "settings Escape closes",
+    "source search filters one work",
+    "mobile source pill touch focus",
+    "mobile submit unavailable feedback",
+    "mobile Escape restores focus",
+    "mobile backdrop closes",
+    "source bottom create action opens same dock",
+    "mobile source compact search filters",
+    "mobile clear restores original masonry",
+    "mobile dock dismisses at desktop breakpoint",
+    "reduced-motion disables source stream",
+    "no runtime page errors",
+    "all media/fonts stay local",
+    "no business fetch/XHR"
+  ],
+  "viewportProxy": [
+    {
+      "height": 600,
+      "panel": {
+        "x": 20,
+        "y": 296,
+        "width": 350,
+        "height": 160
+      }
+    },
+    {
+      "height": 440,
+      "panel": {
+        "x": 20,
+        "y": 136,
+        "width": 350,
+        "height": 160
+      }
+    },
+    {
+      "height": 360,
+      "panel": {
+        "x": 20,
+        "y": 60,
+        "width": 350,
+        "height": 160
+      }
+    }
+  ],
+  "runtimeErrors": [],
+  "externalRequests": [],
+  "serviceRequests": [],
+  "physicalKeyboard": "PENDING",
+  "userVisualAcceptance": "PENDING",
+  "result": "PASS"
+}

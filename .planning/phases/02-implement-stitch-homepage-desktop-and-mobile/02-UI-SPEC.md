@@ -7,6 +7,8 @@ preset: none
 created: '2026-11-14'
 ---
 
+> 2026-11-14 用户视觉验收否决：本文件中由代理自行加入、与 canonical Stitch 原稿不一致的规则（本地自绘 SVG 替代、四档字号统一、新增文案/布局等）全部撤销。用户原始设计优先；返工以 DESIGN.md 与 REWORK.md 为当前合同。以下保留为首轮历史，不代表用户批准。
+
 # Phase 02 — UI Design Contract
 
 > 本阶段视觉及交互合同。以 CAR-5 指定的 Stitch 两个 screen 与 HTML 为唯一构图来源；实现可抽取 React 组件，但不得把导出 HTML 原样作为页面交付。

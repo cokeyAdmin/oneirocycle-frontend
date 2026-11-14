@@ -1,4 +1,6 @@
-# CAR-5 首页验收记录
+# CAR-5 首轮首页记录（用户已否决）
+
+> 用户因擅自添加内容和视觉偏差否决此版本。以下仅保留历史；不可把本页 PASS 当作当前视觉通过。当前证据见 [返工记录](verification-homepage-rework.md)。
 
 关联：[CAR-5](https://linear.app/cardof/issue/CAR-5) · 2026-11-14 · `/workspace/oneirocycle-frontend`。
 
