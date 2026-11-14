@@ -1,0 +1,23 @@
+{
+  "contract": "1.0.0",
+  "flavor": "core",
+  "milestone": null,
+  "phases": [
+    {
+      "number": "1",
+      "name": "Foundation",
+      "status": "complete"
+    },
+    {
+      "number": "2",
+      "name": "Stitch homepage",
+      "status": "in_progress"
+    }
+  ],
+  "next": {
+    "command": "$gsd-verify-work 2",
+    "label": "Review homepage visuals and physical mobile keyboard",
+    "reason": "Three plans delivered and automated checks passed; final human/device UAT pending, CAR-5 In Review"
+  },
+  "updated_at": "2026-11-14T09:28:08.353Z"
+}

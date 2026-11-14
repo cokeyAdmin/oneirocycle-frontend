@@ -16,7 +16,7 @@
 4. 文档明确区分已实现基础设施、未接通能力和待协商 API；无假生成成功。
 5. 原文件及后端仓库保持不变，Linear 同一任务有证据记录，无未授权远程写入。
 
-**Status:** 本轮工程已实现并通过本地验收；独立复审通过。CAR-6 已存在，历史创建拒绝已解除。待 Hermes 将验收证据同步至同一 Linear 任务；不将本地完成当作外部 Done。
+**Status:** 本轮工程已实现并通过本地验收；独立复审通过。CAR-6 已存在，历史创建拒绝已解除。CAR-6 已同步 In Review 并读回；不将本地完成当作外部 Done。
 
 ### Phase 2: Implement Stitch homepage (desktop and mobile)
 
@@ -34,11 +34,21 @@
 4. `npm run check`、`npm run build` 和实际浏览器断点核验通过；桌面/移动截图与偏差记录归档。
 5. 验收证据同步到 CAR-5；不修改后端，不推送、合并或部署。
 
-**Status:** In progress — CAR-5; design references loaded from Stitch.
+**Status:** 工程与自动化完成，CAR-5 In Review；真实设备与视觉 UAT 待人工，未标记 Done。
 
 **Plans:** 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Root-route tracer, separate desktop/mobile shells, and accessible prompt-dock focus lifecycle.
-- [ ] 02-02-PLAN.md — Complete desktop/mobile expansion, local interactions, and VisualViewport resilience.
-- [ ] 02-03-PLAN.md — Five-width browser evidence, screenshots, precise handoff guidance, and physical-device UAT boundary.
+
+- [x] 02-01-PLAN.md — Root-route tracer, separate desktop/mobile shells, and accessible prompt-dock focus lifecycle.
+- [x] 02-02-PLAN.md — Complete desktop/mobile expansion, local interactions, and VisualViewport resilience.
+- [x] 02-03-PLAN.md — Five-width browser evidence, screenshots, precise handoff guidance, and physical-device UAT boundary.
+
+## Progress
+
+| Phase              | Plans Complete | Status      | Completed  |
+| ------------------ | -------------- | ----------- | ---------- |
+| 1. Foundation      | 1/1            | Complete    | 2026-11-14 |
+| 2. Stitch homepage | 3/3            | In Progress | —          |
+
+Phase 2 工程完成；In Progress 仅保留真实手机与视觉人工验收，不是实现仍在后台运行。
