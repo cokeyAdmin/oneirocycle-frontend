@@ -36,7 +36,8 @@
 
 **Status:** In progress — CAR-5; design references loaded from Stitch.
 
-**Plans:** 1 plan
+**Plans:** 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Desktop/mobile homepage and interactive states.
+- [ ] 02-01-PLAN.md — Desktop/mobile homepage, interactions, accessibility, and VisualViewport resilience.
+- [ ] 02-02-PLAN.md — Five-width browser evidence, screenshots, handoff, and physical-device UAT boundary.
