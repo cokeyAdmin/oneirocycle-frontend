@@ -3,7 +3,19 @@ phase: 01-foundation
 plan: 01
 subsystem: frontend
 tags: [nextjs, typescript, contracts, commands]
-requirements-completed: [ENG-01, ENG-02, MOD-01, LOAD-01, STATE-01, CMD-01, API-01, JOB-01, CONTRACT-01, QA-01]
+requirements-completed:
+  [
+    ENG-01,
+    ENG-02,
+    MOD-01,
+    LOAD-01,
+    STATE-01,
+    CMD-01,
+    API-01,
+    JOB-01,
+    CONTRACT-01,
+    QA-01,
+  ]
 completed: 2026-11-14
 coverage:
   - deliverable: Typed commands, editor state and task recovery boundaries
