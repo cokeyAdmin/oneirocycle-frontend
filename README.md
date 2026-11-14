@@ -1,6 +1,6 @@
-# 环梦篇章 AIGC · 前端基础工程
+# 环梦篇章 AIGC · 前端
 
-关联任务：[CAR-6](https://linear.app/cardof/issue/CAR-6/前端初始化环梦篇章-aigc-前端项目)。本轮仅工程和模块骨架，**不是完整创作产品**；首页实现由 CAR-5 管理。
+关联任务：[CAR-6](https://linear.app/cardof/issue/CAR-6/前端初始化环梦篇章-aigc-前端项目)。基础工程已完成；首页由 [CAR-5](https://linear.app/cardof/issue/CAR-5) 管理，已实现本地界面，**不代表真实生成服务已接通**。
 
 ## 启动
 
@@ -13,7 +13,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-默认端口 3000，可用 `npm run dev -- --port 3100` 调整。根入口 `/` 故意返回空页面，不含模板视觉或业务控件；`/health` 返回前端进程存活 JSON，**不证明后端或模型可用**。
+默认端口 3000，可用 `npm run dev -- --port 3100` 调整。根路由 / 现已提供 CAR-5 OneiroCycle 首页。`/health` 返回前端进程存活 JSON，**不证明后端或模型可用**。
 
 ```sh
 npm run format
@@ -27,7 +27,8 @@ curl http://localhost:3000/health
 
 ## 模块
 
-- `src/app`：App Router、Query Provider、无视觉入口及健康路由。
+- `src/app`：App Router、Query Provider、首页入口及健康路由。
+- `src/components/homepage`：独立桌面/移动组合、本地交互和显式示例内容。
 - `src/modules/account` / `assets` / `projects`：认证端口、资产身份、项目文档与持久化端口。
 - `src/modules/generation/image.ts` / `video.ts`：四种生成方式的内部输入类型，公共任务端口在 `ports.ts`。
 - `src/modules/canvas` / `director`：React Flow 与 Three/R3F 的客户端按需加载入口，未挂载产品页面。
@@ -57,3 +58,23 @@ TanStack Query 保存服务器快照；Zustand 保存编辑器临时状态及本
 ## 仓库与工作流
 
 前后端是独立目录、独立仓库；本轮不修改后端。沿用全局 GSD，执行记录保留在 `.planning`。Linear 由 Hermes 唯一写入；Codex 的任务事件和核验证据交由 Hermes 同步，不绕过工具审批。本地提交不等于推送、合并或部署。
+
+## CAR-5 首页验收
+
+开发预览：`npm run dev -- --port 3102`，打开 `http://localhost:3102/`。
+生产预览：`npm run build` 后运行 `npm start -- --port 3102`。
+
+桌面侧栏、创作类型/模型/画幅、作品搜索/分类、设置预览，以及移动悬浮输入框可在当前页面操作。生成、复刻、资产、登录和账户保存均未接入，只提示不可用；刷新后本地界面状态不保留。首页不加载画布或 3D 引擎，不请求远程示例图片/字体。
+
+- [验收记录与设计差异](docs/verification-homepage.md)
+- [桌面截图](docs/assets/homepage-desktop-1440.png)、[移动截图](docs/assets/homepage-mobile-390.png)、[移动展开面板](docs/assets/homepage-mobile-dock.png)
+- 五宽度和 Chromium 可视视口代理检查已通过；**真实手机 OS 软键盘/安全区及最终视觉验收尚待人工确认**，不等于已部署。
+
+可选复跑浏览器证据（另一个终端保持上述生产服务运行）：
+
+```sh
+# 使用已有的 Playwright 安装，不需要修改项目依赖。
+PLAYWRIGHT_MODULE=/opt/data/home/.local/lib/node_modules/@playwright/cli/node_modules/playwright/index.mjs node scripts/verify-homepage.mjs
+```
+
+其他环境可安装/使用自己的 Playwright，省略此变量时从 `playwright` 包解析；`HOMEPAGE_URL` 可覆盖默认 `http://127.0.0.1:3102`。脚本会更新 `docs/assets` 的实际截图和 JSON 结果，需要系统中文字体才能生成可读中文截图。

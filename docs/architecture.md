@@ -4,7 +4,8 @@
 
 ## 目录边界
 
-- `src/app`：App Router、最小根布局和技术启动入口；不实现未经批准的产品页面。
+- `src/app`：App Router、最小根布局、已授权 CAR-5 首页及技术健康入口。
+- `src/components/homepage`：独立桌面/移动组合，共用本地示例数据与语义控件。状态留在 React，不使用服务器缓存或编辑器 store；未接服务动作只提示不可用。移动输入以原生 dialog 管理模态状态，VisualViewport resize/scroll 调整面板几何。
 - `src/modules/account`：会话读取/登出/权限接口，实际认证适配待协商。
 - `src/modules/projects`：可序列化文档、schemaVersion、服务端 revision、保存/恢复接口。
 - `src/modules/assets`：资产身份与元数据类型，上传协议列入待确认清单，不将临时 blob URL 当持久地址。
