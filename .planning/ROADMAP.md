@@ -1,6 +1,6 @@
-# 本轮路线图
+# 前端路线图
 
-仅规划已授权工程初始化，不把长期产品范围提前转成实施计划。
+按单独 Linear 任务分阶段交付；真实服务端/生成服务仍不在当前首页范围。
 
 ## Phase 1: 工程、模块和协作边界
 
@@ -18,4 +18,25 @@
 
 **Status:** 本轮工程已实现并通过本地验收；独立复审通过。CAR-6 已存在，历史创建拒绝已解除。待 Hermes 将验收证据同步至同一 Linear 任务；不将本地完成当作外部 Done。
 
-后续页面单独沿用 CAR-5 的设计读取与验收流程，不属于此阶段。
+### Phase 2: Implement Stitch homepage (desktop and mobile)
+
+**Goal:** 依据 CAR-5 指定的 Stitch 桌面与移动专属原型实现 OneiroCycle 首页、响应式布局和页面内交互。
+
+**Requirements:** HOME-01、HOME-02、HOME-03、HOME-04、HOME-05、HOME-06。
+
+**Depends on:** Phase 1
+
+**Success Criteria:**
+
+1. 桌面与移动分别按对应 Stitch Screen 和原始 HTML 核对；损坏的桌面静态截图不作为布局依据。
+2. 375、390、768、1280、1440px 下无意外横向滚动、截断、固定浮层遮挡；移动提示框展开、收起、触控/键盘及安全区行为可用。
+3. 页面内已实现交互可操作；未接服务的能力均为清楚占位，不声称生成或数据写入成功。
+4. `npm run check`、`npm run build` 和实际浏览器断点核验通过；桌面/移动截图与偏差记录归档。
+5. 验收证据同步到 CAR-5；不修改后端，不推送、合并或部署。
+
+**Status:** In progress — CAR-5; design references loaded from Stitch.
+
+**Plans:** 1 plan
+
+Plans:
+- [ ] 02-01-PLAN.md — Desktop/mobile homepage and interactive states.
