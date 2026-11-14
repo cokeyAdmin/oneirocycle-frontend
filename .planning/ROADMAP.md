@@ -36,8 +36,9 @@
 
 **Status:** In progress — CAR-5; design references loaded from Stitch.
 
-**Plans:** 2 plans
+**Plans:** 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Desktop/mobile homepage, interactions, accessibility, and VisualViewport resilience.
-- [ ] 02-02-PLAN.md — Five-width browser evidence, screenshots, handoff, and physical-device UAT boundary.
+- [ ] 02-01-PLAN.md — Root-route tracer, separate desktop/mobile shells, and accessible prompt-dock focus lifecycle.
+- [ ] 02-02-PLAN.md — Complete desktop/mobile expansion, local interactions, and VisualViewport resilience.
+- [ ] 02-03-PLAN.md — Five-width browser evidence, screenshots, precise handoff guidance, and physical-device UAT boundary.

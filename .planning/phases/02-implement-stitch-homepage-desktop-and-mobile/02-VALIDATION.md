@@ -39,9 +39,11 @@ created: "2026-11-14"
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
 | 02-01-01 | 01 | 1 | HOME-01, HOME-02, HOME-03, HOME-05 | T-02-01, T-02-02 | Route serves both compositions; unavailable actions stay local | typecheck + unit + build + HTTP smoke | `npm run typecheck && npm test && npm run build` plus production HTTP content assertions | ✅ existing scripts | ⬜ pending |
-| 02-01-02 | 01 | 1 | HOME-01, HOME-02, HOME-03, HOME-04, HOME-05 | T-02-01–T-02-04 | Local media/data only; VisualViewport listeners clean up; no remote success path | full suite + build | `npm run check && npm run build` | ✅ existing scripts | ⬜ pending |
-| 02-02-01 | 02 | 2 | HOME-04, HOME-05, HOME-06 | T-02-05, T-02-06 | Evidence distinguishes Chromium proxy from physical device and captures no secrets | browser matrix + artifact gate | `npm run check && npm run build` plus width/screenshot/proxy-status assertions | ❌ produced by task | ⬜ pending |
-| 02-02-02 | 02 | 2 | HOME-04, HOME-05, HOME-06 | T-02-05 | Handoff keeps physical OS-keyboard UAT pending until device evidence exists | full suite + document/event gate | `npm run check && npm run build` plus README/event/UAT-status assertions | ❌ produced by task | ⬜ pending |
+| 02-01-02 | 01 | 1 | HOME-01, HOME-02, HOME-03, HOME-05 | T-02-01, T-02-02 | Responsive shell and dock focus lifecycle stay local and accessible | full suite + build | `npm run check && npm run build` plus scoped whitespace gate | ✅ existing scripts | ⬜ pending |
+| 02-02-01 | 02 | 2 | HOME-01, HOME-03, HOME-05 | T-02-03 | Desktop expansion uses typed local media/data and no remote success path | full suite + build | `npm run check && npm run build` plus scoped whitespace gate | ✅ existing scripts | ⬜ pending |
+| 02-02-02 | 02 | 2 | HOME-02, HOME-03, HOME-04, HOME-05 | T-02-04 | VisualViewport resize/scroll listeners clean up; focused input/CTA remain reachable | full suite + build + source assertions | `npm run check && npm run build` plus VisualViewport resize/scroll and whitespace assertions | ✅ existing scripts | ⬜ pending |
+| 02-03-01 | 03 | 3 | HOME-04, HOME-05, HOME-06 | T-02-05, T-02-06 | Evidence distinguishes Chromium proxy from physical device and captures no secrets | browser matrix + artifact gate | `npm run check && npm run build` plus width/screenshot/proxy-status assertions | ❌ produced by task | ⬜ pending |
+| 02-03-02 | 03 | 3 | HOME-04, HOME-05, HOME-06 | T-02-05 | Exact new README guidance is present; physical OS-keyboard UAT stays pending until device evidence exists | full suite + document/event gate | `npm run check && npm run build` plus exact README sentence/event/UAT-status assertions | ❌ produced by task | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -51,7 +53,7 @@ created: "2026-11-14"
 
 - Existing Vitest, TypeScript, lint, format, and Next.js build scripts cover all automated code gates; no test dependency or scaffold is needed.
 - `02-VALIDATION.md` exists before execution and binds every plan task to an automated command/failure direction.
-- Browser evidence paths are created by Plan 02-02 Task 1 using cached Chromium; no `MISSING — Wave 0` command is present.
+- Browser evidence paths are created by Plan 02-03 Task 1 using cached Chromium; no `MISSING — Wave 0` command is present.
 - Physical mobile OS-keyboard behavior has no container substitute and is explicitly routed to the Manual-Only Verification below.
 
 ---
