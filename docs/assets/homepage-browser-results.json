@@ -1,0 +1,130 @@
+{
+  "browser": "155.0.8059.12",
+  "widths": [
+    {
+      "width": 375,
+      "scrollWidth": 375,
+      "composition": "mobile",
+      "outside": [],
+      "undersized": [],
+      "dockNavGap": 16
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "composition": "mobile",
+      "outside": [],
+      "undersized": [],
+      "dockNavGap": 16
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "composition": "desktop",
+      "outside": [],
+      "undersized": [],
+      "dockNavGap": null
+    },
+    {
+      "width": 1280,
+      "scrollWidth": 1280,
+      "composition": "desktop",
+      "outside": [],
+      "undersized": [],
+      "dockNavGap": null
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "composition": "desktop",
+      "outside": [],
+      "undersized": [],
+      "dockNavGap": null
+    }
+  ],
+  "interactions": [
+    "desktop creation reports unavailable, retaining prompt and choices",
+    "sidebar collapses",
+    "theme changes locally",
+    "keyboard focus has visible outline",
+    "settings focus trap, Escape and restore",
+    "promotion dismisses locally",
+    "search empty state",
+    "clear restores four illustrative works",
+    "category produces one matching work",
+    "desktop feature rail scroll",
+    "marquee pauses on hover",
+    "reduced-motion disables marquee animation",
+    "mobile rail touch scroll control",
+    "touch opens dock and focuses textarea",
+    "mobile mode selection announced",
+    "mobile tool unavailable feedback",
+    "mobile creation unavailable feedback",
+    "synthetic VisualViewport scroll offset/inset propagates (not native device evidence)",
+    "mobile Escape closes and restores focus",
+    "keyboard open and backdrop close restore focus",
+    "rapid reopen closes without leaked modal",
+    "mobile dock closes across desktop breakpoint",
+    "desktop settings close across mobile breakpoint",
+    "unavailable mobile destinations do not navigate",
+    "no runtime page errors",
+    "no failed resource requests",
+    "no external media/font requests",
+    "no fetch/XHR requests from local UI"
+  ],
+  "viewportProxy": [
+    {
+      "derived": "600px",
+      "offset": "0px",
+      "keyboard": "0px",
+      "actual": 600,
+      "top": 0,
+      "height": 600,
+      "panel": {
+        "x": 12,
+        "y": 206,
+        "width": 366,
+        "height": 382
+      }
+    },
+    {
+      "derived": "440px",
+      "offset": "0px",
+      "keyboard": "0px",
+      "actual": 440,
+      "top": 0,
+      "height": 440,
+      "panel": {
+        "x": 12,
+        "y": 46,
+        "width": 366,
+        "height": 382
+      }
+    },
+    {
+      "derived": "360px",
+      "offset": "0px",
+      "keyboard": "0px",
+      "actual": 360,
+      "top": 0,
+      "height": 360,
+      "panel": {
+        "x": 12,
+        "y": 12,
+        "width": 366,
+        "height": 336
+      }
+    }
+  ],
+  "physicalKeyboard": "PENDING",
+  "syntheticViewport": {
+    "derived": "460px",
+    "offset": "80px",
+    "keyboard": "304px"
+  },
+  "errors": [],
+  "failed": [],
+  "external": [],
+  "serviceRequests": [],
+  "result": "PASS"
+}

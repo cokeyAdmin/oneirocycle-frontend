@@ -1,0 +1,19 @@
+{
+  "workItemKey": "frontend-initialization",
+  "delivery": "delivered",
+  "lastError": null,
+  "team": "Cardof",
+  "projectId": "65a16e31-96d0-4233-9c95-343b0b9683d8",
+  "intendedTitle": "【前端】初始化环梦篇章 AIGC 工程与模块边界",
+  "scopeSource": ".planning/REQUIREMENTS.md",
+  "stateIntent": "Backlog",
+  "issueId": "CAR-6",
+  "issueUrl": "https://linear.app/cardof/issue/CAR-6/前端初始化环梦篇章-aigc-前端项目",
+  "relatedIssue": "CAR-5",
+  "replayPolicy": "Delivered and read back. Reuse CAR-6; never replay the pending creation. User explicitly selected Hermes as Linear writer after the Codex approval rejection.",
+  "previousRejection": "user rejected MCP tool call",
+  "actualTitle": "【前端】初始化环梦篇章 AIGC 前端项目",
+  "actualState": "Backlog",
+  "writer": "Hermes native Linear MCP",
+  "verifiedAt": "2026-11-13T18:26:01.475759+00:00"
+}

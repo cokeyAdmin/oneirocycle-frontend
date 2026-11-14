@@ -1,0 +1,3279 @@
+/* Canonical Stitch desktop tokens, utility geometry and effects; scoped to this composition. */
+.stitch-desktop:is(*),
+.stitch-desktop *,
+.stitch-desktop:is(::before),
+.stitch-desktop ::before,
+.stitch-desktop:is(::after),
+.stitch-desktop ::after {
+  --stitch-tw-border-spacing-x: 0;
+  --stitch-tw-border-spacing-y: 0;
+  --stitch-tw-translate-x: 0;
+  --stitch-tw-translate-y: 0;
+  --stitch-tw-rotate: 0;
+  --stitch-tw-skew-x: 0;
+  --stitch-tw-skew-y: 0;
+  --stitch-tw-scale-x: 1;
+  --stitch-tw-scale-y: 1;
+  --stitch-tw-pan-x: ;
+  --stitch-tw-pan-y: ;
+  --stitch-tw-pinch-zoom: ;
+  --stitch-tw-scroll-snap-strictness: proximity;
+  --stitch-tw-gradient-from-position: ;
+  --stitch-tw-gradient-via-position: ;
+  --stitch-tw-gradient-to-position: ;
+  --stitch-tw-ordinal: ;
+  --stitch-tw-slashed-zero: ;
+  --stitch-tw-numeric-figure: ;
+  --stitch-tw-numeric-spacing: ;
+  --stitch-tw-numeric-fraction: ;
+  --stitch-tw-ring-inset: ;
+  --stitch-tw-ring-offset-width: 0px;
+  --stitch-tw-ring-offset-color: #fff;
+  --stitch-tw-ring-color: rgb(59 130 246 / 0.5);
+  --stitch-tw-ring-offset-shadow: 0 0 #0000;
+  --stitch-tw-ring-shadow: 0 0 #0000;
+  --stitch-tw-shadow: 0 0 #0000;
+  --stitch-tw-shadow-colored: 0 0 #0000;
+  --stitch-tw-blur: ;
+  --stitch-tw-brightness: ;
+  --stitch-tw-contrast: ;
+  --stitch-tw-grayscale: ;
+  --stitch-tw-hue-rotate: ;
+  --stitch-tw-invert: ;
+  --stitch-tw-saturate: ;
+  --stitch-tw-sepia: ;
+  --stitch-tw-drop-shadow: ;
+  --stitch-tw-backdrop-blur: ;
+  --stitch-tw-backdrop-brightness: ;
+  --stitch-tw-backdrop-contrast: ;
+  --stitch-tw-backdrop-grayscale: ;
+  --stitch-tw-backdrop-hue-rotate: ;
+  --stitch-tw-backdrop-invert: ;
+  --stitch-tw-backdrop-opacity: ;
+  --stitch-tw-backdrop-saturate: ;
+  --stitch-tw-backdrop-sepia: ;
+  --stitch-tw-contain-size: ;
+  --stitch-tw-contain-layout: ;
+  --stitch-tw-contain-paint: ;
+  --stitch-tw-contain-style: ;
+}
+.stitch-desktop:is(::backdrop),
+.stitch-desktop ::backdrop {
+  --stitch-tw-border-spacing-x: 0;
+  --stitch-tw-border-spacing-y: 0;
+  --stitch-tw-translate-x: 0;
+  --stitch-tw-translate-y: 0;
+  --stitch-tw-rotate: 0;
+  --stitch-tw-skew-x: 0;
+  --stitch-tw-skew-y: 0;
+  --stitch-tw-scale-x: 1;
+  --stitch-tw-scale-y: 1;
+  --stitch-tw-pan-x: ;
+  --stitch-tw-pan-y: ;
+  --stitch-tw-pinch-zoom: ;
+  --stitch-tw-scroll-snap-strictness: proximity;
+  --stitch-tw-gradient-from-position: ;
+  --stitch-tw-gradient-via-position: ;
+  --stitch-tw-gradient-to-position: ;
+  --stitch-tw-ordinal: ;
+  --stitch-tw-slashed-zero: ;
+  --stitch-tw-numeric-figure: ;
+  --stitch-tw-numeric-spacing: ;
+  --stitch-tw-numeric-fraction: ;
+  --stitch-tw-ring-inset: ;
+  --stitch-tw-ring-offset-width: 0px;
+  --stitch-tw-ring-offset-color: #fff;
+  --stitch-tw-ring-color: rgb(59 130 246 / 0.5);
+  --stitch-tw-ring-offset-shadow: 0 0 #0000;
+  --stitch-tw-ring-shadow: 0 0 #0000;
+  --stitch-tw-shadow: 0 0 #0000;
+  --stitch-tw-shadow-colored: 0 0 #0000;
+  --stitch-tw-blur: ;
+  --stitch-tw-brightness: ;
+  --stitch-tw-contrast: ;
+  --stitch-tw-grayscale: ;
+  --stitch-tw-hue-rotate: ;
+  --stitch-tw-invert: ;
+  --stitch-tw-saturate: ;
+  --stitch-tw-sepia: ;
+  --stitch-tw-drop-shadow: ;
+  --stitch-tw-backdrop-blur: ;
+  --stitch-tw-backdrop-brightness: ;
+  --stitch-tw-backdrop-contrast: ;
+  --stitch-tw-backdrop-grayscale: ;
+  --stitch-tw-backdrop-hue-rotate: ;
+  --stitch-tw-backdrop-invert: ;
+  --stitch-tw-backdrop-opacity: ;
+  --stitch-tw-backdrop-saturate: ;
+  --stitch-tw-backdrop-sepia: ;
+  --stitch-tw-contain-size: ;
+  --stitch-tw-contain-layout: ;
+  --stitch-tw-contain-paint: ;
+  --stitch-tw-contain-style: ;
+} /* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */
+.stitch-desktop:is(*),
+.stitch-desktop *,
+.stitch-desktop:is(::after),
+.stitch-desktop ::after,
+.stitch-desktop:is(::before),
+.stitch-desktop ::before {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+}
+.stitch-desktop:is(::after),
+.stitch-desktop ::after,
+.stitch-desktop:is(::before),
+.stitch-desktop ::before {
+  --stitch-tw-content: '';
+}
+.stitch-desktop:is(:host),
+.stitch-desktop :host,
+.stitch-desktop {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  -webkit-tap-highlight-color: transparent;
+}
+.stitch-desktop {
+  margin: 0;
+  line-height: inherit;
+}
+.stitch-desktop:is(hr),
+.stitch-desktop hr {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
+.stitch-desktop:is(abbr:where([title])),
+.stitch-desktop abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+  text-decoration: underline dotted;
+}
+.stitch-desktop:is(h1),
+.stitch-desktop h1,
+.stitch-desktop:is(h2),
+.stitch-desktop h2,
+.stitch-desktop:is(h3),
+.stitch-desktop h3,
+.stitch-desktop:is(h4),
+.stitch-desktop h4,
+.stitch-desktop:is(h5),
+.stitch-desktop h5,
+.stitch-desktop:is(h6),
+.stitch-desktop h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+.stitch-desktop:is(a),
+.stitch-desktop a {
+  color: inherit;
+  text-decoration: inherit;
+}
+.stitch-desktop:is(b),
+.stitch-desktop b,
+.stitch-desktop:is(strong),
+.stitch-desktop strong {
+  font-weight: bolder;
+}
+.stitch-desktop:is(code),
+.stitch-desktop code,
+.stitch-desktop:is(kbd),
+.stitch-desktop kbd,
+.stitch-desktop:is(pre),
+.stitch-desktop pre,
+.stitch-desktop:is(samp),
+.stitch-desktop samp {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-size: 1em;
+}
+.stitch-desktop:is(small),
+.stitch-desktop small {
+  font-size: 80%;
+}
+.stitch-desktop:is(sub),
+.stitch-desktop sub,
+.stitch-desktop:is(sup),
+.stitch-desktop sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.stitch-desktop:is(sub),
+.stitch-desktop sub {
+  bottom: -0.25em;
+}
+.stitch-desktop:is(sup),
+.stitch-desktop sup {
+  top: -0.5em;
+}
+.stitch-desktop:is(table),
+.stitch-desktop table {
+  text-indent: 0;
+  border-color: inherit;
+  border-collapse: collapse;
+}
+.stitch-desktop:is(button),
+.stitch-desktop button,
+.stitch-desktop:is(input),
+.stitch-desktop input,
+.stitch-desktop:is(optgroup),
+.stitch-desktop optgroup,
+.stitch-desktop:is(select),
+.stitch-desktop select,
+.stitch-desktop:is(textarea),
+.stitch-desktop textarea {
+  font-family: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+.stitch-desktop:is(button),
+.stitch-desktop button,
+.stitch-desktop:is(select),
+.stitch-desktop select {
+  text-transform: none;
+}
+.stitch-desktop:is(button),
+.stitch-desktop button,
+.stitch-desktop:is(input:where([type='button'])),
+.stitch-desktop input:where([type='button']),
+.stitch-desktop:is(input:where([type='reset'])),
+.stitch-desktop input:where([type='reset']),
+.stitch-desktop:is(input:where([type='submit'])),
+.stitch-desktop input:where([type='submit']) {
+  -webkit-appearance: button;
+  background-color: transparent;
+  background-image: none;
+}
+.stitch-desktop:is(:-moz-focusring),
+.stitch-desktop :-moz-focusring {
+  outline: auto;
+}
+.stitch-desktop:is(:-moz-ui-invalid),
+.stitch-desktop :-moz-ui-invalid {
+  box-shadow: none;
+}
+.stitch-desktop:is(progress),
+.stitch-desktop progress {
+  vertical-align: baseline;
+}
+.stitch-desktop:is(::-webkit-inner-spin-button),
+.stitch-desktop ::-webkit-inner-spin-button,
+.stitch-desktop:is(::-webkit-outer-spin-button),
+.stitch-desktop ::-webkit-outer-spin-button {
+  height: auto;
+}
+.stitch-desktop:is([type='search']),
+.stitch-desktop [type='search'] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+.stitch-desktop:is(::-webkit-search-decoration),
+.stitch-desktop ::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.stitch-desktop:is(::-webkit-file-upload-button),
+.stitch-desktop ::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+.stitch-desktop:is(summary),
+.stitch-desktop summary {
+  display: list-item;
+}
+.stitch-desktop:is(blockquote),
+.stitch-desktop blockquote,
+.stitch-desktop:is(dd),
+.stitch-desktop dd,
+.stitch-desktop:is(dl),
+.stitch-desktop dl,
+.stitch-desktop:is(figure),
+.stitch-desktop figure,
+.stitch-desktop:is(h1),
+.stitch-desktop h1,
+.stitch-desktop:is(h2),
+.stitch-desktop h2,
+.stitch-desktop:is(h3),
+.stitch-desktop h3,
+.stitch-desktop:is(h4),
+.stitch-desktop h4,
+.stitch-desktop:is(h5),
+.stitch-desktop h5,
+.stitch-desktop:is(h6),
+.stitch-desktop h6,
+.stitch-desktop:is(hr),
+.stitch-desktop hr,
+.stitch-desktop:is(p),
+.stitch-desktop p,
+.stitch-desktop:is(pre),
+.stitch-desktop pre {
+  margin: 0;
+}
+.stitch-desktop:is(fieldset),
+.stitch-desktop fieldset {
+  margin: 0;
+  padding: 0;
+}
+.stitch-desktop:is(legend),
+.stitch-desktop legend {
+  padding: 0;
+}
+.stitch-desktop:is(menu),
+.stitch-desktop menu,
+.stitch-desktop:is(ol),
+.stitch-desktop ol,
+.stitch-desktop:is(ul),
+.stitch-desktop ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.stitch-desktop:is(dialog),
+.stitch-desktop dialog {
+  padding: 0;
+}
+.stitch-desktop:is(textarea),
+.stitch-desktop textarea {
+  resize: vertical;
+}
+.stitch-desktop:is(input::placeholder),
+.stitch-desktop input::placeholder,
+.stitch-desktop:is(textarea::placeholder),
+.stitch-desktop textarea::placeholder {
+  opacity: 1;
+  color: #9ca3af;
+}
+.stitch-desktop:is([role='button']),
+.stitch-desktop [role='button'],
+.stitch-desktop:is(button),
+.stitch-desktop button {
+  cursor: pointer;
+}
+.stitch-desktop:is(:disabled),
+.stitch-desktop :disabled {
+  cursor: default;
+}
+.stitch-desktop:is(audio),
+.stitch-desktop audio,
+.stitch-desktop:is(canvas),
+.stitch-desktop canvas,
+.stitch-desktop:is(embed),
+.stitch-desktop embed,
+.stitch-desktop:is(iframe),
+.stitch-desktop iframe,
+.stitch-desktop:is(img),
+.stitch-desktop img,
+.stitch-desktop:is(object),
+.stitch-desktop object,
+.stitch-desktop:is(svg),
+.stitch-desktop svg,
+.stitch-desktop:is(video),
+.stitch-desktop video {
+  display: block;
+  vertical-align: middle;
+}
+.stitch-desktop:is(img),
+.stitch-desktop img,
+.stitch-desktop:is(video),
+.stitch-desktop video {
+  max-width: 100%;
+  height: auto;
+}
+.stitch-desktop:is([hidden]:where(:not([hidden='until-found']))),
+.stitch-desktop [hidden]:where(:not([hidden='until-found'])) {
+  display: none;
+}
+.stitch-desktop:is([type='text']),
+.stitch-desktop [type='text'],
+.stitch-desktop:is(input:where(:not([type]))),
+.stitch-desktop input:where(:not([type])),
+.stitch-desktop:is([type='email']),
+.stitch-desktop [type='email'],
+.stitch-desktop:is([type='url']),
+.stitch-desktop [type='url'],
+.stitch-desktop:is([type='password']),
+.stitch-desktop [type='password'],
+.stitch-desktop:is([type='number']),
+.stitch-desktop [type='number'],
+.stitch-desktop:is([type='date']),
+.stitch-desktop [type='date'],
+.stitch-desktop:is([type='datetime-local']),
+.stitch-desktop [type='datetime-local'],
+.stitch-desktop:is([type='month']),
+.stitch-desktop [type='month'],
+.stitch-desktop:is([type='search']),
+.stitch-desktop [type='search'],
+.stitch-desktop:is([type='tel']),
+.stitch-desktop [type='tel'],
+.stitch-desktop:is([type='time']),
+.stitch-desktop [type='time'],
+.stitch-desktop:is([type='week']),
+.stitch-desktop [type='week'],
+.stitch-desktop:is([multiple]),
+.stitch-desktop [multiple],
+.stitch-desktop:is(textarea),
+.stitch-desktop textarea,
+.stitch-desktop:is(select),
+.stitch-desktop select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border-color: #6b7280;
+  border-width: 1px;
+  border-radius: 0px;
+  padding-top: 0.5rem;
+  padding-right: 0.75rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  --stitch-tw-shadow: 0 0 #0000;
+}
+.stitch-desktop:is([type='text']:focus),
+.stitch-desktop [type='text']:focus,
+.stitch-desktop:is(input:where(:not([type])):focus),
+.stitch-desktop input:where(:not([type])):focus,
+.stitch-desktop:is([type='email']:focus),
+.stitch-desktop [type='email']:focus,
+.stitch-desktop:is([type='url']:focus),
+.stitch-desktop [type='url']:focus,
+.stitch-desktop:is([type='password']:focus),
+.stitch-desktop [type='password']:focus,
+.stitch-desktop:is([type='number']:focus),
+.stitch-desktop [type='number']:focus,
+.stitch-desktop:is([type='date']:focus),
+.stitch-desktop [type='date']:focus,
+.stitch-desktop:is([type='datetime-local']:focus),
+.stitch-desktop [type='datetime-local']:focus,
+.stitch-desktop:is([type='month']:focus),
+.stitch-desktop [type='month']:focus,
+.stitch-desktop:is([type='search']:focus),
+.stitch-desktop [type='search']:focus,
+.stitch-desktop:is([type='tel']:focus),
+.stitch-desktop [type='tel']:focus,
+.stitch-desktop:is([type='time']:focus),
+.stitch-desktop [type='time']:focus,
+.stitch-desktop:is([type='week']:focus),
+.stitch-desktop [type='week']:focus,
+.stitch-desktop:is([multiple]:focus),
+.stitch-desktop [multiple]:focus,
+.stitch-desktop:is(textarea:focus),
+.stitch-desktop textarea:focus,
+.stitch-desktop:is(select:focus),
+.stitch-desktop select:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --stitch-tw-ring-inset: var(--stitch-tw-empty, /*!*/ /*!*/);
+  --stitch-tw-ring-offset-width: 0px;
+  --stitch-tw-ring-offset-color: #fff;
+  --stitch-tw-ring-color: #2563eb;
+  --stitch-tw-ring-offset-shadow: var(--stitch-tw-ring-inset) 0 0 0
+    var(--stitch-tw-ring-offset-width) var(--stitch-tw-ring-offset-color);
+  --stitch-tw-ring-shadow: var(--stitch-tw-ring-inset) 0 0 0
+    calc(1px + var(--stitch-tw-ring-offset-width)) var(--stitch-tw-ring-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow), var(--stitch-tw-ring-shadow),
+    var(--stitch-tw-shadow);
+  border-color: #2563eb;
+}
+.stitch-desktop:is(input::placeholder),
+.stitch-desktop input::placeholder,
+.stitch-desktop:is(textarea::placeholder),
+.stitch-desktop textarea::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+.stitch-desktop:is(::-webkit-datetime-edit-fields-wrapper),
+.stitch-desktop ::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+.stitch-desktop:is(::-webkit-date-and-time-value),
+.stitch-desktop ::-webkit-date-and-time-value {
+  min-height: 1.5em;
+  text-align: inherit;
+}
+.stitch-desktop:is(::-webkit-datetime-edit),
+.stitch-desktop ::-webkit-datetime-edit {
+  display: inline-flex;
+}
+.stitch-desktop:is(::-webkit-datetime-edit),
+.stitch-desktop ::-webkit-datetime-edit,
+.stitch-desktop:is(::-webkit-datetime-edit-year-field),
+.stitch-desktop ::-webkit-datetime-edit-year-field,
+.stitch-desktop:is(::-webkit-datetime-edit-month-field),
+.stitch-desktop ::-webkit-datetime-edit-month-field,
+.stitch-desktop:is(::-webkit-datetime-edit-day-field),
+.stitch-desktop ::-webkit-datetime-edit-day-field,
+.stitch-desktop:is(::-webkit-datetime-edit-hour-field),
+.stitch-desktop ::-webkit-datetime-edit-hour-field,
+.stitch-desktop:is(::-webkit-datetime-edit-minute-field),
+.stitch-desktop ::-webkit-datetime-edit-minute-field,
+.stitch-desktop:is(::-webkit-datetime-edit-second-field),
+.stitch-desktop ::-webkit-datetime-edit-second-field,
+.stitch-desktop:is(::-webkit-datetime-edit-millisecond-field),
+.stitch-desktop ::-webkit-datetime-edit-millisecond-field,
+.stitch-desktop:is(::-webkit-datetime-edit-meridiem-field),
+.stitch-desktop ::-webkit-datetime-edit-meridiem-field {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.stitch-desktop:is(select),
+.stitch-desktop select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  print-color-adjust: exact;
+}
+.stitch-desktop:is([multiple]),
+.stitch-desktop [multiple],
+.stitch-desktop:is([size]:where(select:not([size='1']))),
+.stitch-desktop [size]:where(select:not([size='1'])) {
+  background-image: initial;
+  background-position: initial;
+  background-repeat: unset;
+  background-size: initial;
+  padding-right: 0.75rem;
+  print-color-adjust: unset;
+}
+.stitch-desktop:is([type='checkbox']),
+.stitch-desktop [type='checkbox'],
+.stitch-desktop:is([type='radio']),
+.stitch-desktop [type='radio'] {
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0;
+  print-color-adjust: exact;
+  display: inline-block;
+  vertical-align: middle;
+  background-origin: border-box;
+  -webkit-user-select: none;
+  user-select: none;
+  flex-shrink: 0;
+  height: 1rem;
+  width: 1rem;
+  color: #2563eb;
+  background-color: #fff;
+  border-color: #6b7280;
+  border-width: 1px;
+  --stitch-tw-shadow: 0 0 #0000;
+}
+.stitch-desktop:is([type='checkbox']),
+.stitch-desktop [type='checkbox'] {
+  border-radius: 0px;
+}
+.stitch-desktop:is([type='radio']),
+.stitch-desktop [type='radio'] {
+  border-radius: 100%;
+}
+.stitch-desktop:is([type='checkbox']:focus),
+.stitch-desktop [type='checkbox']:focus,
+.stitch-desktop:is([type='radio']:focus),
+.stitch-desktop [type='radio']:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --stitch-tw-ring-inset: var(--stitch-tw-empty, /*!*/ /*!*/);
+  --stitch-tw-ring-offset-width: 2px;
+  --stitch-tw-ring-offset-color: #fff;
+  --stitch-tw-ring-color: #2563eb;
+  --stitch-tw-ring-offset-shadow: var(--stitch-tw-ring-inset) 0 0 0
+    var(--stitch-tw-ring-offset-width) var(--stitch-tw-ring-offset-color);
+  --stitch-tw-ring-shadow: var(--stitch-tw-ring-inset) 0 0 0
+    calc(2px + var(--stitch-tw-ring-offset-width)) var(--stitch-tw-ring-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow), var(--stitch-tw-ring-shadow),
+    var(--stitch-tw-shadow);
+}
+.stitch-desktop:is([type='checkbox']:checked),
+.stitch-desktop [type='checkbox']:checked,
+.stitch-desktop:is([type='radio']:checked),
+.stitch-desktop [type='radio']:checked {
+  border-color: transparent;
+  background-color: currentColor;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.stitch-desktop:is([type='checkbox']:checked),
+.stitch-desktop [type='checkbox']:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}
+@media (forced-colors: active) {
+  .stitch-desktop:is([type='checkbox']:checked),
+  .stitch-desktop [type='checkbox']:checked {
+    -webkit-appearance: auto;
+    appearance: auto;
+  }
+}
+.stitch-desktop:is([type='radio']:checked),
+.stitch-desktop [type='radio']:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+}
+@media (forced-colors: active) {
+  .stitch-desktop:is([type='radio']:checked),
+  .stitch-desktop [type='radio']:checked {
+    -webkit-appearance: auto;
+    appearance: auto;
+  }
+}
+.stitch-desktop:is([type='checkbox']:checked:hover),
+.stitch-desktop [type='checkbox']:checked:hover,
+.stitch-desktop:is([type='checkbox']:checked:focus),
+.stitch-desktop [type='checkbox']:checked:focus,
+.stitch-desktop:is([type='radio']:checked:hover),
+.stitch-desktop [type='radio']:checked:hover,
+.stitch-desktop:is([type='radio']:checked:focus),
+.stitch-desktop [type='radio']:checked:focus {
+  border-color: transparent;
+  background-color: currentColor;
+}
+.stitch-desktop:is([type='checkbox']:indeterminate),
+.stitch-desktop [type='checkbox']:indeterminate {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e");
+  border-color: transparent;
+  background-color: currentColor;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+@media (forced-colors: active) {
+  .stitch-desktop:is([type='checkbox']:indeterminate),
+  .stitch-desktop [type='checkbox']:indeterminate {
+    -webkit-appearance: auto;
+    appearance: auto;
+  }
+}
+.stitch-desktop:is([type='checkbox']:indeterminate:hover),
+.stitch-desktop [type='checkbox']:indeterminate:hover,
+.stitch-desktop:is([type='checkbox']:indeterminate:focus),
+.stitch-desktop [type='checkbox']:indeterminate:focus {
+  border-color: transparent;
+  background-color: currentColor;
+}
+.stitch-desktop:is([type='file']),
+.stitch-desktop [type='file'] {
+  background: unset;
+  border-color: inherit;
+  border-width: 0;
+  border-radius: 0;
+  padding: 0;
+  font-size: unset;
+  line-height: inherit;
+}
+.stitch-desktop:is([type='file']:focus),
+.stitch-desktop [type='file']:focus {
+  outline: 1px solid ButtonText;
+  outline: 1px auto -webkit-focus-ring-color;
+}
+.stitch-desktop:is(.pointer-events-none),
+.stitch-desktop .pointer-events-none {
+  pointer-events: none;
+}
+.stitch-desktop:is(.pointer-events-auto),
+.stitch-desktop .pointer-events-auto {
+  pointer-events: auto;
+}
+.stitch-desktop:is(.fixed),
+.stitch-desktop .fixed {
+  position: fixed;
+}
+.stitch-desktop:is(.absolute),
+.stitch-desktop .absolute {
+  position: absolute;
+}
+.stitch-desktop:is(.relative),
+.stitch-desktop .relative {
+  position: relative;
+}
+.stitch-desktop:is(.sticky),
+.stitch-desktop .sticky {
+  position: sticky;
+}
+.stitch-desktop:is(.inset-0),
+.stitch-desktop .inset-0 {
+  inset: 0px;
+}
+.stitch-desktop:is(.inset-y-0),
+.stitch-desktop .inset-y-0 {
+  top: 0px;
+  bottom: 0px;
+}
+.stitch-desktop:is(.-bottom-0\.5),
+.stitch-desktop .-bottom-0\.5 {
+  bottom: -0.125rem;
+}
+.stitch-desktop:is(.-right-0\.5),
+.stitch-desktop .-right-0\.5 {
+  right: -0.125rem;
+}
+.stitch-desktop:is(.right-1\.5),
+.stitch-desktop .right-1\.5 {
+  right: 0.375rem;
+}
+.stitch-desktop:is(.top-0),
+.stitch-desktop .top-0 {
+  top: 0px;
+}
+.stitch-desktop:is(.top-1\.5),
+.stitch-desktop .top-1\.5 {
+  top: 0.375rem;
+}
+.stitch-desktop:is(.-right-8),
+.stitch-desktop .-right-8 {
+  right: -2rem;
+}
+.stitch-desktop:is(.-top-8),
+.stitch-desktop .-top-8 {
+  top: -2rem;
+}
+.stitch-desktop:is(.bottom-0),
+.stitch-desktop .bottom-0 {
+  bottom: 0px;
+}
+.stitch-desktop:is(.bottom-2\.5),
+.stitch-desktop .bottom-2\.5 {
+  bottom: 0.625rem;
+}
+.stitch-desktop:is(.bottom-6),
+.stitch-desktop .bottom-6 {
+  bottom: 1.5rem;
+}
+.stitch-desktop:is(.bottom-full),
+.stitch-desktop .bottom-full {
+  bottom: 100%;
+}
+.stitch-desktop:is(.left-0),
+.stitch-desktop .left-0 {
+  left: 0px;
+}
+.stitch-desktop:is(.left-3),
+.stitch-desktop .left-3 {
+  left: 0.75rem;
+}
+.stitch-desktop:is(.left-4),
+.stitch-desktop .left-4 {
+  left: 1rem;
+}
+.stitch-desktop:is(.right-0),
+.stitch-desktop .right-0 {
+  right: 0px;
+}
+.stitch-desktop:is(.right-1),
+.stitch-desktop .right-1 {
+  right: 0.25rem;
+}
+.stitch-desktop:is(.right-2),
+.stitch-desktop .right-2 {
+  right: 0.5rem;
+}
+.stitch-desktop:is(.right-2\.5),
+.stitch-desktop .right-2\.5 {
+  right: 0.625rem;
+}
+.stitch-desktop:is(.right-3),
+.stitch-desktop .right-3 {
+  right: 0.75rem;
+}
+.stitch-desktop:is(.right-4),
+.stitch-desktop .right-4 {
+  right: 1rem;
+}
+.stitch-desktop:is(.top-1),
+.stitch-desktop .top-1 {
+  top: 0.25rem;
+}
+.stitch-desktop:is(.top-2\.5),
+.stitch-desktop .top-2\.5 {
+  top: 0.625rem;
+}
+.stitch-desktop:is(.right-14),
+.stitch-desktop .right-14 {
+  right: 3.5rem;
+}
+.stitch-desktop:is(.right-6),
+.stitch-desktop .right-6 {
+  right: 1.5rem;
+}
+.stitch-desktop:is(.z-50),
+.stitch-desktop .z-50 {
+  z-index: 50;
+}
+.stitch-desktop:is(.z-10),
+.stitch-desktop .z-10 {
+  z-index: 10;
+}
+.stitch-desktop:is(.z-20),
+.stitch-desktop .z-20 {
+  z-index: 20;
+}
+.stitch-desktop:is(.z-40),
+.stitch-desktop .z-40 {
+  z-index: 40;
+}
+.stitch-desktop:is(.m-0),
+.stitch-desktop .m-0 {
+  margin: 0px;
+}
+.stitch-desktop:is(.mx-auto),
+.stitch-desktop .mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.stitch-desktop:is(.my-2),
+.stitch-desktop .my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.stitch-desktop:is(.ml-1),
+.stitch-desktop .ml-1 {
+  margin-left: 0.25rem;
+}
+.stitch-desktop:is(.mb-2),
+.stitch-desktop .mb-2 {
+  margin-bottom: 0.5rem;
+}
+.stitch-desktop:is(.mt-0\.5),
+.stitch-desktop .mt-0\.5 {
+  margin-top: 0.125rem;
+}
+.stitch-desktop:is(.block),
+.stitch-desktop .block {
+  display: block;
+}
+.stitch-desktop:is(.inline-block),
+.stitch-desktop .inline-block {
+  display: inline-block;
+}
+.stitch-desktop:is(.flex),
+.stitch-desktop .flex {
+  display: flex;
+}
+.stitch-desktop:is(.inline-flex),
+.stitch-desktop .inline-flex {
+  display: inline-flex;
+}
+.stitch-desktop:is(.grid),
+.stitch-desktop .grid {
+  display: grid;
+}
+.stitch-desktop:is(.hidden),
+.stitch-desktop .hidden {
+  display: none;
+}
+.stitch-desktop:is(.aspect-\[16\/9\]),
+.stitch-desktop .aspect-\[16\/9\] {
+  aspect-ratio: 16/9;
+}
+.stitch-desktop:is(.h-screen),
+.stitch-desktop .h-screen {
+  height: 100vh;
+}
+.stitch-desktop:is(.h-4),
+.stitch-desktop .h-4 {
+  height: 1rem;
+}
+.stitch-desktop:is(.h-9),
+.stitch-desktop .h-9 {
+  height: 2.25rem;
+}
+.stitch-desktop:is(.h-full),
+.stitch-desktop .h-full {
+  height: 100%;
+}
+.stitch-desktop:is(.h-7),
+.stitch-desktop .h-7 {
+  height: 1.75rem;
+}
+.stitch-desktop:is(.h-1\.5),
+.stitch-desktop .h-1\.5 {
+  height: 0.375rem;
+}
+.stitch-desktop:is(.h-2\.5),
+.stitch-desktop .h-2\.5 {
+  height: 0.625rem;
+}
+.stitch-desktop:is(.h-3\.5),
+.stitch-desktop .h-3\.5 {
+  height: 0.875rem;
+}
+.stitch-desktop:is(.h-8),
+.stitch-desktop .h-8 {
+  height: 2rem;
+}
+.stitch-desktop:is(.h-1),
+.stitch-desktop .h-1 {
+  height: 0.25rem;
+}
+.stitch-desktop:is(.h-11),
+.stitch-desktop .h-11 {
+  height: 2.75rem;
+}
+.stitch-desktop:is(.h-28),
+.stitch-desktop .h-28 {
+  height: 7rem;
+}
+.stitch-desktop:is(.h-3),
+.stitch-desktop .h-3 {
+  height: 0.75rem;
+}
+.stitch-desktop:is(.h-44),
+.stitch-desktop .h-44 {
+  height: 11rem;
+}
+.stitch-desktop:is(.h-5),
+.stitch-desktop .h-5 {
+  height: 1.25rem;
+}
+.stitch-desktop:is(.h-64),
+.stitch-desktop .h-64 {
+  height: 16rem;
+}
+.stitch-desktop:is(.max-h-none),
+.stitch-desktop .max-h-none {
+  max-height: none;
+}
+.stitch-desktop:is(.min-h-full),
+.stitch-desktop .min-h-full {
+  min-height: 100%;
+}
+.stitch-desktop:is(.w-4),
+.stitch-desktop .w-4 {
+  width: 1rem;
+}
+.stitch-desktop:is(.w-full),
+.stitch-desktop .w-full {
+  width: 100%;
+}
+.stitch-desktop:is(.w-20),
+.stitch-desktop .w-20 {
+  width: 5rem;
+}
+.stitch-desktop:is(.w-9),
+.stitch-desktop .w-9 {
+  width: 2.25rem;
+}
+.stitch-desktop:is(.w-7),
+.stitch-desktop .w-7 {
+  width: 1.75rem;
+}
+.stitch-desktop:is(.w-1\.5),
+.stitch-desktop .w-1\.5 {
+  width: 0.375rem;
+}
+.stitch-desktop:is(.w-2\.5),
+.stitch-desktop .w-2\.5 {
+  width: 0.625rem;
+}
+.stitch-desktop:is(.w-3\.5),
+.stitch-desktop .w-3\.5 {
+  width: 0.875rem;
+}
+.stitch-desktop:is(.w-8),
+.stitch-desktop .w-8 {
+  width: 2rem;
+}
+.stitch-desktop:is(.w-0),
+.stitch-desktop .w-0 {
+  width: 0px;
+}
+.stitch-desktop:is(.w-10),
+.stitch-desktop .w-10 {
+  width: 2.5rem;
+}
+.stitch-desktop:is(.w-12),
+.stitch-desktop .w-12 {
+  width: 3rem;
+}
+.stitch-desktop:is(.w-28),
+.stitch-desktop .w-28 {
+  width: 7rem;
+}
+.stitch-desktop:is(.w-3),
+.stitch-desktop .w-3 {
+  width: 0.75rem;
+}
+.stitch-desktop:is(.w-44),
+.stitch-desktop .w-44 {
+  width: 11rem;
+}
+.stitch-desktop:is(.w-5),
+.stitch-desktop .w-5 {
+  width: 1.25rem;
+}
+.stitch-desktop:is(.w-64),
+.stitch-desktop .w-64 {
+  width: 16rem;
+}
+.stitch-desktop:is(.w-\[280px\]),
+.stitch-desktop .w-\[280px\] {
+  width: 280px;
+}
+.stitch-desktop:is(.w-11),
+.stitch-desktop .w-11 {
+  width: 2.75rem;
+}
+.stitch-desktop:is(.min-w-0),
+.stitch-desktop .min-w-0 {
+  min-width: 0px;
+}
+.stitch-desktop:is(.max-w-3xl),
+.stitch-desktop .max-w-3xl {
+  max-width: 48rem;
+}
+.stitch-desktop:is(.max-w-6xl),
+.stitch-desktop .max-w-6xl {
+  max-width: 72rem;
+}
+.stitch-desktop:is(.max-w-xl),
+.stitch-desktop .max-w-xl {
+  max-width: 36rem;
+}
+.stitch-desktop:is(.max-w-2xl),
+.stitch-desktop .max-w-2xl {
+  max-width: 42rem;
+}
+.stitch-desktop:is(.max-w-\[90px\]),
+.stitch-desktop .max-w-\[90px\] {
+  max-width: 90px;
+}
+.stitch-desktop:is(.max-w-lg),
+.stitch-desktop .max-w-lg {
+  max-width: 32rem;
+}
+.stitch-desktop:is(.max-w-none),
+.stitch-desktop .max-w-none {
+  max-width: none;
+}
+.stitch-desktop:is(.flex-1),
+.stitch-desktop .flex-1 {
+  flex: 1 1 0%;
+}
+.stitch-desktop:is(.flex-shrink-0),
+.stitch-desktop .flex-shrink-0 {
+  flex-shrink: 0;
+}
+.stitch-desktop:is(.translate-x-2),
+.stitch-desktop .translate-x-2 {
+  --stitch-tw-translate-x: 0.5rem;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.scale-75),
+.stitch-desktop .scale-75 {
+  --stitch-tw-scale-x: 0.75;
+  --stitch-tw-scale-y: 0.75;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.scale-95),
+.stitch-desktop .scale-95 {
+  --stitch-tw-scale-x: 0.95;
+  --stitch-tw-scale-y: 0.95;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+.stitch-desktop:is(.animate-pulse),
+.stitch-desktop .animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.stitch-desktop:is(.cursor-pointer),
+.stitch-desktop .cursor-pointer {
+  cursor: pointer;
+}
+.stitch-desktop:is(.select-none),
+.stitch-desktop .select-none {
+  -webkit-user-select: none;
+  user-select: none;
+}
+.stitch-desktop:is(.resize-none),
+.stitch-desktop .resize-none {
+  resize: none;
+}
+.stitch-desktop:is(.grid-cols-1),
+.stitch-desktop .grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.stitch-desktop:is(.grid-cols-3),
+.stitch-desktop .grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.stitch-desktop:is(.flex-col),
+.stitch-desktop .flex-col {
+  flex-direction: column;
+}
+.stitch-desktop:is(.flex-wrap),
+.stitch-desktop .flex-wrap {
+  flex-wrap: wrap;
+}
+.stitch-desktop:is(.items-start),
+.stitch-desktop .items-start {
+  align-items: flex-start;
+}
+.stitch-desktop:is(.items-center),
+.stitch-desktop .items-center {
+  align-items: center;
+}
+.stitch-desktop:is(.items-stretch),
+.stitch-desktop .items-stretch {
+  align-items: stretch;
+}
+.stitch-desktop:is(.justify-start),
+.stitch-desktop .justify-start {
+  justify-content: flex-start;
+}
+.stitch-desktop:is(.justify-end),
+.stitch-desktop .justify-end {
+  justify-content: flex-end;
+}
+.stitch-desktop:is(.justify-center),
+.stitch-desktop .justify-center {
+  justify-content: center;
+}
+.stitch-desktop:is(.justify-between),
+.stitch-desktop .justify-between {
+  justify-content: space-between;
+}
+.stitch-desktop:is(.gap-3),
+.stitch-desktop .gap-3 {
+  gap: 0.75rem;
+}
+.stitch-desktop:is(.gap-1),
+.stitch-desktop .gap-1 {
+  gap: 0.25rem;
+}
+.stitch-desktop:is(.gap-1\.5),
+.stitch-desktop .gap-1\.5 {
+  gap: 0.375rem;
+}
+.stitch-desktop:is(.gap-2),
+.stitch-desktop .gap-2 {
+  gap: 0.5rem;
+}
+.stitch-desktop:is(.gap-2\.5),
+.stitch-desktop .gap-2\.5 {
+  gap: 0.625rem;
+}
+.stitch-desktop:is(.gap-0\.5),
+.stitch-desktop .gap-0\.5 {
+  gap: 0.125rem;
+}
+.stitch-desktop:is(.gap-3\.5),
+.stitch-desktop .gap-3\.5 {
+  gap: 0.875rem;
+}
+.stitch-desktop:is(.gap-4),
+.stitch-desktop .gap-4 {
+  gap: 1rem;
+}
+.stitch-desktop:is(.gap-6),
+.stitch-desktop .gap-6 {
+  gap: 1.5rem;
+}
+.stitch-desktop:is(.space-x-2\.5 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-x-2\.5 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-x-reverse: 0;
+  margin-right: calc(0.625rem * var(--stitch-tw-space-x-reverse));
+  margin-left: calc(0.625rem * calc(1 - var(--stitch-tw-space-x-reverse)));
+}
+.stitch-desktop:is(.space-y-6 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--stitch-tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--stitch-tw-space-y-reverse));
+}
+.stitch-desktop:is(.space-x-1 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-x-1 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-x-reverse: 0;
+  margin-right: calc(0.25rem * var(--stitch-tw-space-x-reverse));
+  margin-left: calc(0.25rem * calc(1 - var(--stitch-tw-space-x-reverse)));
+}
+.stitch-desktop:is(.space-x-2 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * var(--stitch-tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--stitch-tw-space-x-reverse)));
+}
+.stitch-desktop:is(.space-x-3 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-x-reverse: 0;
+  margin-right: calc(0.75rem * var(--stitch-tw-space-x-reverse));
+  margin-left: calc(0.75rem * calc(1 - var(--stitch-tw-space-x-reverse)));
+}
+.stitch-desktop:is(.space-y-1\.5 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-y-1\.5 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-y-reverse: 0;
+  margin-top: calc(0.375rem * calc(1 - var(--stitch-tw-space-y-reverse)));
+  margin-bottom: calc(0.375rem * var(--stitch-tw-space-y-reverse));
+}
+.stitch-desktop:is(.space-y-2 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--stitch-tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--stitch-tw-space-y-reverse));
+}
+.stitch-desktop:is(.space-y-9 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-y-9 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-y-reverse: 0;
+  margin-top: calc(2.25rem * calc(1 - var(--stitch-tw-space-y-reverse)));
+  margin-bottom: calc(2.25rem * var(--stitch-tw-space-y-reverse));
+}
+.stitch-desktop:is(.space-x-1\.5 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-x-1\.5 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-x-reverse: 0;
+  margin-right: calc(0.375rem * var(--stitch-tw-space-x-reverse));
+  margin-left: calc(0.375rem * calc(1 - var(--stitch-tw-space-x-reverse)));
+}
+.stitch-desktop:is(.space-y-1 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--stitch-tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--stitch-tw-space-y-reverse));
+}
+.stitch-desktop:is(.space-y-4 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--stitch-tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--stitch-tw-space-y-reverse));
+}
+.stitch-desktop:is(.space-y-3 > :not([hidden]) ~ :not([hidden])),
+.stitch-desktop .space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --stitch-tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--stitch-tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--stitch-tw-space-y-reverse));
+}
+.stitch-desktop:is(.self-start),
+.stitch-desktop .self-start {
+  align-self: flex-start;
+}
+.stitch-desktop:is(.overflow-hidden),
+.stitch-desktop .overflow-hidden {
+  overflow: hidden;
+}
+.stitch-desktop:is(.overflow-y-auto),
+.stitch-desktop .overflow-y-auto {
+  overflow-y: auto;
+}
+.stitch-desktop:is(.truncate),
+.stitch-desktop .truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.stitch-desktop:is(.whitespace-nowrap),
+.stitch-desktop .whitespace-nowrap {
+  white-space: nowrap;
+}
+.stitch-desktop:is(.rounded-full),
+.stitch-desktop .rounded-full {
+  border-radius: 9999px;
+}
+.stitch-desktop:is(.rounded-md),
+.stitch-desktop .rounded-md {
+  border-radius: 0.375rem;
+}
+.stitch-desktop:is(.rounded-lg),
+.stitch-desktop .rounded-lg {
+  border-radius: 0.5rem;
+}
+.stitch-desktop:is(.rounded-2xl),
+.stitch-desktop .rounded-2xl {
+  border-radius: 1rem;
+}
+.stitch-desktop:is(.rounded-xl),
+.stitch-desktop .rounded-xl {
+  border-radius: 0.75rem;
+}
+.stitch-desktop:is(.rounded),
+.stitch-desktop .rounded {
+  border-radius: 0.25rem;
+}
+.stitch-desktop:is(.rounded-sm),
+.stitch-desktop .rounded-sm {
+  border-radius: 0.125rem;
+}
+.stitch-desktop:is(.border),
+.stitch-desktop .border {
+  border-width: 1px;
+}
+.stitch-desktop:is(.border-2),
+.stitch-desktop .border-2 {
+  border-width: 2px;
+}
+.stitch-desktop:is(.border-b),
+.stitch-desktop .border-b {
+  border-bottom-width: 1px;
+}
+.stitch-desktop:is(.border-r),
+.stitch-desktop .border-r {
+  border-right-width: 1px;
+}
+.stitch-desktop:is(.border-t),
+.stitch-desktop .border-t {
+  border-top-width: 1px;
+}
+.stitch-desktop:is(.border-dashed),
+.stitch-desktop .border-dashed {
+  border-style: dashed;
+}
+.stitch-desktop:is(.border-none),
+.stitch-desktop .border-none {
+  border-style: none;
+}
+.stitch-desktop:is(.border-white\/10),
+.stitch-desktop .border-white\/10 {
+  border-color: rgb(255 255 255 / 0.1);
+}
+.stitch-desktop:is(.border-neutral-900),
+.stitch-desktop .border-neutral-900 {
+  --stitch-tw-border-opacity: 1;
+  border-color: rgb(23 23 23 / var(--stitch-tw-border-opacity, 1));
+}
+.stitch-desktop:is(.border-white\/15),
+.stitch-desktop .border-white\/15 {
+  border-color: rgb(255 255 255 / 0.15);
+}
+.stitch-desktop:is(.border-white\/25),
+.stitch-desktop .border-white\/25 {
+  border-color: rgb(255 255 255 / 0.25);
+}
+.stitch-desktop:is(.border-white\/5),
+.stitch-desktop .border-white\/5 {
+  border-color: rgb(255 255 255 / 0.05);
+}
+.stitch-desktop:is(.border-blue-300\/60),
+.stitch-desktop .border-blue-300\/60 {
+  border-color: rgb(147 197 253 / 0.6);
+}
+.stitch-desktop:is(.border-blue-500\/30),
+.stitch-desktop .border-blue-500\/30 {
+  border-color: rgb(59 130 246 / 0.3);
+}
+.stitch-desktop:is(.border-cyan-300\/70),
+.stitch-desktop .border-cyan-300\/70 {
+  border-color: rgb(103 232 249 / 0.7);
+}
+.stitch-desktop:is(.border-cyan-400\/30),
+.stitch-desktop .border-cyan-400\/30 {
+  border-color: rgb(34 211 238 / 0.3);
+}
+.stitch-desktop:is(.border-cyan-500\/30),
+.stitch-desktop .border-cyan-500\/30 {
+  border-color: rgb(6 182 212 / 0.3);
+}
+.stitch-desktop:is(.border-neutral-400),
+.stitch-desktop .border-neutral-400 {
+  --stitch-tw-border-opacity: 1;
+  border-color: rgb(163 163 163 / var(--stitch-tw-border-opacity, 1));
+}
+.stitch-desktop:is(.border-purple-500\/30),
+.stitch-desktop .border-purple-500\/30 {
+  border-color: rgb(168 85 247 / 0.3);
+}
+.stitch-desktop:is(.border-white\/20),
+.stitch-desktop .border-white\/20 {
+  border-color: rgb(255 255 255 / 0.2);
+}
+.stitch-desktop:is(.border-white\/30),
+.stitch-desktop .border-white\/30 {
+  border-color: rgb(255 255 255 / 0.3);
+}
+.stitch-desktop:is(.border-white\/\[0\.08\]),
+.stitch-desktop .border-white\/\[0\.08\] {
+  border-color: rgb(255 255 255 / 0.08);
+}
+.stitch-desktop:is(.bg-white\/10),
+.stitch-desktop .bg-white\/10 {
+  background-color: rgb(255 255 255 / 0.1);
+}
+.stitch-desktop:is(.bg-\[\#0e0f14\]\/95),
+.stitch-desktop .bg-\[\#0e0f14\]\/95 {
+  background-color: rgb(14 15 20 / 0.95);
+}
+.stitch-desktop:is(.bg-cyan-400),
+.stitch-desktop .bg-cyan-400 {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(34 211 238 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.bg-emerald-400),
+.stitch-desktop .bg-emerald-400 {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(52 211 153 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.bg-emerald-400\/90),
+.stitch-desktop .bg-emerald-400\/90 {
+  background-color: rgb(52 211 153 / 0.9);
+}
+.stitch-desktop:is(.bg-transparent),
+.stitch-desktop .bg-transparent {
+  background-color: transparent;
+}
+.stitch-desktop:is(.bg-white),
+.stitch-desktop .bg-white {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.bg-white\/\[0\.03\]),
+.stitch-desktop .bg-white\/\[0\.03\] {
+  background-color: rgb(255 255 255 / 0.03);
+}
+.stitch-desktop:is(.bg-white\/\[0\.05\]),
+.stitch-desktop .bg-white\/\[0\.05\] {
+  background-color: rgb(255 255 255 / 0.05);
+}
+.stitch-desktop:is(.bg-white\/\[0\.08\]),
+.stitch-desktop .bg-white\/\[0\.08\] {
+  background-color: rgb(255 255 255 / 0.08);
+}
+.stitch-desktop:is(.bg-blue-300),
+.stitch-desktop .bg-blue-300 {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(147 197 253 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.bg-blue-500\/20),
+.stitch-desktop .bg-blue-500\/20 {
+  background-color: rgb(59 130 246 / 0.2);
+}
+.stitch-desktop:is(.bg-cyan-200),
+.stitch-desktop .bg-cyan-200 {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(165 243 252 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.bg-cyan-500\/20),
+.stitch-desktop .bg-cyan-500\/20 {
+  background-color: rgb(6 182 212 / 0.2);
+}
+.stitch-desktop:is(.bg-neutral-300),
+.stitch-desktop .bg-neutral-300 {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(212 212 212 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.bg-neutral-900),
+.stitch-desktop .bg-neutral-900 {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(23 23 23 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.bg-purple-500\/20),
+.stitch-desktop .bg-purple-500\/20 {
+  background-color: rgb(168 85 247 / 0.2);
+}
+.stitch-desktop:is(.bg-white\/15),
+.stitch-desktop .bg-white\/15 {
+  background-color: rgb(255 255 255 / 0.15);
+}
+.stitch-desktop:is(.bg-gradient-to-tr),
+.stitch-desktop .bg-gradient-to-tr {
+  background-image: linear-gradient(
+    to top right,
+    var(--stitch-tw-gradient-stops)
+  );
+}
+.stitch-desktop:is(.bg-gradient-to-br),
+.stitch-desktop .bg-gradient-to-br {
+  background-image: linear-gradient(
+    to bottom right,
+    var(--stitch-tw-gradient-stops)
+  );
+}
+.stitch-desktop:is(.bg-gradient-to-l),
+.stitch-desktop .bg-gradient-to-l {
+  background-image: linear-gradient(to left, var(--stitch-tw-gradient-stops));
+}
+.stitch-desktop:is(.bg-gradient-to-r),
+.stitch-desktop .bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--stitch-tw-gradient-stops));
+}
+.stitch-desktop:is(.from-purple-500\/30),
+.stitch-desktop .from-purple-500\/30 {
+  --stitch-tw-gradient-from: rgb(168 85 247 / 0.3)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(168 85 247 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-\[\#0b0c10\]),
+.stitch-desktop .from-\[\#0b0c10\] {
+  --stitch-tw-gradient-from: #0b0c10 var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(11 12 16 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-amber-500\/20),
+.stitch-desktop .from-amber-500\/20 {
+  --stitch-tw-gradient-from: rgb(245 158 11 / 0.2)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(245 158 11 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-blue-500\/20),
+.stitch-desktop .from-blue-500\/20 {
+  --stitch-tw-gradient-from: rgb(59 130 246 / 0.2)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(59 130 246 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-cyan-400\/40),
+.stitch-desktop .from-cyan-400\/40 {
+  --stitch-tw-gradient-from: rgb(34 211 238 / 0.4)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(34 211 238 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-cyan-500\/20),
+.stitch-desktop .from-cyan-500\/20 {
+  --stitch-tw-gradient-from: rgb(6 182 212 / 0.2)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(6 182 212 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-emerald-500\/20),
+.stitch-desktop .from-emerald-500\/20 {
+  --stitch-tw-gradient-from: rgb(16 185 129 / 0.2)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(16 185 129 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-indigo-500\/20),
+.stitch-desktop .from-indigo-500\/20 {
+  --stitch-tw-gradient-from: rgb(99 102 241 / 0.2)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(99 102 241 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-indigo-500\/25),
+.stitch-desktop .from-indigo-500\/25 {
+  --stitch-tw-gradient-from: rgb(99 102 241 / 0.25)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(99 102 241 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-pink-400\/40),
+.stitch-desktop .from-pink-400\/40 {
+  --stitch-tw-gradient-from: rgb(244 114 182 / 0.4)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(244 114 182 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-purple-500\/20),
+.stitch-desktop .from-purple-500\/20 {
+  --stitch-tw-gradient-from: rgb(168 85 247 / 0.2)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(168 85 247 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-purple-500\/40),
+.stitch-desktop .from-purple-500\/40 {
+  --stitch-tw-gradient-from: rgb(168 85 247 / 0.4)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(168 85 247 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-transparent),
+.stitch-desktop .from-transparent {
+  --stitch-tw-gradient-from: transparent var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(0 0 0 / 0) var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.from-cyan-400\/20),
+.stitch-desktop .from-cyan-400\/20 {
+  --stitch-tw-gradient-from: rgb(34 211 238 / 0.2)
+    var(--stitch-tw-gradient-from-position);
+  --stitch-tw-gradient-to: rgb(34 211 238 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from), var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.via-indigo-600\/10),
+.stitch-desktop .via-indigo-600\/10 {
+  --stitch-tw-gradient-to: rgb(79 70 229 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from),
+    rgb(79 70 229 / 0.1) var(--stitch-tw-gradient-via-position),
+    var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.via-orange-600\/10),
+.stitch-desktop .via-orange-600\/10 {
+  --stitch-tw-gradient-to: rgb(234 88 12 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from),
+    rgb(234 88 12 / 0.1) var(--stitch-tw-gradient-via-position),
+    var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.via-purple-500\/20),
+.stitch-desktop .via-purple-500\/20 {
+  --stitch-tw-gradient-to: rgb(168 85 247 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from),
+    rgb(168 85 247 / 0.2) var(--stitch-tw-gradient-via-position),
+    var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.via-sky-600\/10),
+.stitch-desktop .via-sky-600\/10 {
+  --stitch-tw-gradient-to: rgb(2 132 199 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from),
+    rgb(2 132 199 / 0.1) var(--stitch-tw-gradient-via-position),
+    var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.via-teal-600\/10),
+.stitch-desktop .via-teal-600\/10 {
+  --stitch-tw-gradient-to: rgb(13 148 136 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from),
+    rgb(13 148 136 / 0.1) var(--stitch-tw-gradient-via-position),
+    var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.via-violet-600\/10),
+.stitch-desktop .via-violet-600\/10 {
+  --stitch-tw-gradient-to: rgb(124 58 237 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from),
+    rgb(124 58 237 / 0.1) var(--stitch-tw-gradient-via-position),
+    var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.via-white\/\[0\.06\]),
+.stitch-desktop .via-white\/\[0\.06\] {
+  --stitch-tw-gradient-to: rgb(255 255 255 / 0)
+    var(--stitch-tw-gradient-to-position);
+  --stitch-tw-gradient-stops:
+    var(--stitch-tw-gradient-from),
+    rgb(255 255 255 / 0.06) var(--stitch-tw-gradient-via-position),
+    var(--stitch-tw-gradient-to);
+}
+.stitch-desktop:is(.to-cyan-500\/30),
+.stitch-desktop .to-cyan-500\/30 {
+  --stitch-tw-gradient-to: rgb(6 182 212 / 0.3)
+    var(--stitch-tw-gradient-to-position);
+}
+.stitch-desktop:is(.to-blue-500\/40),
+.stitch-desktop .to-blue-500\/40 {
+  --stitch-tw-gradient-to: rgb(59 130 246 / 0.4)
+    var(--stitch-tw-gradient-to-position);
+}
+.stitch-desktop:is(.to-cyan-400\/15),
+.stitch-desktop .to-cyan-400\/15 {
+  --stitch-tw-gradient-to: rgb(34 211 238 / 0.15)
+    var(--stitch-tw-gradient-to-position);
+}
+.stitch-desktop:is(.to-cyan-400\/40),
+.stitch-desktop .to-cyan-400\/40 {
+  --stitch-tw-gradient-to: rgb(34 211 238 / 0.4)
+    var(--stitch-tw-gradient-to-position);
+}
+.stitch-desktop:is(.to-pink-500\/40),
+.stitch-desktop .to-pink-500\/40 {
+  --stitch-tw-gradient-to: rgb(236 72 153 / 0.4)
+    var(--stitch-tw-gradient-to-position);
+}
+.stitch-desktop:is(.to-purple-500\/40),
+.stitch-desktop .to-purple-500\/40 {
+  --stitch-tw-gradient-to: rgb(168 85 247 / 0.4)
+    var(--stitch-tw-gradient-to-position);
+}
+.stitch-desktop:is(.to-transparent),
+.stitch-desktop .to-transparent {
+  --stitch-tw-gradient-to: transparent var(--stitch-tw-gradient-to-position);
+}
+.stitch-desktop:is(.bg-contain),
+.stitch-desktop .bg-contain {
+  background-size: contain;
+}
+.stitch-desktop:is(.bg-cover),
+.stitch-desktop .bg-cover {
+  background-size: cover;
+}
+.stitch-desktop:is(.bg-center),
+.stitch-desktop .bg-center {
+  background-position: center;
+}
+.stitch-desktop:is(.bg-no-repeat),
+.stitch-desktop .bg-no-repeat {
+  background-repeat: no-repeat;
+}
+.stitch-desktop:is(.object-contain),
+.stitch-desktop .object-contain {
+  object-fit: contain;
+}
+.stitch-desktop:is(.p-1),
+.stitch-desktop .p-1 {
+  padding: 0.25rem;
+}
+.stitch-desktop:is(.p-0),
+.stitch-desktop .p-0 {
+  padding: 0px;
+}
+.stitch-desktop:is(.p-2),
+.stitch-desktop .p-2 {
+  padding: 0.5rem;
+}
+.stitch-desktop:is(.p-3),
+.stitch-desktop .p-3 {
+  padding: 0.75rem;
+}
+.stitch-desktop:is(.p-3\.5),
+.stitch-desktop .p-3\.5 {
+  padding: 0.875rem;
+}
+.stitch-desktop:is(.p-1\.5),
+.stitch-desktop .p-1\.5 {
+  padding: 0.375rem;
+}
+.stitch-desktop:is(.p-2\.5),
+.stitch-desktop .p-2\.5 {
+  padding: 0.625rem;
+}
+.stitch-desktop:is(.p-4),
+.stitch-desktop .p-4 {
+  padding: 1rem;
+}
+.stitch-desktop:is(.p-6),
+.stitch-desktop .p-6 {
+  padding: 1.5rem;
+}
+.stitch-desktop:is(.px-2),
+.stitch-desktop .px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.stitch-desktop:is(.px-4),
+.stitch-desktop .px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.stitch-desktop:is(.py-0\.5),
+.stitch-desktop .py-0\.5 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+.stitch-desktop:is(.py-2),
+.stitch-desktop .py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.stitch-desktop:is(.px-3),
+.stitch-desktop .px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+.stitch-desktop:is(.py-1),
+.stitch-desktop .py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+.stitch-desktop:is(.py-5),
+.stitch-desktop .py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+.stitch-desktop:is(.px-1),
+.stitch-desktop .px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+.stitch-desktop:is(.px-1\.5),
+.stitch-desktop .px-1\.5 {
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+}
+.stitch-desktop:is(.px-6),
+.stitch-desktop .px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.stitch-desktop:is(.py-1\.5),
+.stitch-desktop .py-1\.5 {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+.stitch-desktop:is(.py-2\.5),
+.stitch-desktop .py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+.stitch-desktop:is(.py-3),
+.stitch-desktop .py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.stitch-desktop:is(.py-8),
+.stitch-desktop .py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.stitch-desktop:is(.px-2\.5),
+.stitch-desktop .px-2\.5 {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+.stitch-desktop:is(.px-3\.5),
+.stitch-desktop .px-3\.5 {
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+}
+.stitch-desktop:is(.py-4),
+.stitch-desktop .py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.stitch-desktop:is(.pt-0\.5),
+.stitch-desktop .pt-0\.5 {
+  padding-top: 0.125rem;
+}
+.stitch-desktop:is(.pt-3),
+.stitch-desktop .pt-3 {
+  padding-top: 0.75rem;
+}
+.stitch-desktop:is(.pb-3),
+.stitch-desktop .pb-3 {
+  padding-bottom: 0.75rem;
+}
+.stitch-desktop:is(.pl-0),
+.stitch-desktop .pl-0 {
+  padding-left: 0px;
+}
+.stitch-desktop:is(.pl-4),
+.stitch-desktop .pl-4 {
+  padding-left: 1rem;
+}
+.stitch-desktop:is(.pr-2),
+.stitch-desktop .pr-2 {
+  padding-right: 0.5rem;
+}
+.stitch-desktop:is(.pt-1),
+.stitch-desktop .pt-1 {
+  padding-top: 0.25rem;
+}
+.stitch-desktop:is(.pt-1\.5),
+.stitch-desktop .pt-1\.5 {
+  padding-top: 0.375rem;
+}
+.stitch-desktop:is(.pt-2),
+.stitch-desktop .pt-2 {
+  padding-top: 0.5rem;
+}
+.stitch-desktop:is(.pt-2\.5),
+.stitch-desktop .pt-2\.5 {
+  padding-top: 0.625rem;
+}
+.stitch-desktop:is(.pt-4),
+.stitch-desktop .pt-4 {
+  padding-top: 1rem;
+}
+.stitch-desktop:is(.text-center),
+.stitch-desktop .text-center {
+  text-align: center;
+}
+.stitch-desktop:is(.font-mono),
+.stitch-desktop .font-mono {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+}
+.stitch-desktop:is(.font-serif),
+.stitch-desktop .font-serif {
+  font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+.stitch-desktop:is(.text-\[11px\]),
+.stitch-desktop .text-\[11px\] {
+  font-size: 11px;
+}
+.stitch-desktop:is(.text-xs),
+.stitch-desktop .text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.stitch-desktop:is(.text-2xl),
+.stitch-desktop .text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.stitch-desktop:is(.text-\[10px\]),
+.stitch-desktop .text-\[10px\] {
+  font-size: 10px;
+}
+.stitch-desktop:is(.text-sm),
+.stitch-desktop .text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.stitch-desktop:is(.text-\[8px\]),
+.stitch-desktop .text-\[8px\] {
+  font-size: 8px;
+}
+.stitch-desktop:is(.text-\[9px\]),
+.stitch-desktop .text-\[9px\] {
+  font-size: 9px;
+}
+.stitch-desktop:is(.font-medium),
+.stitch-desktop .font-medium {
+  font-weight: 500;
+}
+.stitch-desktop:is(.font-semibold),
+.stitch-desktop .font-semibold {
+  font-weight: 600;
+}
+.stitch-desktop:is(.font-extrabold),
+.stitch-desktop .font-extrabold {
+  font-weight: 800;
+}
+.stitch-desktop:is(.font-bold),
+.stitch-desktop .font-bold {
+  font-weight: 700;
+}
+.stitch-desktop:is(.font-normal),
+.stitch-desktop .font-normal {
+  font-weight: 400;
+}
+.stitch-desktop:is(.leading-none),
+.stitch-desktop .leading-none {
+  line-height: 1;
+}
+.stitch-desktop:is(.leading-normal),
+.stitch-desktop .leading-normal {
+  line-height: 1.5;
+}
+.stitch-desktop:is(.tracking-wider),
+.stitch-desktop .tracking-wider {
+  letter-spacing: 0.05em;
+}
+.stitch-desktop:is(.tracking-tight),
+.stitch-desktop .tracking-tight {
+  letter-spacing: -0.025em;
+}
+.stitch-desktop:is(.tracking-tighter),
+.stitch-desktop .tracking-tighter {
+  letter-spacing: -0.05em;
+}
+.stitch-desktop:is(.tracking-wide),
+.stitch-desktop .tracking-wide {
+  letter-spacing: 0.025em;
+}
+.stitch-desktop:is(.text-neutral-300),
+.stitch-desktop .text-neutral-300 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(212 212 212 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-neutral-400),
+.stitch-desktop .text-neutral-400 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(163 163 163 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-white),
+.stitch-desktop .text-white {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-amber-200),
+.stitch-desktop .text-amber-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(253 230 138 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-blue-200),
+.stitch-desktop .text-blue-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(191 219 254 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-cyan-200),
+.stitch-desktop .text-cyan-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(165 243 252 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-cyan-300),
+.stitch-desktop .text-cyan-300 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(103 232 249 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-neutral-950),
+.stitch-desktop .text-neutral-950 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(10 10 10 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-pink-300),
+.stitch-desktop .text-pink-300 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(249 168 212 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-purple-200),
+.stitch-desktop .text-purple-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(233 213 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-amber-200\/90),
+.stitch-desktop .text-amber-200\/90 {
+  color: rgb(253 230 138 / 0.9);
+}
+.stitch-desktop:is(.text-emerald-300\/90),
+.stitch-desktop .text-emerald-300\/90 {
+  color: rgb(110 231 183 / 0.9);
+}
+.stitch-desktop:is(.text-neutral-200),
+.stitch-desktop .text-neutral-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(229 229 229 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-neutral-500),
+.stitch-desktop .text-neutral-500 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(115 115 115 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-neutral-800),
+.stitch-desktop .text-neutral-800 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(38 38 38 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.text-purple-300\/90),
+.stitch-desktop .text-purple-300\/90 {
+  color: rgb(216 180 254 / 0.9);
+}
+.stitch-desktop:is(.text-sky-300\/90),
+.stitch-desktop .text-sky-300\/90 {
+  color: rgb(125 211 252 / 0.9);
+}
+.stitch-desktop:is(.text-white\/70),
+.stitch-desktop .text-white\/70 {
+  color: rgb(255 255 255 / 0.7);
+}
+.stitch-desktop:is(.text-white\/80),
+.stitch-desktop .text-white\/80 {
+  color: rgb(255 255 255 / 0.8);
+}
+.stitch-desktop:is(.line-through),
+.stitch-desktop .line-through {
+  -webkit-text-decoration-line: line-through;
+  text-decoration-line: line-through;
+}
+.stitch-desktop:is(.antialiased),
+.stitch-desktop .antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.stitch-desktop:is(.placeholder-neutral-400::placeholder),
+.stitch-desktop .placeholder-neutral-400::placeholder {
+  --stitch-tw-placeholder-opacity: 1;
+  color: rgb(163 163 163 / var(--stitch-tw-placeholder-opacity, 1));
+}
+.stitch-desktop:is(.placeholder-neutral-500::placeholder),
+.stitch-desktop .placeholder-neutral-500::placeholder {
+  --stitch-tw-placeholder-opacity: 1;
+  color: rgb(115 115 115 / var(--stitch-tw-placeholder-opacity, 1));
+}
+.stitch-desktop:is(.opacity-0),
+.stitch-desktop .opacity-0 {
+  opacity: 0;
+}
+.stitch-desktop:is(.opacity-20),
+.stitch-desktop .opacity-20 {
+  opacity: 0.2;
+}
+.stitch-desktop:is(.opacity-35),
+.stitch-desktop .opacity-35 {
+  opacity: 0.35;
+}
+.stitch-desktop:is(.shadow),
+.stitch-desktop .shadow {
+  --stitch-tw-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --stitch-tw-shadow-colored:
+    0 1px 3px 0 var(--stitch-tw-shadow-color),
+    0 1px 2px -1px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(.shadow-2xl),
+.stitch-desktop .shadow-2xl {
+  --stitch-tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --stitch-tw-shadow-colored: 0 25px 50px -12px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(.shadow-\[0_0_6px_rgba\(76\2c 215\2c 246\2c 0\.9\)\]),
+.stitch-desktop .shadow-\[0_0_6px_rgba\(76\2c 215\2c 246\2c 0\.9\)\] {
+  --stitch-tw-shadow: 0 0 6px rgba(76, 215, 246, 0.9);
+  --stitch-tw-shadow-colored: 0 0 6px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(.shadow-inner),
+.stitch-desktop .shadow-inner {
+  --stitch-tw-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  --stitch-tw-shadow-colored: inset 0 2px 4px 0 var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(.shadow-lg),
+.stitch-desktop .shadow-lg {
+  --stitch-tw-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --stitch-tw-shadow-colored:
+    0 10px 15px -3px var(--stitch-tw-shadow-color),
+    0 4px 6px -4px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(.shadow-md),
+.stitch-desktop .shadow-md {
+  --stitch-tw-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --stitch-tw-shadow-colored:
+    0 4px 6px -1px var(--stitch-tw-shadow-color),
+    0 2px 4px -2px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(.shadow-sm),
+.stitch-desktop .shadow-sm {
+  --stitch-tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --stitch-tw-shadow-colored: 0 1px 2px 0 var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(.shadow-xl),
+.stitch-desktop .shadow-xl {
+  --stitch-tw-shadow:
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --stitch-tw-shadow-colored:
+    0 20px 25px -5px var(--stitch-tw-shadow-color),
+    0 8px 10px -6px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(.blur-2xl),
+.stitch-desktop .blur-2xl {
+  --stitch-tw-blur: blur(40px);
+  filter: var(--stitch-tw-blur) var(--stitch-tw-brightness)
+    var(--stitch-tw-contrast) var(--stitch-tw-grayscale)
+    var(--stitch-tw-hue-rotate) var(--stitch-tw-invert)
+    var(--stitch-tw-saturate) var(--stitch-tw-sepia)
+    var(--stitch-tw-drop-shadow);
+}
+.stitch-desktop:is(.drop-shadow-sm),
+.stitch-desktop .drop-shadow-sm {
+  --stitch-tw-drop-shadow: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05));
+  filter: var(--stitch-tw-blur) var(--stitch-tw-brightness)
+    var(--stitch-tw-contrast) var(--stitch-tw-grayscale)
+    var(--stitch-tw-hue-rotate) var(--stitch-tw-invert)
+    var(--stitch-tw-saturate) var(--stitch-tw-sepia)
+    var(--stitch-tw-drop-shadow);
+}
+.stitch-desktop:is(.backdrop-blur-md),
+.stitch-desktop .backdrop-blur-md {
+  --stitch-tw-backdrop-blur: blur(12px);
+  -webkit-backdrop-filter: var(--stitch-tw-backdrop-blur)
+    var(--stitch-tw-backdrop-brightness) var(--stitch-tw-backdrop-contrast)
+    var(--stitch-tw-backdrop-grayscale) var(--stitch-tw-backdrop-hue-rotate)
+    var(--stitch-tw-backdrop-invert) var(--stitch-tw-backdrop-opacity)
+    var(--stitch-tw-backdrop-saturate) var(--stitch-tw-backdrop-sepia);
+  backdrop-filter: var(--stitch-tw-backdrop-blur)
+    var(--stitch-tw-backdrop-brightness) var(--stitch-tw-backdrop-contrast)
+    var(--stitch-tw-backdrop-grayscale) var(--stitch-tw-backdrop-hue-rotate)
+    var(--stitch-tw-backdrop-invert) var(--stitch-tw-backdrop-opacity)
+    var(--stitch-tw-backdrop-saturate) var(--stitch-tw-backdrop-sepia);
+}
+.stitch-desktop:is(.backdrop-blur-xl),
+.stitch-desktop .backdrop-blur-xl {
+  --stitch-tw-backdrop-blur: blur(24px);
+  -webkit-backdrop-filter: var(--stitch-tw-backdrop-blur)
+    var(--stitch-tw-backdrop-brightness) var(--stitch-tw-backdrop-contrast)
+    var(--stitch-tw-backdrop-grayscale) var(--stitch-tw-backdrop-hue-rotate)
+    var(--stitch-tw-backdrop-invert) var(--stitch-tw-backdrop-opacity)
+    var(--stitch-tw-backdrop-saturate) var(--stitch-tw-backdrop-sepia);
+  backdrop-filter: var(--stitch-tw-backdrop-blur)
+    var(--stitch-tw-backdrop-brightness) var(--stitch-tw-backdrop-contrast)
+    var(--stitch-tw-backdrop-grayscale) var(--stitch-tw-backdrop-hue-rotate)
+    var(--stitch-tw-backdrop-invert) var(--stitch-tw-backdrop-opacity)
+    var(--stitch-tw-backdrop-saturate) var(--stitch-tw-backdrop-sepia);
+}
+.stitch-desktop:is(.transition-all),
+.stitch-desktop .transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.stitch-desktop:is(.transition-colors),
+.stitch-desktop .transition-colors {
+  transition-property:
+    color,
+    background-color,
+    border-color,
+    fill,
+    stroke,
+    -webkit-text-decoration-color;
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property:
+    color,
+    background-color,
+    border-color,
+    text-decoration-color,
+    fill,
+    stroke,
+    -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.stitch-desktop:is(.transition-transform),
+.stitch-desktop .transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.stitch-desktop:is(.transition-opacity),
+.stitch-desktop .transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.stitch-desktop:is(.duration-300),
+.stitch-desktop .duration-300 {
+  transition-duration: 300ms;
+}
+.stitch-desktop:is(.duration-200),
+.stitch-desktop .duration-200 {
+  transition-duration: 200ms;
+}
+.stitch-desktop:is(.duration-500),
+.stitch-desktop .duration-500 {
+  transition-duration: 500ms;
+}
+.stitch-desktop:is(.duration-700),
+.stitch-desktop .duration-700 {
+  transition-duration: 700ms;
+}
+.stitch-desktop:is(.ease-out),
+.stitch-desktop .ease-out {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+.stitch-desktop:is(.selection\:bg-neutral-600 *::selection),
+.stitch-desktop .selection\:bg-neutral-600 *::selection {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(82 82 82 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.selection\:text-white *::selection),
+.stitch-desktop .selection\:text-white *::selection {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.selection\:bg-neutral-600::selection),
+.stitch-desktop .selection\:bg-neutral-600::selection {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(82 82 82 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.selection\:text-white::selection),
+.stitch-desktop .selection\:text-white::selection {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.backdrop\:bg-black\/80::backdrop),
+.stitch-desktop .backdrop\:bg-black\/80::backdrop {
+  background-color: rgb(0 0 0 / 0.8);
+}
+.stitch-desktop:is(.backdrop\:backdrop-blur-sm::backdrop),
+.stitch-desktop .backdrop\:backdrop-blur-sm::backdrop {
+  --stitch-tw-backdrop-blur: blur(4px);
+  -webkit-backdrop-filter: var(--stitch-tw-backdrop-blur)
+    var(--stitch-tw-backdrop-brightness) var(--stitch-tw-backdrop-contrast)
+    var(--stitch-tw-backdrop-grayscale) var(--stitch-tw-backdrop-hue-rotate)
+    var(--stitch-tw-backdrop-invert) var(--stitch-tw-backdrop-opacity)
+    var(--stitch-tw-backdrop-saturate) var(--stitch-tw-backdrop-sepia);
+  backdrop-filter: var(--stitch-tw-backdrop-blur)
+    var(--stitch-tw-backdrop-brightness) var(--stitch-tw-backdrop-contrast)
+    var(--stitch-tw-backdrop-grayscale) var(--stitch-tw-backdrop-hue-rotate)
+    var(--stitch-tw-backdrop-invert) var(--stitch-tw-backdrop-opacity)
+    var(--stitch-tw-backdrop-saturate) var(--stitch-tw-backdrop-sepia);
+}
+.stitch-desktop:is(.focus-within\:w-64:focus-within),
+.stitch-desktop .focus-within\:w-64:focus-within {
+  width: 16rem;
+}
+.stitch-desktop:is(.focus-within\:border-white\/30:focus-within),
+.stitch-desktop .focus-within\:border-white\/30:focus-within {
+  border-color: rgb(255 255 255 / 0.3);
+}
+.stitch-desktop:is(.focus-within\:bg-white\/\[0\.06\]:focus-within),
+.stitch-desktop .focus-within\:bg-white\/\[0\.06\]:focus-within {
+  background-color: rgb(255 255 255 / 0.06);
+}
+.stitch-desktop:is(.focus-within\:px-3:focus-within),
+.stitch-desktop .focus-within\:px-3:focus-within {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+.stitch-desktop:is(.hover\:-translate-y-1\.5:hover),
+.stitch-desktop .hover\:-translate-y-1\.5:hover {
+  --stitch-tw-translate-y: -0.375rem;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.hover\:-translate-y-2:hover),
+.stitch-desktop .hover\:-translate-y-2:hover {
+  --stitch-tw-translate-y: -0.5rem;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.hover\:scale-\[1\.01\]:hover),
+.stitch-desktop .hover\:scale-\[1\.01\]:hover {
+  --stitch-tw-scale-x: 1.01;
+  --stitch-tw-scale-y: 1.01;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.hover\:scale-\[1\.02\]:hover),
+.stitch-desktop .hover\:scale-\[1\.02\]:hover {
+  --stitch-tw-scale-x: 1.02;
+  --stitch-tw-scale-y: 1.02;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.hover\:scale-105:hover),
+.stitch-desktop .hover\:scale-105:hover {
+  --stitch-tw-scale-x: 1.05;
+  --stitch-tw-scale-y: 1.05;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.hover\:border-white\/20:hover),
+.stitch-desktop .hover\:border-white\/20:hover {
+  border-color: rgb(255 255 255 / 0.2);
+}
+.stitch-desktop:is(.hover\:border-white\/25:hover),
+.stitch-desktop .hover\:border-white\/25:hover {
+  border-color: rgb(255 255 255 / 0.25);
+}
+.stitch-desktop:is(.hover\:border-white\/30:hover),
+.stitch-desktop .hover\:border-white\/30:hover {
+  border-color: rgb(255 255 255 / 0.3);
+}
+.stitch-desktop:is(.hover\:bg-white\/10:hover),
+.stitch-desktop .hover\:bg-white\/10:hover {
+  background-color: rgb(255 255 255 / 0.1);
+}
+.stitch-desktop:is(.hover\:bg-white\/20:hover),
+.stitch-desktop .hover\:bg-white\/20:hover {
+  background-color: rgb(255 255 255 / 0.2);
+}
+.stitch-desktop:is(.hover\:bg-white\/\[0\.04\]:hover),
+.stitch-desktop .hover\:bg-white\/\[0\.04\]:hover {
+  background-color: rgb(255 255 255 / 0.04);
+}
+.stitch-desktop:is(.hover\:bg-white\/\[0\.06\]:hover),
+.stitch-desktop .hover\:bg-white\/\[0\.06\]:hover {
+  background-color: rgb(255 255 255 / 0.06);
+}
+.stitch-desktop:is(.hover\:bg-white\/\[0\.08\]:hover),
+.stitch-desktop .hover\:bg-white\/\[0\.08\]:hover {
+  background-color: rgb(255 255 255 / 0.08);
+}
+.stitch-desktop:is(.hover\:bg-white\/\[0\.12\]:hover),
+.stitch-desktop .hover\:bg-white\/\[0\.12\]:hover {
+  background-color: rgb(255 255 255 / 0.12);
+}
+.stitch-desktop:is(.hover\:bg-cyan-500\/30:hover),
+.stitch-desktop .hover\:bg-cyan-500\/30:hover {
+  background-color: rgb(6 182 212 / 0.3);
+}
+.stitch-desktop:is(.hover\:bg-neutral-200:hover),
+.stitch-desktop .hover\:bg-neutral-200:hover {
+  --stitch-tw-bg-opacity: 1;
+  background-color: rgb(229 229 229 / var(--stitch-tw-bg-opacity, 1));
+}
+.stitch-desktop:is(.hover\:bg-white\/\[0\.07\]:hover),
+.stitch-desktop .hover\:bg-white\/\[0\.07\]:hover {
+  background-color: rgb(255 255 255 / 0.07);
+}
+.stitch-desktop:is(.hover\:text-white:hover),
+.stitch-desktop .hover\:text-white:hover {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.hover\:text-cyan-300:hover),
+.stitch-desktop .hover\:text-cyan-300:hover {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(103 232 249 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.hover\:underline:hover),
+.stitch-desktop .hover\:underline:hover {
+  -webkit-text-decoration-line: underline;
+  text-decoration-line: underline;
+}
+.stitch-desktop:is(
+  .hover\:shadow-\[0_20px_40px_-10px_rgba\(0\2c 0\2c 0\2c 0\.7\)\]:hover
+),
+.stitch-desktop
+  .hover\:shadow-\[0_20px_40px_-10px_rgba\(0\2c
+  0\2c
+  0\2c
+  0\.7\)\]:hover {
+  --stitch-tw-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
+  --stitch-tw-shadow-colored: 0 20px 40px -10px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .hover\:shadow-\[0_20px_40px_-12px_rgba\(0\2c 0\2c 0\2c 0\.8\)\]:hover
+),
+.stitch-desktop
+  .hover\:shadow-\[0_20px_40px_-12px_rgba\(0\2c
+  0\2c
+  0\2c
+  0\.8\)\]:hover {
+  --stitch-tw-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8);
+  --stitch-tw-shadow-colored: 0 20px 40px -12px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .hover\:shadow-\[0_25px_60px_-12px_rgba\(0\2c
+    0\2c
+    0\2c
+    0\.8\)\2c
+    0_0_40px_rgba\(139\2c
+    92\2c
+    246\2c
+    0\.2\)\]:hover
+),
+.stitch-desktop
+  .hover\:shadow-\[0_25px_60px_-12px_rgba\(0\2c
+  0\2c
+  0\2c
+  0\.8\)\2c
+  0_0_40px_rgba\(139\2c
+  92\2c
+  246\2c
+  0\.2\)\]:hover {
+  --stitch-tw-shadow:
+    0 25px 60px -12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(139, 92, 246, 0.2);
+  --stitch-tw-shadow-colored:
+    0 25px 60px -12px var(--stitch-tw-shadow-color),
+    0 0 40px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(.focus\:outline-none:focus),
+.stitch-desktop .focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.stitch-desktop:is(.focus\:ring-0:focus),
+.stitch-desktop .focus\:ring-0:focus {
+  --stitch-tw-ring-offset-shadow: var(--stitch-tw-ring-inset) 0 0 0
+    var(--stitch-tw-ring-offset-width) var(--stitch-tw-ring-offset-color);
+  --stitch-tw-ring-shadow: var(--stitch-tw-ring-inset) 0 0 0
+    calc(0px + var(--stitch-tw-ring-offset-width)) var(--stitch-tw-ring-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow), var(--stitch-tw-ring-shadow),
+    var(--stitch-tw-shadow, 0 0 #0000);
+}
+.stitch-desktop:is(.active\:scale-95:active),
+.stitch-desktop .active\:scale-95:active {
+  --stitch-tw-scale-x: 0.95;
+  --stitch-tw-scale-y: 0.95;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.focus-within\:active\:scale-100:active:focus-within),
+.stitch-desktop .focus-within\:active\:scale-100:active:focus-within {
+  --stitch-tw-scale-x: 1;
+  --stitch-tw-scale-y: 1;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(
+  .group\/search:focus-within .group-focus-within\/search\:w-full
+),
+.stitch-desktop
+  .group\/search:focus-within
+  .group-focus-within\/search\:w-full {
+  width: 100%;
+}
+.stitch-desktop:is(
+  .group\/search:focus-within .group-focus-within\/search\:pl-1
+),
+.stitch-desktop .group\/search:focus-within .group-focus-within\/search\:pl-1 {
+  padding-left: 0.25rem;
+}
+.stitch-desktop:is(
+  .group\/search:focus-within .group-focus-within\/search\:opacity-100
+),
+.stitch-desktop
+  .group\/search:focus-within
+  .group-focus-within\/search\:opacity-100 {
+  opacity: 1;
+}
+.stitch-desktop:is(.group:hover .group-hover\:translate-x-0\.5),
+.stitch-desktop .group:hover .group-hover\:translate-x-0\.5 {
+  --stitch-tw-translate-x: 0.125rem;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.group:hover .group-hover\:translate-x-0),
+.stitch-desktop .group:hover .group-hover\:translate-x-0 {
+  --stitch-tw-translate-x: 0px;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.group:hover .group-hover\:rotate-12),
+.stitch-desktop .group:hover .group-hover\:rotate-12 {
+  --stitch-tw-rotate: 12deg;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.group:hover .group-hover\:scale-105),
+.stitch-desktop .group:hover .group-hover\:scale-105 {
+  --stitch-tw-scale-x: 1.05;
+  --stitch-tw-scale-y: 1.05;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:scale-110),
+.stitch-desktop .group\/card:hover .group-hover\/card\:scale-110 {
+  --stitch-tw-scale-x: 1.1;
+  --stitch-tw-scale-y: 1.1;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.group\/like:hover .group-hover\/like\:scale-110),
+.stitch-desktop .group\/like:hover .group-hover\/like\:scale-110 {
+  --stitch-tw-scale-x: 1.1;
+  --stitch-tw-scale-y: 1.1;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.group:hover .group-hover\:scale-110),
+.stitch-desktop .group:hover .group-hover\:scale-110 {
+  --stitch-tw-scale-x: 1.1;
+  --stitch-tw-scale-y: 1.1;
+  transform: translate(
+      var(--stitch-tw-translate-x),
+      var(--stitch-tw-translate-y)
+    )
+    rotate(var(--stitch-tw-rotate)) skewX(var(--stitch-tw-skew-x))
+    skewY(var(--stitch-tw-skew-y)) scaleX(var(--stitch-tw-scale-x))
+    scaleY(var(--stitch-tw-scale-y));
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:border-amber-400\/40),
+.stitch-desktop .group\/card:hover .group-hover\/card\:border-amber-400\/40 {
+  border-color: rgb(251 191 36 / 0.4);
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:border-blue-400\/40),
+.stitch-desktop .group\/card:hover .group-hover\/card\:border-blue-400\/40 {
+  border-color: rgb(96 165 250 / 0.4);
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:border-cyan-400\/40),
+.stitch-desktop .group\/card:hover .group-hover\/card\:border-cyan-400\/40 {
+  border-color: rgb(34 211 238 / 0.4);
+}
+.stitch-desktop:is(
+  .group\/card:hover .group-hover\/card\:border-emerald-400\/40
+),
+.stitch-desktop .group\/card:hover .group-hover\/card\:border-emerald-400\/40 {
+  border-color: rgb(52 211 153 / 0.4);
+}
+.stitch-desktop:is(
+  .group\/card:hover .group-hover\/card\:border-purple-400\/40
+),
+.stitch-desktop .group\/card:hover .group-hover\/card\:border-purple-400\/40 {
+  border-color: rgb(192 132 252 / 0.4);
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:border-sky-400\/40),
+.stitch-desktop .group\/card:hover .group-hover\/card\:border-sky-400\/40 {
+  border-color: rgb(56 189 248 / 0.4);
+}
+.stitch-desktop:is(.group:hover .group-hover\:bg-white\/15),
+.stitch-desktop .group:hover .group-hover\:bg-white\/15 {
+  background-color: rgb(255 255 255 / 0.15);
+}
+.stitch-desktop:is(.group:hover .group-hover\:bg-white\/20),
+.stitch-desktop .group:hover .group-hover\:bg-white\/20 {
+  background-color: rgb(255 255 255 / 0.2);
+}
+.stitch-desktop:is(.group:hover .group-hover\:text-cyan-200),
+.stitch-desktop .group:hover .group-hover\:text-cyan-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(165 243 252 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group:hover .group-hover\:text-neutral-300),
+.stitch-desktop .group:hover .group-hover\:text-neutral-300 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(212 212 212 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group:hover .group-hover\:text-white),
+.stitch-desktop .group:hover .group-hover\:text-white {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:text-amber-300),
+.stitch-desktop .group\/card:hover .group-hover\/card\:text-amber-300 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(252 211 77 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:text-emerald-200),
+.stitch-desktop .group\/card:hover .group-hover\/card\:text-emerald-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(167 243 208 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:text-neutral-300),
+.stitch-desktop .group\/card:hover .group-hover\/card\:text-neutral-300 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(212 212 212 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:text-purple-200),
+.stitch-desktop .group\/card:hover .group-hover\/card\:text-purple-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(233 213 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:text-sky-200),
+.stitch-desktop .group\/card:hover .group-hover\/card\:text-sky-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(186 230 253 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group\/card:hover .group-hover\/card\:text-white),
+.stitch-desktop .group\/card:hover .group-hover\/card\:text-white {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group\/like:hover .group-hover\/like\:text-pink-400),
+.stitch-desktop .group\/like:hover .group-hover\/like\:text-pink-400 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(244 114 182 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group\/search:hover .group-hover\/search\:text-white),
+.stitch-desktop .group\/search:hover .group-hover\/search\:text-white {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group:hover .group-hover\:text-neutral-200),
+.stitch-desktop .group:hover .group-hover\:text-neutral-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(229 229 229 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group:hover .group-hover\:text-purple-200),
+.stitch-desktop .group:hover .group-hover\:text-purple-200 {
+  --stitch-tw-text-opacity: 1;
+  color: rgb(233 213 255 / var(--stitch-tw-text-opacity, 1));
+}
+.stitch-desktop:is(.group:hover .group-hover\:opacity-100),
+.stitch-desktop .group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+}
+.stitch-desktop:is(
+  .group\/card:hover
+    .group-hover\/card\:shadow-\[0_0_15px_rgba\(192\2c
+    132\2c
+    252\2c
+    0\.3\)\]
+),
+.stitch-desktop
+  .group\/card:hover
+  .group-hover\/card\:shadow-\[0_0_15px_rgba\(192\2c
+  132\2c
+  252\2c
+  0\.3\)\] {
+  --stitch-tw-shadow: 0 0 15px rgba(192, 132, 252, 0.3);
+  --stitch-tw-shadow-colored: 0 0 15px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .group\/card:hover
+    .group-hover\/card\:shadow-\[0_0_15px_rgba\(245\2c
+    158\2c
+    11\2c
+    0\.3\)\]
+),
+.stitch-desktop
+  .group\/card:hover
+  .group-hover\/card\:shadow-\[0_0_15px_rgba\(245\2c
+  158\2c
+  11\2c
+  0\.3\)\] {
+  --stitch-tw-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+  --stitch-tw-shadow-colored: 0 0 15px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .group\/card:hover
+    .group-hover\/card\:shadow-\[0_0_15px_rgba\(34\2c
+    211\2c
+    238\2c
+    0\.3\)\]
+),
+.stitch-desktop
+  .group\/card:hover
+  .group-hover\/card\:shadow-\[0_0_15px_rgba\(34\2c
+  211\2c
+  238\2c
+  0\.3\)\] {
+  --stitch-tw-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+  --stitch-tw-shadow-colored: 0 0 15px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .group\/card:hover
+    .group-hover\/card\:shadow-\[0_0_15px_rgba\(52\2c
+    211\2c
+    153\2c
+    0\.3\)\]
+),
+.stitch-desktop
+  .group\/card:hover
+  .group-hover\/card\:shadow-\[0_0_15px_rgba\(52\2c
+  211\2c
+  153\2c
+  0\.3\)\] {
+  --stitch-tw-shadow: 0 0 15px rgba(52, 211, 153, 0.3);
+  --stitch-tw-shadow-colored: 0 0 15px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .group\/card:hover
+    .group-hover\/card\:shadow-\[0_0_15px_rgba\(56\2c
+    189\2c
+    248\2c
+    0\.3\)\]
+),
+.stitch-desktop
+  .group\/card:hover
+  .group-hover\/card\:shadow-\[0_0_15px_rgba\(56\2c
+  189\2c
+  248\2c
+  0\.3\)\] {
+  --stitch-tw-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+  --stitch-tw-shadow-colored: 0 0 15px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .group\/card:hover
+    .group-hover\/card\:shadow-\[0_0_15px_rgba\(96\2c
+    165\2c
+    250\2c
+    0\.3\)\]
+),
+.stitch-desktop
+  .group\/card:hover
+  .group-hover\/card\:shadow-\[0_0_15px_rgba\(96\2c
+  165\2c
+  250\2c
+  0\.3\)\] {
+  --stitch-tw-shadow: 0 0 15px rgba(96, 165, 250, 0.3);
+  --stitch-tw-shadow-colored: 0 0 15px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .group:hover
+    .group-hover\:shadow-\[0_0_20px_rgba\(142\2c
+    168\2c
+    255\2c
+    0\.25\)\]
+),
+.stitch-desktop
+  .group:hover
+  .group-hover\:shadow-\[0_0_20px_rgba\(142\2c
+  168\2c
+  255\2c
+  0\.25\)\] {
+  --stitch-tw-shadow: 0 0 20px rgba(142, 168, 255, 0.25);
+  --stitch-tw-shadow-colored: 0 0 20px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .group:hover
+    .group-hover\:shadow-\[0_0_20px_rgba\(76\2c
+    215\2c
+    246\2c
+    0\.25\)\]
+),
+.stitch-desktop
+  .group:hover
+  .group-hover\:shadow-\[0_0_20px_rgba\(76\2c
+  215\2c
+  246\2c
+  0\.25\)\] {
+  --stitch-tw-shadow: 0 0 20px rgba(76, 215, 246, 0.25);
+  --stitch-tw-shadow-colored: 0 0 20px var(--stitch-tw-shadow-color);
+  box-shadow:
+    var(--stitch-tw-ring-offset-shadow, 0 0 #0000),
+    var(--stitch-tw-ring-shadow, 0 0 #0000), var(--stitch-tw-shadow);
+}
+.stitch-desktop:is(
+  .group\/track:hover .group-hover\/track\:\[animation-play-state\:paused\]
+),
+.stitch-desktop
+  .group\/track:hover
+  .group-hover\/track\:\[animation-play-state\:paused\] {
+  animation-play-state: paused;
+}
+@media (min-width: 640px) {
+  .stitch-desktop:is(.sm\:inline-block),
+  .stitch-desktop .sm\:inline-block {
+    display: inline-block;
+  }
+  .stitch-desktop:is(.sm\:inline-flex),
+  .stitch-desktop .sm\:inline-flex {
+    display: inline-flex;
+  }
+  .stitch-desktop:is(.sm\:h-72),
+  .stitch-desktop .sm\:h-72 {
+    height: 18rem;
+  }
+  .stitch-desktop:is(.sm\:grid-cols-2),
+  .stitch-desktop .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 768px) {
+  .stitch-desktop:is(.md\:left-72),
+  .stitch-desktop .md\:left-72 {
+    left: 18rem;
+  }
+  .stitch-desktop:is(.md\:inline),
+  .stitch-desktop .md\:inline {
+    display: inline;
+  }
+  .stitch-desktop:is(.md\:flex),
+  .stitch-desktop .md\:flex {
+    display: flex;
+  }
+  .stitch-desktop:is(.md\:h-80),
+  .stitch-desktop .md\:h-80 {
+    height: 20rem;
+  }
+  .stitch-desktop:is(.md\:w-64),
+  .stitch-desktop .md\:w-64 {
+    width: 16rem;
+  }
+  .stitch-desktop:is(.md\:flex-row),
+  .stitch-desktop .md\:flex-row {
+    flex-direction: row;
+  }
+  .stitch-desktop:is(.md\:items-center),
+  .stitch-desktop .md\:items-center {
+    align-items: center;
+  }
+  .stitch-desktop:is(.md\:self-auto),
+  .stitch-desktop .md\:self-auto {
+    align-self: auto;
+  }
+  .stitch-desktop:is(.md\:px-10),
+  .stitch-desktop .md\:px-10 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+  .stitch-desktop:is(.md\:px-8),
+  .stitch-desktop .md\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .stitch-desktop:is(.md\:py-10),
+  .stitch-desktop .md\:py-10 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+  .stitch-desktop:is(.md\:text-3xl),
+  .stitch-desktop .md\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  .stitch-desktop:is(.md\:text-sm),
+  .stitch-desktop .md\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  .stitch-desktop:is(.md\:focus-within\:w-72:focus-within),
+  .stitch-desktop .md\:focus-within\:w-72:focus-within {
+    width: 18rem;
+  }
+}
+@media (min-width: 1024px) {
+  .stitch-desktop:is(.lg\:col-span-4),
+  .stitch-desktop .lg\:col-span-4 {
+    grid-column: span 4 / span 4;
+  }
+  .stitch-desktop:is(.lg\:col-span-8),
+  .stitch-desktop .lg\:col-span-8 {
+    grid-column: span 8 / span 8;
+  }
+  .stitch-desktop:is(.lg\:grid-cols-12),
+  .stitch-desktop .lg\:grid-cols-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .stitch-desktop:is(.lg\:grid-cols-4),
+  .stitch-desktop .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.stitch-desktop {
+  --bg-surface: #0b0c10;
+  --bg-sidebar: #0f1015;
+  --card-bg: rgba(255, 255, 255, 0.035);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --glass-panel: rgba(16, 18, 24, 0.7);
+  --text-main: #f0f2f5;
+  --text-muted: #8b92a4;
+  --dot-grid: rgba(255, 255, 255, 0.03);
+  --glass-glow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.16),
+    0 12px 32px -8px rgba(0, 0, 0, 0.5);
+}
+
+.stitch-desktop:is(.light-theme),
+.stitch-desktop .light-theme {
+  --bg-surface: #f4f5f8;
+  --bg-sidebar: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --glass-panel: rgba(255, 255, 255, 0.9);
+  --text-main: #11141a;
+  --text-muted: #5e6677;
+  --dot-grid: rgba(0, 0, 0, 0.04);
+  --glass-glow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9),
+    0 8px 24px -4px rgba(0, 0, 0, 0.06);
+}
+
+.stitch-desktop {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+.stitch-desktop:is(.bg-dot-pattern),
+.stitch-desktop .bg-dot-pattern {
+  background-image: radial-gradient(var(--dot-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Refined Liquid Glass - High transparency, subtle refraction */
+.stitch-desktop:is(.liquid-glass),
+.stitch-desktop .liquid-glass {
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--glass-glow);
+}
+
+.stitch-desktop:is(.liquid-glass-elevated),
+.stitch-desktop .liquid-glass-elevated {
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  background: rgba(20, 22, 29, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+    0 16px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+.stitch-desktop:is(.light-theme .liquid-glass-elevated),
+.stitch-desktop .light-theme .liquid-glass-elevated {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Input expansion animation */
+.stitch-desktop:is(#desktop-prompt-container),
+.stitch-desktop #desktop-prompt-container {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stitch-desktop:is(#desktop-expanded-toolbar),
+.stitch-desktop #desktop-expanded-toolbar {
+  transition:
+    opacity 0.25s ease,
+    max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.stitch-desktop:is(#desktop-expanded-toolbar.open),
+.stitch-desktop #desktop-expanded-toolbar.open {
+  max-height: 220px;
+  opacity: 1;
+}
+
+/* Auto-scrolling marquee track */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.stitch-desktop:is(.auto-scroll-track),
+.stitch-desktop .auto-scroll-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 34s linear infinite;
+  will-change: transform;
+}
+
+.stitch-desktop:is(.auto-scroll-track:hover),
+.stitch-desktop .auto-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+/* Left banner aurora ambient shimmer */
+@keyframes bannerAurora {
+  0%,
+  100% {
+    transform: scale(1) translate(0%, 0%) rotate(0deg);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.15) translate(4%, -3%) rotate(6deg);
+    opacity: 0.75;
+  }
+}
+
+.stitch-desktop:is(.animate-banner-aurora),
+.stitch-desktop .animate-banner-aurora {
+  animation: bannerAurora 8s ease-in-out infinite;
+}
+
+/* Banner carousel pagination indicator cycle */
+@keyframes indicatorCycle {
+  0%,
+  22% {
+    width: 14px;
+    background-color: #ffffff;
+    opacity: 1;
+  }
+  25%,
+  97% {
+    width: 4px;
+    background-color: rgba(255, 255, 255, 0.25);
+    opacity: 0.6;
+  }
+  100% {
+    width: 14px;
+    background-color: #ffffff;
+    opacity: 1;
+  }
+}
+
+.stitch-desktop:is(.dot-step-1),
+.stitch-desktop .dot-step-1 {
+  animation: indicatorCycle 12s infinite ease-in-out 0s;
+}
+.stitch-desktop:is(.dot-step-2),
+.stitch-desktop .dot-step-2 {
+  animation: indicatorCycle 12s infinite ease-in-out 3s;
+}
+.stitch-desktop:is(.dot-step-3),
+.stitch-desktop .dot-step-3 {
+  animation: indicatorCycle 12s infinite ease-in-out 6s;
+}
+.stitch-desktop:is(.dot-step-4),
+.stitch-desktop .dot-step-4 {
+  animation: indicatorCycle 12s infinite ease-in-out 9s;
+}
+
+/* Floating bottom dock animation */
+.stitch-desktop:is(#desktop-floating-dock),
+.stitch-desktop #desktop-floating-dock {
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.3s ease;
+  transform: translateY(120%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stitch-desktop:is(#desktop-floating-dock.visible),
+.stitch-desktop #desktop-floating-dock.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Scrollbar */
+.stitch-desktop::-webkit-scrollbar,
+.stitch-desktop ::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.stitch-desktop::-webkit-scrollbar-track,
+.stitch-desktop ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.stitch-desktop::-webkit-scrollbar-thumb,
+.stitch-desktop ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .stitch-desktop,
+  .stitch-desktop * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  }
+}
