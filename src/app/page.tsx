@@ -1,4 +1,5 @@
-// Intentionally blank technical entry. Product homepage belongs to CAR-5.
+import { HomepageClient } from '@/components/homepage/homepage-client';
+
 export default function Page() {
-  return null;
+  return <HomepageClient />;
 }
