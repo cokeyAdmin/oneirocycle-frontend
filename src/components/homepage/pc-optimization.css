@@ -1,0 +1,357 @@
+/* CAR-7: approved desktop variants; original mobile composition is unchanged. */
+.stitch-desktop {
+  min-height: 0;
+  overflow: hidden;
+  --pc-surface: #18191d;
+  --pc-foreground: #f1f3f7;
+  --pc-muted: #a2a4ad;
+  --pc-hover: #ffffff0d;
+  --pc-border: #ffffff1a;
+  --pc-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.stitch-desktop.light-theme {
+  --pc-surface: #ffffff;
+  --pc-foreground: #15171c;
+  --pc-muted: #62646c;
+  --pc-hover: #00000008;
+  --pc-border: #0000001a;
+}
+.stitch-desktop #desktop-promo-banner {
+  flex-shrink: 0;
+}
+.stitch-desktop .pc-shell {
+  min-height: 0;
+  overflow: hidden;
+}
+.stitch-desktop #desktop-main-sidebar {
+  height: 100%;
+  overflow: hidden;
+}
+.stitch-desktop .pc-sidebar-content {
+  min-height: 0;
+  overflow: hidden;
+}
+.stitch-desktop .pc-workspace {
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.stitch-desktop .pc-workspace > header {
+  position: relative;
+  flex-shrink: 0;
+  background: var(--bg-main) !important;
+  gap: 12px;
+}
+.stitch-desktop .pc-workspace-body {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+}
+.stitch-desktop .pc-sidebar-logo {
+  width: 36px;
+  height: 36px;
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+.stitch-desktop .pc-logo-reveal {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.stitch-desktop .pc-project-name {
+  width: 148px;
+  min-height: 45px;
+  font-size: 28px;
+}
+.stitch-desktop #desktop-sidebar-header-wrapper {
+  gap: 8px;
+}
+.stitch-desktop #desktop-sidebar-header-wrapper > div {
+  gap: 8px;
+}
+.stitch-desktop .pc-workspace .nimbus-nav {
+  flex-shrink: 0;
+}
+@media (min-width: 1024px) {
+  .stitch-desktop #desktop-main-sidebar:not([data-collapsed='true']) {
+    width: 280px;
+  }
+}
+@media (max-height: 650px) {
+  .stitch-desktop .pc-sidebar-content {
+    padding-block: 8px;
+  }
+  .stitch-desktop .pc-sidebar-content > nav {
+    margin-top: 8px;
+  }
+  .stitch-desktop #desktop-main-sidebar nav > button {
+    padding-block: 6px;
+  }
+}
+.stitch-desktop .pc-prompt-section {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.stitch-desktop .pc-prompt {
+  width: 100%;
+  max-width: 320px;
+  position: relative;
+  --prompt-text-height: 68px;
+  --prompt-actions-height: 64px;
+  transition: max-width 0.4s var(--pc-spring);
+}
+.stitch-desktop .pc-prompt[data-expanded='true'] {
+  max-width: 480px;
+}
+.stitch-desktop #desktop-prompt-container.pc-prompt-card {
+  position: relative;
+  border: 1px solid var(--pc-border);
+  background: var(--pc-surface);
+  color: var(--pc-foreground);
+  border-radius: 24px;
+  padding: 0;
+  display: block;
+  height: 48px;
+  box-shadow: 0 2px 8px #00000014;
+  transition:
+    height 0.4s var(--pc-spring),
+    border-color 0.2s;
+  overflow: visible;
+}
+.stitch-desktop .pc-prompt[data-expanded='true'] #desktop-prompt-container {
+  height: calc(var(--prompt-text-height) + var(--prompt-actions-height) + 20px);
+}
+.stitch-desktop #desktop-prompt-container:focus-within {
+  border-color: #a4b8da66;
+  box-shadow: 0 0 0 1px #a4b8da26;
+}
+.stitch-desktop .pc-prompt-trigger {
+  position: absolute;
+  inset: 0 44px 0 0;
+  border: 0;
+  padding: 0 16px;
+  border-radius: 24px;
+  background: transparent;
+  color: var(--pc-muted);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    opacity 0.3s,
+    transform 0.4s var(--pc-spring);
+}
+.stitch-desktop .pc-prompt[data-expanded='true'] .pc-prompt-trigger {
+  opacity: 0;
+  transform: translateY(4px) scale(1.02);
+  pointer-events: none;
+}
+.stitch-desktop .pc-prompt-text-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 40px;
+  height: var(--prompt-text-height);
+  opacity: 0;
+  transform: translateY(-4px) scale(0.97);
+  transition:
+    opacity 0.3s,
+    transform 0.4s var(--pc-spring);
+  pointer-events: none;
+}
+.stitch-desktop .pc-prompt[data-expanded='true'] .pc-prompt-text-area {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.stitch-desktop .pc-prompt-textarea {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  resize: none;
+  border: 0;
+  background: transparent;
+  color: var(--pc-foreground);
+  font: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  padding: 14px 8px 10px 16px;
+  overflow-y: auto;
+  outline: none;
+  transition: height 0.15s ease-out;
+}
+.stitch-desktop .pc-prompt-textarea::placeholder {
+  color: var(--pc-muted);
+}
+.stitch-desktop .pc-prompt-fade {
+  position: absolute;
+  height: 18px;
+  left: 16px;
+  right: 6px;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.stitch-desktop .pc-prompt-fade-top {
+  top: 0;
+  background: linear-gradient(var(--pc-surface), transparent);
+}
+.stitch-desktop .pc-prompt-fade-bottom {
+  bottom: 0;
+  background: linear-gradient(transparent, var(--pc-surface));
+}
+.stitch-desktop .pc-prompt-actions {
+  position: absolute;
+  left: 12px;
+  right: 48px;
+  bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.25s,
+    transform 0.4s var(--pc-spring);
+  pointer-events: none;
+}
+.stitch-desktop .pc-prompt[data-expanded='true'] .pc-prompt-actions {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.stitch-desktop #desktop-compact-toolbar-row {
+  display: contents;
+}
+.stitch-desktop #desktop-compact-toolbar-row > div:first-child {
+  gap: 2px;
+}
+.stitch-desktop #desktop-compact-toolbar-row > div:last-child {
+  gap: 2px;
+  margin-left: auto;
+}
+.stitch-desktop .pc-prompt-actions button:not([role='menuitemradio']) {
+  border-radius: 999px;
+  padding: 5px 8px;
+  background: transparent;
+  border-color: transparent;
+  color: var(--pc-muted);
+  box-shadow: none;
+}
+.stitch-desktop .pc-prompt-actions button:hover {
+  background: var(--pc-hover);
+  color: var(--pc-foreground);
+}
+.stitch-desktop .pc-prompt-actions [role='menu'] {
+  max-height: min(280px, 45dvh);
+  overflow-y: auto;
+}
+.stitch-desktop .pc-prompt-actions [role='menuitemradio'][aria-checked='true'] {
+  background: var(--pc-hover);
+  color: var(--pc-foreground);
+}
+.stitch-desktop .pc-prompt-upload {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  font-size: 20px;
+  line-height: 1;
+  border: 0;
+}
+.stitch-desktop .pc-prompt-send {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--pc-foreground);
+  color: var(--pc-surface);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.stitch-desktop .pc-prompt-send:hover {
+  opacity: 0.85;
+}
+.stitch-desktop .pc-prompt-send:active {
+  transform: scale(0.95);
+}
+.stitch-desktop .pc-prompt-action-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.5) rotate(45deg);
+  filter: blur(1px);
+  transition: all 0.3s var(--pc-spring);
+}
+.stitch-desktop .pc-prompt-action-icon[data-visible='true'] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+.stitch-desktop .pc-prompt-collapse {
+  position: absolute;
+  top: 9px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--pc-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.stitch-desktop .pc-prompt[data-expanded='true'] .pc-prompt-collapse {
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (min-width: 768px) and (max-width: 900px) {
+  .stitch-desktop .pc-workspace > header {
+    padding-inline: 16px;
+  }
+  .stitch-desktop .nimbus-item {
+    padding-inline: 10px;
+  }
+}
+
+.stitch-desktop .sidebar-label:has(.pc-project-name) {
+  width: 148px;
+  flex: none;
+}
+.stitch-desktop .nimbus-nav .nimbus-item {
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* The surrounding card supplies the focus ring for this composite input. */
+.stitch-desktop .pc-prompt-textarea:focus-visible {
+  outline: none;
+}

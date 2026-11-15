@@ -1,6 +1,7 @@
 @import '../components/homepage/stitch-desktop.css';
 @import '../components/homepage/stitch-mobile.css';
 @import '../components/homepage/stitch-fonts.css';
+@import '../components/homepage/pc-optimization.css';
 
 html,
 body {
