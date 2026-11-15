@@ -52,3 +52,10 @@ Plans:
 | 2. Stitch homepage | 3/3            | In Progress | —          |
 
 Phase 2 工程完成；In Progress 仅保留真实手机与视觉人工验收，不是实现仍在后台运行。
+
+## Phase 3: PC 页面优化（CAR-7 当前子任务）
+
+Goal: 按用户明确参考实施 CAR-8～CAR-12；父任务继续接收后续问题。
+Requirements: PC-01～PC-05（见 03-CONTEXT.md）。
+Plans: 03-01 液态组件 → 03-02 桌面接入 → 03-03 验证与交付。
+Status: 2026-11-15 当前5子任务已实现，3份计划工程与自动验证完成；用户视觉验收PENDING，父任务持续开放。

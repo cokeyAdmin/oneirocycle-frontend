@@ -33,9 +33,10 @@ export function useStitchHomepage(variant: 'desktop' | 'mobile') {
   const lastTrigger = useRef<HTMLElement | null>(null);
   const mobile = variant === 'mobile';
   const unavailable = () => setNotice('该功能尚未接入，当前仅展示界面预览。');
-  function closePrompt() {
+  function closePrompt(restoreFocus = true) {
     setOpen(false);
     setMenu(null);
+    if (!restoreFocus) return;
     requestAnimationFrame(() =>
       (lastTrigger.current ?? triggerRef.current)?.focus({
         preventScroll: true,
@@ -45,6 +46,13 @@ export function useStitchHomepage(variant: 'desktop' | 'mobile') {
   function showPrompt(trigger?: HTMLElement) {
     lastTrigger.current = trigger ?? triggerRef.current;
     setOpen(true);
+    if (!mobile)
+      rootRef.current?.querySelector('[data-stitch-creator]')?.scrollIntoView({
+        block: 'center',
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'instant'
+          : 'smooth',
+      });
   }
 
   useEffect(() => {
@@ -291,6 +299,9 @@ export function useStitchHomepage(variant: 'desktop' | 'mobile') {
     collapsed,
     light,
     category,
+    setCategory,
+    showPrompt,
+    unavailable,
     menu,
     model,
     creationType,

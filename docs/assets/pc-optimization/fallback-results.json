@@ -1,0 +1,18 @@
+[
+  {
+    "name": "context loss readable fallbacks",
+    "pass": true,
+    "detail": {
+      "logo": "url(\"http://localhost:3000/media/stitch/811c2d1b2e23202e.png\")",
+      "text": "oneirocycle"
+    }
+  },
+  {
+    "name": "context restoration",
+    "pass": true
+  },
+  {
+    "name": "no WebGL startup fallback and navigation",
+    "pass": true
+  }
+]

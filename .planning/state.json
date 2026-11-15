@@ -12,12 +12,17 @@
       "number": "2",
       "name": "Stitch homepage",
       "status": "in_progress"
+    },
+    {
+      "number": "3",
+      "name": "PC page optimization (CAR-7 current subtasks)",
+      "status": "human_needed"
     }
   ],
   "next": {
-    "command": "$gsd-verify-work 2",
-    "label": "Review homepage visuals and physical mobile keyboard",
-    "reason": "Rejected first submission reworked against canonical source; local checks passed; user visual re-review and physical keyboard UAT pending. CAR-5 In Review read back."
+    "command": "$gsd-verify-work 3",
+    "label": "Review CAR-8–CAR-12 PC visual effects",
+    "reason": "Implementation, 17 tests, Node24 webpack build, strict UI audit, code review and 26 browser assertions passed; user visual acceptance pending."
   },
-  "updated_at": "2026-11-14T10:36:20.891005+00:00"
+  "updated_at": "2026-11-15T05:13:52.531345+00:00"
 }

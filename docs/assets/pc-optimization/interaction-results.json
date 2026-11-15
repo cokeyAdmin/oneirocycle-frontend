@@ -1,0 +1,30 @@
+[
+  {
+    "name": "mode pointer and arrow",
+    "pass": true
+  },
+  {
+    "name": "mode End",
+    "pass": true
+  },
+  {
+    "name": "mode Home",
+    "pass": true
+  },
+  {
+    "name": "focus on expansion",
+    "pass": true
+  },
+  {
+    "name": "long text scroll",
+    "pass": true
+  },
+  {
+    "name": "honest submit feedback",
+    "pass": true
+  },
+  {
+    "name": "text shrinks after clearing",
+    "pass": true
+  }
+]

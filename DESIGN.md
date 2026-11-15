@@ -30,3 +30,11 @@ Disconnected actions may show feedback only after activation. No additional pers
 ## Acceptance
 
 Compare original HTML rendering and implementation at identical width, height, theme and interaction state; freeze source animations at the same timestamp. Include same-input side-by-side full frames and focused crops. Build/layout tests alone do not establish visual fidelity. Real mobile keyboard/safe-area UAT remains separate. Only the user can accept the final visual result.
+
+## Approved PC optimization — 2026-11-15 (CAR-7)
+
+The user approved CAR-8–CAR-12 as explicit desktop exceptions to the original Stitch treatment. Keep all other Stitch visuals and the independent mobile shell. Four-mode navigation uses the supplied Waterline liquid navbar; the existing local logo uses GlassIconReveal; the sidebar `oneirocycle` name uses LiquidText at a slightly larger 28px maximum. The prompt uses the supplied capsule-to-card spring transition and autogrowing textarea, preserving existing local prompt/type/model state and unavailable-service feedback.
+
+Runtime ownership remains Model B: existing scoped Stitch CSS variables own colors and fonts. `pc-optimization.css` consumes those variables for desktop layout, controls and theme mapping; the supplied shaders own their optical material constants. Component owners: `src/components/ui/liquid-*`; desktop integration in `desktop-homepage.tsx`; prompt behavior in `desktop-prompt-input.tsx` with shared state from `use-stitch-homepage.ts`. No new dependencies, remote demo logos/model icons, demo voice recognition, or mobile restyling.
+
+The desktop app fits the viewport: banner and toolbar stay visible, sidebar never scrolls, only the right content region scrolls. Short-height sidebars use tighter existing navigation spacing so account controls remain reachable. Reduced motion and WebGL fallbacks preserve readable names and usable controls. Browser evidence and remaining visual acceptance belong to `docs/verification-pc-optimization.md`.
