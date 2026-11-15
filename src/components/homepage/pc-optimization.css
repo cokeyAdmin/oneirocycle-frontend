@@ -41,7 +41,7 @@
 .stitch-desktop .pc-workspace > header {
   position: relative;
   flex-shrink: 0;
-  background: var(--bg-main) !important;
+  background: var(--bg-surface) !important;
   gap: 12px;
 }
 .stitch-desktop .pc-workspace-body {
