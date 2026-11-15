@@ -1,41 +1,23 @@
 ---
-current_phase: '02'
-current_plan: 'rework'
+current_phase: '03'
+current_plan: '03'
 status: human_needed
-last_updated: '2026-11-14'
+last_updated: '2026-11-15'
 ---
 
-# 工作状态
+# 当前状态
 
-## 当前阶段
+Phase 03 — CAR-7 当前 PC 优化，执行 CAR-8～CAR-12。Mac Codex 直接维护 Linear；2026-11-15 用户确认服务端没有同任务 writer。
 
-Phase 2 — CAR-5 首页返工已本地完成，等待用户重新视觉验收及真机验收。
-分支：feat/car-6-frontend-foundation。此前仅本地交付；用户于 2026-11-14 明确授权立即推送本次成果，并常驻授权以后每次待验收前先提交、推送任务分支；本次推送结果以远端 SHA 读回及任务评论为准。未合并、部署，未修改后端。
+仓库：oneirocycle-frontend；基线 22aa286；分支 codex/car-7-pc-page-optimization。
+CAR-8～CAR-12 已实现；代码提交 ad721e2、76ec8a7；最终 check/17测试、Node24 webpack构建、strict UI审计及26项浏览器断言均通过。待用户视觉验收，见03-UAT.md与docs/verification-pc-optimization.md。
 
-## 已完成
+GSD Core 1.20.1 已验证；进度识别已有 Phase 1/2 成果，本轮新增 Phase 3，保留 Phase 2 的人工视觉/真机待验收边界。
 
-- 用户否决首轮视觉实现；首轮自订替代素材、字号及布局规则不是用户批准，已撤销。
-- 按指定 Stitch 桌面/移动原始 HTML 恢复原素材、字体、文案、布局及收起/展开交互；删除擅自新增内容。
-- 本地代码 45bf9f1；返工摘要 7962945。旧提交、截图与验收记录仅作被否决版本历史。
-- 最终应用 npm run check PASS（7 文件 / 17 测试），production build PASS。
-- 375/390/768/1280/1440 及页面交互、触控/焦点、短视口代理通过；无页面错误、外部素材或业务请求。
-- 同视口同状态四组原稿/实现对照及细节裁切已归档。静态 UI 审计 0 项，不代替视觉验收。
-- 当前证据：docs/verification-homepage-rework.md、design-qa.md、docs/assets/rework/。
+完整范围与验收见 phases/03-pc-page-optimization/03-CONTEXT.md；计划01/02完成，03自动验证与证据完成、人工视觉验收待确认。参考全文在 references/，不依赖用户附件本机路径。
 
-## 待验收
+CAR-7保持开放；CAR-8～CAR-12交付后同步In Review，最终读回以events.jsonl为准。后续新增子任务只记录，不自动扩展本轮范围。
 
-用户视觉复验 PENDING；物理 iOS/Android 软键盘、安全区、长输入、滚动与旋转 UAT PENDING。
-作者内联 QA 不是独立审查或用户批准；桌面仍记录轻微栅格合成差异，不宣称像素完全一致。
-下一检查点为 $gsd-verify-work 2，不重复实现，不新增产品 UI。
+现有 Next 自动生成 AGENTS.md/next-env.d.ts 变动已检查并保留。用户常驻授权待验收前提交并推送任务分支、读回远端 SHA；不直接推 main、不合并或部署。
 
-## Linear 同步
-
-CAR-5 In Review，状态与返工评论均已读回确认；不是 Done。
-最新评论：f1ddc0f6-ebc0-40c7-ac6c-c9a70d8775c5。
-历史否决评论：618ba8ab-f2a8-41df-a1ec-7765f029f0a3。
-用户已常驻授权 Linear MCP 调用，不逐次请求会话批准；未修改或绕过客户端权限机制。
-
-## 执行与范围
-
-本轮为已授权任务的内联验收返工，不宣称后台 worker、独立复审或多代理执行。
-Phase 1 工程完成；真实认证/API/模型、持久化、完整编辑器及 Agent 服务仍未接通，不属 CAR-5 范围。
+历史：Phase 2 首页返工的本地验证见 docs/verification-homepage-rework.md；CAR-5 的最终视觉与真实手机键盘、安全区 UAT 未确认，本轮不代替其验收。

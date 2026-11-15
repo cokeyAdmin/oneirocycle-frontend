@@ -1,0 +1,39 @@
+[
+  {
+    "name": "model selection",
+    "pass": true
+  },
+  {
+    "name": "Shift Enter newline",
+    "pass": true
+  },
+  {
+    "name": "Escape restores focus",
+    "pass": true,
+    "detail": "Waited for the scheduled focus-restoration animation frame"
+  },
+  {
+    "name": "empty blur preserves external focus",
+    "pass": true
+  },
+  {
+    "name": "IME Enter not intercepted",
+    "pass": true
+  },
+  {
+    "name": "light theme",
+    "pass": true
+  },
+  {
+    "name": "sidebar collapse",
+    "pass": true
+  },
+  {
+    "name": "close banner no page overflow",
+    "pass": true
+  },
+  {
+    "name": "reduced motion",
+    "pass": true
+  }
+]

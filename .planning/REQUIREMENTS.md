@@ -34,3 +34,15 @@
 ENG 至 QA 的骨架验收已通过，证据见 docs/verification.md 和 01-REVIEW.md；FLOW-01 的本地任务关联与执行记录已完成。HOME-01 至 HOME-06 映射 Phase 2 / CAR-5，实施和验收进展同步至同一 Linear issue。
 
 HOME-01/HOME-02 首轮视觉实现被用户否决，已按原稿返工，本地作者核对通过但保持未勾选，等待用户复验。HOME-04/HOME-05 的真机软键盘与安全区仍待验收。当前证据为 docs/verification-homepage-rework.md 和 docs/assets/rework/；旧证据仅为历史。CAR-5 In Review，返工评论与状态已读回。
+
+## Phase 3 — 当前 PC 页面优化（CAR-7）
+
+用户于2026-11-15授权实施以下当前子任务；将来新加子任务不自动纳入本轮。
+
+- [x] **PC-01 / CAR-8**：侧栏与顶部固定，只有右侧正文上下滚动；横幅/侧栏开关不产生整页溢出。
+- [x] **PC-02 / CAR-9**：四模式采用用户 Waterline 液态玻璃参考，保留受控状态与键盘切换。
+- [x] **PC-03 / CAR-10**：原项目 Logo 采用玻璃显现，保留原色与 WebGL 降级。
+- [x] **PC-04 / CAR-11**：项目名称采用 LiquidText，字号适度增大，缺失模块以现有依赖补齐。
+- [x] **PC-05 / CAR-12**：输入胶囊采用参考展开、增高与过渡；保留原功能与真实未接入反馈。
+
+勾选表示实现与自动检查有证据，不表示用户视觉验收。人工验收见 Phase03 03-UAT.md；浏览器及构建证据见 docs/verification-pc-optimization.md。
