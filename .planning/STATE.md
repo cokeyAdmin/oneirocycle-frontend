@@ -7,6 +7,10 @@ last_updated: '2026-11-15'
 
 # 当前状态
 
+## 2026-11-15 接力更新
+
+用户明确授权实施 CAR-13～CAR-17；先前“仅记录未授权”的描述为历史。当前从 main 08ac551 建立任务分支 codex/car-13-17-fixes。CAR-13 实施及本地验证见 docs/verification-car13.md，待用户验收。CAR-14～CAR-17 所引用的用户组件源码未在各任务或仓库发现，等待可读取的源码，不能自行替代参考效果。CAR-8～CAR-12 已随 PR #2 合并 main；本轮不改其验收状态。
+
 Phase 03 — CAR-7 当前 PC 优化，执行 CAR-8～CAR-12。Mac Codex 直接维护 Linear；2026-11-15 用户确认服务端没有同任务 writer。
 
 仓库：oneirocycle-frontend；基线 22aa286；分支 codex/car-7-pc-page-optimization。

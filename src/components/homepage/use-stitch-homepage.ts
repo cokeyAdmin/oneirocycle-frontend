@@ -297,6 +297,7 @@ export function useStitchHomepage(variant: 'desktop' | 'mobile') {
     open,
     promotion,
     collapsed,
+    setCollapsed,
     light,
     category,
     setCategory,

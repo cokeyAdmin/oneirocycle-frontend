@@ -15,6 +15,7 @@ export function DesktopHomepage() {
     closePrompt,
     unavailable,
     collapsed,
+    setCollapsed,
     creationType,
     dismissMenus,
     dismissNotice,
@@ -147,13 +148,25 @@ export function DesktopHomepage() {
                 <button
                   type="button"
                   className="pc-sidebar-logo"
-                  aria-label="重播 Logo 动画"
+                  aria-label={
+                    collapsed ? '展开侧边栏并重播 Logo 动画' : '重播 Logo 动画'
+                  }
+                  aria-expanded={!collapsed}
+                  aria-controls="desktop-main-sidebar"
+                  onMouseEnter={(event) => {
+                    if (!collapsed) return;
+                    event.currentTarget
+                      .querySelector<HTMLElement>('[role="img"]')
+                      ?.click();
+                    setCollapsed(false);
+                  }}
                   onClick={(event) => {
                     event.stopPropagation();
                     if (event.target === event.currentTarget)
                       event.currentTarget
                         .querySelector<HTMLElement>('[role="img"]')
                         ?.click();
+                    if (collapsed) setCollapsed(false);
                   }}
                 >
                   <GlassIconReveal
@@ -184,32 +197,34 @@ export function DesktopHomepage() {
                   />
                 </div>
               </div>
-              <button
-                id="desktop-sidebar-collapse-toggle"
-                className="sidebar-label hidden md:flex w-7 h-7 rounded-lg liquid-glass hover:bg-white/10 items-center justify-center text-neutral-400 hover:text-white transition-all duration-200 border border-white/10 active:scale-95 flex-shrink-0"
-                title="收起侧边栏"
-                type="button"
-                data-stitch-action="sidebar"
-                aria-expanded={!collapsed}
-                aria-label={collapsed ? '展开侧边栏' : '收起侧边栏'}
-                onClick={onClick}
-              >
-                <svg
-                  id="desktop-sidebar-toggle-icon"
-                  className="w-4 h-4 transition-transform duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
+              {!collapsed && (
+                <button
+                  id="desktop-sidebar-collapse-toggle"
+                  className="sidebar-label hidden md:flex w-7 h-7 rounded-lg liquid-glass hover:bg-white/10 items-center justify-center text-neutral-400 hover:text-white transition-all duration-200 border border-white/10 active:scale-95 flex-shrink-0"
+                  title="收起侧边栏"
+                  type="button"
+                  data-stitch-action="sidebar"
+                  aria-expanded={!collapsed}
+                  aria-label={collapsed ? '展开侧边栏' : '收起侧边栏'}
+                  onClick={onClick}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.8"
-                    d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-                  ></path>
-                </svg>
-              </button>
+                  <svg
+                    id="desktop-sidebar-toggle-icon"
+                    className="w-4 h-4 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.8"
+                      d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+                    ></path>
+                  </svg>
+                </button>
+              )}
             </div>
             <nav className="space-y-1.5 font-medium text-sm">
               <button
