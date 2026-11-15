@@ -8,11 +8,13 @@
 | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | CAR-8  | `desktop-homepage.tsx` + `pc-optimization.css`：banner/侧栏/顶部不滚动，仅右侧正文 main 滚动；修复多出42px横幅高度的整页溢出 |
 | CAR-9  | `ui/liquid-glass-navbar.tsx`：用户 Waterline shader 与水滴物理，四模式受控，静音、键盘可用                                   |
-| CAR-10 | `ui/liquid-glass-logo-reveal.tsx`：原色本地 Logo 玻璃显现/重播，失败与丢失时静态显示                                         |
+| CAR-10 | `ui/liquid-glass-logo-reveal.tsx`：仅提取本地 Logo 的白色图形后进行玻璃显现/重播，失败与丢失时静态显示                       |
 | CAR-11 | `ui/liquid-text.tsx` 及四辅助模块：液态字形与拖曳回流，菜单名称上限28px，无新增依赖                                          |
 | CAR-12 | `desktop-prompt-input.tsx`：320px胶囊到480px卡片弹性展开，68～160px自动高度，长文渐隐，复用原prompt/类型/模型与未接反馈      |
 
 主实现提交：`ad721e2`、`76ec8a7`。完整参考位于 `.planning/phases/03-pc-page-optimization/references/`，不依赖用户附件路径。参考演示的额外上传/语音识别/思考强度未扩大为新产品能力，未伪造服务结果。
+
+CAR-10 返修（2026-11-15）：旧本地 PNG 内含浅蓝灰色图标底，原 SDF 将整张图当作 Logo 轮廓，造成灰色遮罩残留。现已换用用户提供的透明底白色 Logo PNG，玻璃仍按原时间轴显现后释放。CAR-10 已置为 In Review，等待本次视觉验收。
 
 ## 自动检查
 
@@ -20,6 +22,7 @@
 - Node 24.6.0：`npm run build -- --webpack` PASS，首页静态预渲染成功。未改变构建脚本或依赖。
 - strict premium UI audit PASS，0 findings，见 `assets/pc-optimization/premium-audit.json`。
 - `git diff --check` PASS。
+- CAR-10 返修：`npm run typecheck`、组件 ESLint 与 `npm run build -- --webpack` PASS。
 - 独立代码审查修复并复核4项：空blur抢焦、长文缩高、Logo单色丢标识、context loss空白。`03-REVIEW.md` active=0。
 
 本机默认 Node 22.9.0 低于 package.json 的 >=22.12.0；默认 Turbopack 构建触发本机进程端口 EPERM，Webpack 在旧 Node 又触发 require(ESM) 不兼容。使用本机已有 Node24 和 Next支持的Webpack路径后实际构建通过，未安装或更改依赖。未声称默认Turbopack命令通过。

@@ -157,10 +157,11 @@ export function DesktopHomepage() {
                   }}
                 >
                   <GlassIconReveal
-                    originalColors={true}
-                    logo="/media/stitch/811c2d1b2e23202e.png"
+                    logo="/media/stitch/oneirocycle-logo-white.png"
                     label="OneiroCycle Logo"
                     look={light ? 'light' : 'dark'}
+                    iconPlate={false}
+                    tuning={{ halo: 0 }}
                     background={light ? '#ffffff' : '#0f1015'}
                     logoColor={light ? '#15171c' : '#ffffff'}
                     tileSize={36}
