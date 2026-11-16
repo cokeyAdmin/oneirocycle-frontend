@@ -243,9 +243,10 @@ export function DesktopHomepage() {
             >
               <SidebarWater ref={waterRef} light={light} />
               <button
-                className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/[0.08] text-white border border-white/10 shadow-sm transition-all"
+                className="pc-sidebar-current flex items-center gap-3 px-3 py-2 rounded-xl text-white transition-all"
                 type="button"
                 aria-label="首页"
+                aria-current="page"
                 data-stitch-action="home"
                 onClick={onClick}
               >
