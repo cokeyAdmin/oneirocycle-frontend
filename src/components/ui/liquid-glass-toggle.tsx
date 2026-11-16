@@ -323,6 +323,15 @@ export function LiquidToggle({
       const { gl: c, u } = s.glc;
       const S = G.S;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const cv = canvasRef.current;
+      if (cv) {
+        const width = Math.round((G.w + G.PAD * 2) * dpr);
+        const height = Math.round((G.h + G.PAD * 2) * dpr);
+        if (cv.width !== width || cv.height !== height) {
+          cv.width = width;
+          cv.height = height;
+        }
+      }
       c.viewport(0, 0, c.drawingBufferWidth, c.drawingBufferHeight);
       c.uniform2f(u.uRes ?? null, G.w + G.PAD * 2, G.h + G.PAD * 2);
       c.uniform1f(u.uDpr ?? null, dpr);
