@@ -341,10 +341,60 @@
   color: var(--pc-surface);
   transition:
     opacity 0.2s,
-    transform 0.2s;
+    transform 0.2s,
+    width 0.4s,
+    border-radius 0.4s;
 }
 .stitch-desktop .pc-prompt-send:hover {
   opacity: 0.85;
+}
+.stitch-desktop .pc-prompt-send[data-listening='true'] {
+  width: 150px;
+  border-radius: 999px;
+}
+.stitch-desktop .pc-voice-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.stitch-desktop .pc-voice-stop {
+  width: 10px;
+  height: 10px;
+  background: currentColor;
+  border-radius: 2px;
+  animation: pc-voice-spin 2s ease-in-out infinite;
+}
+.stitch-desktop .pc-voice-bars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 16px;
+}
+.stitch-desktop .pc-voice-bars span {
+  width: 2px;
+  height: 3px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: pc-voice-wave 1s ease-in-out infinite;
+}
+@keyframes pc-voice-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pc-voice-wave {
+  50% {
+    height: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stitch-desktop .pc-voice-stop,
+  .stitch-desktop .pc-voice-bars span {
+    animation: none;
+  }
 }
 .stitch-desktop .pc-prompt-send:active {
   transform: scale(0.95);
