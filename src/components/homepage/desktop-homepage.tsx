@@ -160,13 +160,6 @@ export function DesktopHomepage() {
                   }
                   aria-expanded={!collapsed}
                   aria-controls="desktop-main-sidebar"
-                  onMouseEnter={(event) => {
-                    if (!collapsed) return;
-                    event.currentTarget
-                      .querySelector<HTMLElement>('[role="img"]')
-                      ?.click();
-                    setCollapsed(false);
-                  }}
                   onClick={(event) => {
                     event.stopPropagation();
                     if (event.target === event.currentTarget)
