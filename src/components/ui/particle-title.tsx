@@ -358,6 +358,7 @@ function createEngine(
     c.setTransform(1, 0, 0, 1, 0, 0);
     c.clearRect(0, 0, cv.width, cv.height);
     c.globalAlpha = 1;
+    c.drawImage(textCv, 0, 0);
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
@@ -375,6 +376,9 @@ function createEngine(
       p.lt = lt;
       p.bend = pl.bend;
       p.pa = out ? 1 - smooth(lt / 0.18) : smooth((lt - 0.82) / 0.18);
+      if (p.pa <= 0.002) continue;
+      c.globalAlpha = p.pa;
+      c.drawImage(textCv, p.rx, p.ry, p.rw, p.rh, p.rx, p.ry, p.rw, p.rh);
     }
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
     for (const p of parts) {
@@ -441,7 +445,7 @@ function createEngine(
   }
 
   build();
-  enter('gathering');
+  enter('text');
   return {
     setActive(on) {
       if (on === active || destroyed) return;
@@ -503,12 +507,14 @@ export function ParticleTitle({
   const dark = !light;
   const pal = dark ? DARK : LIGHT;
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const cv = canvasRef.current;
     if (reduce || !cv) return;
     const engine = createEngine(cv, text, dark ? DARK : LIGHT);
     if (!engine) return;
+    const readyFrame = requestAnimationFrame(() => setReady(true));
     let visible = true;
     let size = `${cv.clientWidth}x${cv.clientHeight}`;
     const sync = () => engine.setActive(visible && !document.hidden);
@@ -530,6 +536,7 @@ export function ParticleTitle({
     sync();
     return () => {
       document.removeEventListener('visibilitychange', sync);
+      cancelAnimationFrame(readyFrame);
       clearTimeout(rz);
       io.disconnect();
       ro.disconnect();
@@ -546,6 +553,16 @@ export function ParticleTitle({
   return (
     <div
       className={`relative isolate flex h-[100px] w-full items-center justify-center overflow-hidden ${className}`}
+      style={{
+        position: 'relative',
+        isolation: 'isolate',
+        display: 'flex',
+        height: 100,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+      }}
     >
       <div
         aria-hidden="true"
@@ -573,16 +590,39 @@ export function ParticleTitle({
           ref={canvasRef}
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+          }}
         />
       )}
 
       <h1
-        className="relative z-10 m-0 px-6 text-center text-3xl font-medium"
+        className={
+          reduce || !ready
+            ? 'relative z-10 m-0 px-6 text-center text-3xl font-medium'
+            : 'absolute m-[-1px] h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]'
+        }
         style={{
           color: css(pal.ink, 0.95),
           fontSize: 'clamp(20px, 3vw, 30px)',
           fontWeight: 600,
           lineHeight: 1.2,
+          ...(reduce || !ready
+            ? {}
+            : {
+                position: 'absolute',
+                width: '1px',
+                height: '1px',
+                padding: 0,
+                margin: '-1px',
+                overflow: 'hidden',
+                clipPath: 'inset(50%)',
+                whiteSpace: 'nowrap',
+              }),
         }}
       >
         {text}

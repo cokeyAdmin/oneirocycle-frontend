@@ -556,7 +556,7 @@ export function DesktopHomepage() {
               <div className="text-center space-y-2">
                 {'\n'}
                 <ParticleTitle
-                  text="OneiroCycle 环梦篇章，一站式AIGC创作平台"
+                  text="oneiroCycle 环梦篇章，一站式AIGC创作平台"
                   light={light}
                 />
                 {'\n\n'}
