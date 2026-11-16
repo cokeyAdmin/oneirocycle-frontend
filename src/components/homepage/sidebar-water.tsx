@@ -73,6 +73,7 @@ export const SidebarWater = forwardRef<SidebarWaterHandle, SidebarWaterProps>(
   function SidebarWater({ light }, ref) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const lightRef = useRef(light);
+    const previousButton = useRef<HTMLElement | null>(null);
     const animateRef = useRef<((button: HTMLElement) => void) | null>(null);
     const [fallback, setFallback] = useState<{
       from: number;
@@ -99,7 +100,9 @@ export const SidebarWater = forwardRef<SidebarWaterHandle, SidebarWaterProps>(
         const root = canvas.getBoundingClientRect();
         const target = button.getBoundingClientRect();
         const first = button.closest('nav')?.querySelector('button');
-        const origin = first?.getBoundingClientRect() ?? target;
+        const origin =
+          (previousButton.current ?? first)?.getBoundingClientRect() ?? target;
+        previousButton.current = button;
         return {
           from: origin.top - root.top + origin.height / 2,
           to: target.top - root.top + target.height / 2,

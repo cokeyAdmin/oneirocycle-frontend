@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { LiquidNavbar } from '../ui/liquid-glass-navbar';
 import { GlassIconReveal } from '../ui/liquid-glass-logo-reveal';
 import { LiquidText } from '../ui/liquid-text';
@@ -13,6 +13,7 @@ import { SidebarWater, type SidebarWaterHandle } from './sidebar-water';
 
 export function DesktopHomepage() {
   const waterRef = useRef<SidebarWaterHandle>(null);
+  const [menuHighlight, setMenuHighlight] = useState('首页');
   const {
     category,
     setCategory,
@@ -237,15 +238,18 @@ export function DesktopHomepage() {
               onClickCapture={(event) => {
                 if (!(event.target instanceof Element)) return;
                 const button = event.target.closest('button');
-                if (button && event.currentTarget.contains(button))
+                if (button && event.currentTarget.contains(button)) {
                   waterRef.current?.moveTo(button);
+                  setMenuHighlight(button.getAttribute('aria-label') || '首页');
+                }
               }}
             >
               <SidebarWater ref={waterRef} light={light} />
               <button
-                className="pc-sidebar-current flex items-center gap-3 px-3 py-2 rounded-xl text-white transition-all"
+                className="flex items-center gap-3 px-3 py-2 rounded-xl text-white transition-all"
                 type="button"
                 aria-label="首页"
+                data-preview-selected={menuHighlight === '首页'}
                 aria-current="page"
                 data-stitch-action="home"
                 onClick={onClick}
@@ -275,6 +279,7 @@ export function DesktopHomepage() {
                 className="flex items-center gap-3 px-3 py-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/[0.04] transition-all"
                 type="button"
                 aria-label="创作图片"
+                data-preview-selected={menuHighlight === '创作图片'}
                 data-stitch-action="unavailable"
                 onClick={onClick}
               >
@@ -303,6 +308,7 @@ export function DesktopHomepage() {
                 className="flex items-center gap-3 px-3 py-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/[0.04] transition-all"
                 type="button"
                 aria-label="创作视频"
+                data-preview-selected={menuHighlight === '创作视频'}
                 data-stitch-action="unavailable"
                 onClick={onClick}
               >
@@ -331,6 +337,7 @@ export function DesktopHomepage() {
                 className="flex items-center gap-3 px-3 py-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/[0.04] transition-all"
                 type="button"
                 aria-label="无限画布"
+                data-preview-selected={menuHighlight === '无限画布'}
                 data-stitch-action="unavailable"
                 onClick={onClick}
               >
@@ -359,6 +366,7 @@ export function DesktopHomepage() {
                 className="flex items-center gap-3 px-3 py-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/[0.04] transition-all"
                 type="button"
                 aria-label="我的资产"
+                data-preview-selected={menuHighlight === '我的资产'}
                 data-stitch-action="unavailable"
                 onClick={onClick}
               >
