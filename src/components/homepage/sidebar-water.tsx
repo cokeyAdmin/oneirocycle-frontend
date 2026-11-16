@@ -323,8 +323,11 @@ export const SidebarWater = forwardRef<SidebarWaterHandle, SidebarWaterProps>(
         }
         const head = s.lead === 0 ? s.a : s.b,
           tail = s.lead === 0 ? s.b : s.a;
-        const gap = Math.abs(head.y - tail.y) - (head.h + tail.h),
-          thin = Math.max(0, Math.min(1, (gap + 80) / 70));
+        // The reference's fixed 80px overlap assumes an expanded answer panel.
+        // Normalize for short menu rows so settled bodies never stay pinched.
+        const separation =
+          Math.abs(head.y - tail.y) / Math.max(1, head.h + tail.h);
+        const thin = Math.max(0, Math.min(1, (separation - 0.25) / 0.75));
         const shape = (B: Body, k: number) => {
           const w = B.w * (1 - k * thin),
             h = B.h;
