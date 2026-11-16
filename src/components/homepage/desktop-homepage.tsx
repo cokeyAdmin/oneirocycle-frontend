@@ -384,14 +384,12 @@ export function DesktopHomepage() {
                   {'我的资产'}
                 </span>
               </button>
-              <div className="pt-3 border-t border-white/5 my-2"></div>
             </nav>
           </div>
           <div
-            className="flex-shrink-0 p-3 border-t relative z-50 bg-[#0e0f14]/95 w-full"
+            className="flex-shrink-0 p-3 relative z-50 bg-[#0e0f14]/95 w-full"
             style={{
               background: 'rgba(14, 15, 20, 0.95)',
-              borderColor: 'rgba(255, 255, 255, 0.1)',
               backdropFilter: 'blur(20px)',
             }}
           >
