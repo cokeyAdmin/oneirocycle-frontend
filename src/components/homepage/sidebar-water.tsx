@@ -60,300 +60,485 @@ void main(){
  gl_FragColor=vec4(c,a);
 }`;
 
-interface SidebarWaterProps {
-  light: boolean;
-}
+type Body = {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  vx: number;
+  vy: number;
+  vw: number;
+  vh: number;
+};
+type Target = Pick<Body, 'x' | 'y' | 'w' | 'h'>;
+type Drop = {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  r: number;
+  k: number;
+};
+type Ripple = { x: number; y: number; age: number; amp: number };
+const body = (): Body => ({
+  x: 0,
+  y: 0,
+  w: 0,
+  h: 0,
+  vx: 0,
+  vy: 0,
+  vw: 0,
+  vh: 0,
+});
+const PAD = 14;
+const RADIUS = 20;
 
 export interface SidebarWaterHandle {
   moveTo: (button: HTMLElement) => void;
 }
+interface SidebarWaterProps {
+  light: boolean;
+}
 
-/** A temporary water transition between the current and requested menu items. */
+/** Original Spillway spring/water engine adapted to menu button geometry. */
 export const SidebarWater = forwardRef<SidebarWaterHandle, SidebarWaterProps>(
   function SidebarWater({ light }, ref) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const moveRef = useRef<((button: HTMLElement) => void) | null>(null);
+    const redrawRef = useRef<(() => void) | null>(null);
     const lightRef = useRef(light);
-    const previousButton = useRef<HTMLElement | null>(null);
-    const animateRef = useRef<((button: HTMLElement) => void) | null>(null);
-    const [fallback, setFallback] = useState<{
-      from: number;
-      to: number;
-      left: number;
-      width: number;
-      height: number;
-      key: number;
-    } | null>(null);
+    const [fallback, setFallback] = useState<Target | null>(null);
     useImperativeHandle(
       ref,
-      () => ({ moveTo: (button) => animateRef.current?.(button) }),
+      () => ({ moveTo: (button) => moveRef.current?.(button) }),
       [],
     );
     useEffect(() => {
       lightRef.current = light;
+      redrawRef.current?.();
     }, [light]);
 
     useEffect(() => {
       const canvas = canvasRef.current;
-      if (!canvas) return;
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-      const getGeometry = (button: HTMLElement) => {
-        const root = canvas.getBoundingClientRect();
-        const target = button.getBoundingClientRect();
-        const first = button.closest('nav')?.querySelector('button');
-        const origin =
-          (previousButton.current ?? first)?.getBoundingClientRect() ?? target;
-        previousButton.current = button;
-        return {
-          from: origin.top - root.top + origin.height / 2,
-          to: target.top - root.top + target.height / 2,
-          left: target.left - root.left,
-          width: target.width,
-          height: target.height,
-        };
-      };
-      const showFallback = (button: HTMLElement) => {
-        const geometry = getGeometry(button);
-        setFallback({ ...geometry, key: Date.now() });
+      const nav = canvas?.parentElement?.parentElement;
+      if (!canvas || !nav) return;
+      const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let selected =
+        nav.querySelector<HTMLElement>(
+          'button[data-preview-selected="true"]',
+        ) ?? nav.querySelector<HTMLElement>('button');
+      const s = {
+        a: body(),
+        b: body(),
+        lead: 0,
+        lagUntil: 0,
+        drops: [] as Drop[],
+        ripples: [] as Ripple[],
+        moving: false,
+        split: false,
+        ready: false,
+        raf: 0,
+        last: 0,
+        time: 0,
+        visible: true,
+        lost: false,
       };
       const gl = canvas.getContext('webgl', {
-        alpha: true,
         premultipliedAlpha: true,
+        alpha: true,
         antialias: false,
       });
-      if (!gl) {
-        animateRef.current = showFallback;
-        return () => {
-          animateRef.current = null;
-        };
-      }
-      function compile(type: number, source: string) {
+      let program: WebGLProgram | null = null;
+      let buffer: WebGLBuffer | null = null;
+      const shaders: WebGLShader[] = [];
+      const uniforms: Record<string, WebGLUniformLocation | null> = {};
+      const compile = (type: number, source: string) => {
         const shader = gl!.createShader(type);
         if (!shader) return null;
+        shaders.push(shader);
         gl!.shaderSource(shader, source);
         gl!.compileShader(shader);
-        if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
-          gl!.deleteShader(shader);
-          return null;
-        }
-        return shader;
-      }
-      const vs = compile(gl.VERTEX_SHADER, VERT);
-      const fs = compile(gl.FRAGMENT_SHADER, FRAG);
-      const program = gl.createProgram();
-      if (!vs || !fs || !program) {
-        if (vs) gl.deleteShader(vs);
-        if (fs) gl.deleteShader(fs);
-        if (program) gl.deleteProgram(program);
-        animateRef.current = showFallback;
-        return () => {
-          animateRef.current = null;
-        };
-      }
-      gl.attachShader(program, vs);
-      gl.attachShader(program, fs);
-      gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        gl.deleteProgram(program);
-        gl.deleteShader(vs);
-        gl.deleteShader(fs);
-        animateRef.current = showFallback;
-        return () => {
-          animateRef.current = null;
-        };
-      }
-      gl.useProgram(program);
-      const buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      gl.bufferData(
-        gl.ARRAY_BUFFER,
-        new Float32Array([-1, -1, 3, -1, -1, 3]),
-        gl.STATIC_DRAW,
-      );
-      const attrib = gl.getAttribLocation(program, 'a');
-      gl.enableVertexAttribArray(attrib);
-      gl.vertexAttribPointer(attrib, 2, gl.FLOAT, false, 0, 0);
-      const uniform = (name: string) => gl.getUniformLocation(program, name);
-      const u = {
-        res: uniform('uRes'),
-        dpr: uniform('uDpr'),
-        time: uniform('uTime'),
-        card: uniform('uCard'),
-        box: uniform('uBox[0]'),
-        boxR: uniform('uBoxR[0]'),
-        sat: uniform('uSat[0]'),
-        rip: uniform('uRip[0]'),
-        mouse: uniform('uMouse'),
-        front: uniform('uFront'),
-        dark: uniform('uDark'),
-        amb: uniform('uAmb'),
+        return gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)
+          ? shader
+          : null;
       };
-      let frame = 0;
-      let started = 0;
-      let lost = false;
-      let visible = true;
-      let geometry = { from: 0, to: 0, left: 0, width: 0, height: 0 };
-      const render = (now: number) => {
-        frame = 0;
-        if (lost || !visible || document.visibilityState !== 'visible') return;
-        const width = canvas.clientWidth;
-        const height = canvas.clientHeight;
-        if (!width || !height) return;
-        const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-        const pixelWidth = Math.max(1, Math.round(width * dpr));
-        const pixelHeight = Math.max(1, Math.round(height * dpr));
-        if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
-          canvas.width = pixelWidth;
-          canvas.height = pixelHeight;
+      if (gl) {
+        const vertex = compile(gl.VERTEX_SHADER, VERT),
+          fragment = compile(gl.FRAGMENT_SHADER, FRAG);
+        program = gl.createProgram();
+        if (program && vertex && fragment) {
+          gl.attachShader(program, vertex);
+          gl.attachShader(program, fragment);
+          gl.linkProgram(program);
+          if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            gl.deleteProgram(program);
+            program = null;
+          }
+        } else if (program) {
+          gl.deleteProgram(program);
+          program = null;
         }
-        const elapsed = (now - started) / 1000;
-        const progress = Math.min(1, elapsed / (reduce.matches ? 0.01 : 0.75));
-        const strength = Math.sin(Math.PI * progress);
-        const smooth = (x: number) => {
-          const t = Math.min(1, Math.max(0, x));
-          return t * t * (3 - 2 * t);
+        if (program) {
+          gl.useProgram(program);
+          buffer = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+          gl.bufferData(
+            gl.ARRAY_BUFFER,
+            new Float32Array([-1, -1, 3, -1, -1, 3]),
+            gl.STATIC_DRAW,
+          );
+          const attribute = gl.getAttribLocation(program, 'a');
+          gl.enableVertexAttribArray(attribute);
+          gl.vertexAttribPointer(attribute, 2, gl.FLOAT, false, 0, 0);
+          for (const name of [
+            'uRes',
+            'uDpr',
+            'uTime',
+            'uCard',
+            'uBox',
+            'uBoxR',
+            'uSat',
+            'uRip',
+            'uMouse',
+            'uFront',
+            'uDark',
+            'uAmb',
+          ])
+            uniforms[name] = gl.getUniformLocation(
+              program,
+              ['uBox', 'uBoxR', 'uSat', 'uRip'].includes(name)
+                ? name + '[0]'
+                : name,
+            );
+        }
+      }
+      const target = (): Target | null => {
+        if (!selected) return null;
+        const root = nav.getBoundingClientRect(),
+          rect = selected.getBoundingClientRect();
+        return {
+          x: PAD + rect.left - root.left + rect.width / 2,
+          y: PAD + rect.top - root.top + rect.height / 2,
+          w: Math.max(1, rect.width / 2 - 1),
+          h: Math.max(1, rect.height / 2 - 1),
         };
-        const lead =
-          geometry.from +
-          (geometry.to - geometry.from) * smooth(progress * 1.6);
-        const tail =
-          geometry.from +
-          (geometry.to - geometry.from) * smooth((progress - 0.12) * 1.6);
-        const center = geometry.left + geometry.width / 2;
-        gl.viewport(0, 0, pixelWidth, pixelHeight);
-        gl.uniform2f(u.res, width, height);
-        gl.uniform1f(u.dpr, dpr);
-        gl.uniform1f(u.time, elapsed);
-        gl.uniform4f(u.card, 0, 0, width, height);
+      };
+      const resize = () => {
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+        const width = nav.clientWidth + PAD * 2,
+          height = nav.clientHeight + PAD * 2;
+        canvas.width = Math.max(1, Math.round(width * dpr));
+        canvas.height = Math.max(1, Math.round(height * dpr));
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        const T = target();
+        if (!s.ready && T) {
+          Object.assign(s.a, T);
+          Object.assign(s.b, T);
+          s.ready = true;
+        }
+      };
+      const step = (dt: number, now: number) => {
+        s.time += dt;
+        const T = target();
+        if (!T) return;
+        let still = true;
+        const bodies = [s.a, s.b];
+        if (motion.matches) {
+          for (const B of bodies)
+            Object.assign(B, T, { vx: 0, vy: 0, vw: 0, vh: 0 });
+          s.drops = [];
+          s.ripples = [];
+        } else {
+          bodies.forEach((B, i) => {
+            const lead = i === s.lead,
+              k = lead ? 210 : 60,
+              c = lead ? 25 : 13;
+            const f = !lead && now < s.lagUntil ? 0.04 : 1,
+              kh = lead ? 260 : 90;
+            B.vx += (k * (T.x - B.x) - c * B.vx) * dt * f;
+            B.vy += (k * (T.y - B.y) - c * B.vy) * dt * f;
+            B.vw += (k * (T.w - B.w) - c * B.vw) * dt * f;
+            B.vh += (kh * (T.h - B.h) - (lead ? 22 : 14) * B.vh) * dt * f;
+            B.x += B.vx * dt;
+            B.y += B.vy * dt;
+            B.w = Math.max(0, B.w + B.vw * dt);
+            B.h = Math.max(0, B.h + B.vh * dt);
+            if (
+              Math.abs(T.y - B.y) > 0.3 ||
+              Math.abs(T.h - B.h) > 0.3 ||
+              Math.abs(T.w - B.w) > 0.3 ||
+              Math.abs(B.vy) + Math.abs(B.vh) > 3
+            )
+              still = false;
+          });
+          const head = bodies[s.lead]!,
+            tail = bodies[1 - s.lead]!;
+          const gap = Math.abs(head.y - tail.y) - (head.h + tail.h);
+          if (!s.split && s.moving && gap > 4) {
+            s.split = true;
+            const top =
+              Math.min(head.y, tail.y) + (head.y < tail.y ? head.h : tail.h);
+            [0.25, 0.55, 0.85].forEach((t, j) =>
+              s.drops.push({
+                x: head.x + (Math.random() - 0.5) * nav.clientWidth * 0.35,
+                y: top + gap * t,
+                vx: (Math.random() - 0.5) * 80,
+                vy: (head.vy + tail.vy) * 0.4,
+                r: 9 - j * 1.5 + Math.random() * 2,
+                k: 60 + Math.random() * 80,
+              }),
+            );
+          }
+          s.drops = s.drops.filter((d) => {
+            d.vx += (25 * (head.x - d.x) - 6 * d.vx) * dt;
+            d.vy += (d.k * (head.y - d.y) - 9 * d.vy) * dt;
+            d.x += d.vx * dt;
+            d.y += d.vy * dt;
+            if (Math.abs(head.y - d.y) < head.h * 0.85 || head.h < 6)
+              d.r -= dt * 30;
+            return d.r > 0.6;
+          });
+          if (s.drops.length) still = false;
+        }
+        if (s.moving && still) {
+          s.moving = false;
+          if (!motion.matches)
+            s.ripples.push({
+              x: T.x,
+              y: T.y - T.h + Math.min(22, T.h),
+              age: 0,
+              amp: s.split ? 1.1 : 0.6,
+            });
+        }
+        s.ripples.forEach((p) => (p.age += dt));
+        s.ripples = s.ripples.filter((p) => p.age < 2.4);
+      };
+      const draw = () => {
+        const T = target();
+        if (!T) return;
+        if (!gl || !program || s.lost) {
+          setFallback(T);
+          return;
+        }
+        const head = s.lead === 0 ? s.a : s.b,
+          tail = s.lead === 0 ? s.b : s.a;
+        const gap = Math.abs(head.y - tail.y) - (head.h + tail.h),
+          thin = Math.max(0, Math.min(1, (gap + 80) / 70));
+        const shape = (B: Body, k: number) => {
+          const w = B.w * (1 - k * thin),
+            h = B.h;
+          return {
+            w,
+            h,
+            r: Math.max(
+              0,
+              Math.min(RADIUS + (Math.min(w, h) - RADIUS) * thin, w, h),
+            ),
+          };
+        };
+        const hs = shape(head, 0.22),
+          ts = shape(tail, 0.5);
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform2f(
+          uniforms.uRes ?? null,
+          nav.clientWidth + PAD * 2,
+          nav.clientHeight + PAD * 2,
+        );
+        gl.uniform1f(uniforms.uDpr ?? null, dpr);
+        gl.uniform1f(uniforms.uTime ?? null, s.time);
+        gl.uniform4f(
+          uniforms.uCard ?? null,
+          PAD,
+          PAD,
+          nav.clientWidth,
+          nav.clientHeight,
+        );
         gl.uniform4fv(
-          u.box,
+          uniforms.uBox ?? null,
           new Float32Array([
-            center,
-            lead,
-            Math.max(1, geometry.width / 2 - 2),
-            Math.max(1, geometry.height / 2 - 2),
-            center,
-            tail,
-            Math.max(1, geometry.width / 2 - 4),
-            Math.max(1, geometry.height / 2 - 3),
+            head.x,
+            head.y,
+            hs.w,
+            hs.h,
+            tail.x,
+            tail.y,
+            ts.w,
+            ts.h,
           ]),
         );
-        gl.uniform1fv(u.boxR, new Float32Array([14, 14]));
-        const sats = new Float32Array(16);
-        for (let i = 0; i < 3; i++) {
-          sats.set(
-            [
-              center + (i - 1) * geometry.width * 0.16,
-              lead + (tail - lead) * (0.25 + i * 0.25),
-              strength * (4 - i * 0.6),
-              0,
-            ],
-            i * 4,
-          );
-        }
-        gl.uniform4fv(u.sat, sats);
+        gl.uniform1fv(uniforms.uBoxR ?? null, new Float32Array([hs.r, ts.r]));
+        const drops = new Float32Array(16);
+        s.drops
+          .slice(0, 4)
+          .forEach((d, i) => drops.set([d.x, d.y, d.r, 0], i * 4));
+        gl.uniform4fv(uniforms.uSat ?? null, drops);
         const ripples = new Float32Array(24);
-        ripples.set([
-          center,
-          geometry.to,
-          Math.max(0, elapsed - 0.45),
-          progress > 0.6 ? strength * 0.7 : 0,
-        ]);
-        gl.uniform4fv(u.rip, ripples);
-        gl.uniform3f(u.mouse, 0, 0, 0);
-        gl.uniform3f(u.front, lead, strength * 2, 0);
-        gl.uniform1f(u.dark, lightRef.current ? 0 : 1);
-        gl.uniform1f(u.amb, strength * 0.5);
+        s.ripples
+          .slice(-6)
+          .forEach((p, i) => ripples.set([p.x, p.y, p.age, p.amp], i * 4));
+        gl.uniform4fv(uniforms.uRip ?? null, ripples);
+        gl.uniform3f(uniforms.uMouse ?? null, 0, 0, 0);
+        gl.uniform3f(
+          uniforms.uFront ?? null,
+          head.y + head.h,
+          motion.matches ? 0 : Math.min(Math.abs(head.vh) * 0.012, 4.5),
+          0,
+        );
+        gl.uniform1f(uniforms.uDark ?? null, lightRef.current ? 0 : 1);
+        gl.uniform1f(uniforms.uAmb ?? null, motion.matches ? 0 : 1);
         gl.clearColor(0, 0, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
-        if (progress < 1) frame = requestAnimationFrame(render);
-        else gl.clear(gl.COLOR_BUFFER_BIT);
       };
-      const start = (button: HTMLElement) => {
-        if (frame) cancelAnimationFrame(frame);
-        frame = 0;
-        if (lost || !visible) {
-          showFallback(button);
+      const start = () => {
+        if (s.raf || !s.visible || document.visibilityState !== 'visible')
+          return;
+        s.last = performance.now();
+        const tick = (now: number) => {
+          s.raf = 0;
+          step(Math.min((now - s.last) / 1000, 1 / 30), now);
+          s.last = now;
+          draw();
+          if (
+            s.visible &&
+            document.visibilityState === 'visible' &&
+            !s.lost &&
+            program &&
+            !motion.matches
+          )
+            s.raf = requestAnimationFrame(tick);
+        };
+        s.raf = requestAnimationFrame(tick);
+      };
+      const move = (button: HTMLElement) => {
+        selected = button;
+        const T = target();
+        if (!T) return;
+        s.lead = Math.abs(T.y - s.a.y) <= Math.abs(T.y - s.b.y) ? 0 : 1;
+        s.lagUntil = performance.now() + 120;
+        s.moving = true;
+        s.split = false;
+        if (!program || s.lost) {
+          setFallback(T);
           return;
         }
-        geometry = getGeometry(button);
-        started = performance.now();
-        frame = requestAnimationFrame(render);
+        start();
       };
-      animateRef.current = start;
+      moveRef.current = move;
+      redrawRef.current = () => {
+        resize();
+        draw();
+        start();
+      };
+      const onResize = () => {
+        resize();
+        if (!program || s.lost) {
+          const T = target();
+          if (T) setFallback(T);
+        }
+        start();
+      };
+      const ro = new ResizeObserver(onResize);
+      ro.observe(nav);
+      const onVisibility = () => {
+        if (document.visibilityState === 'visible') start();
+        else {
+          cancelAnimationFrame(s.raf);
+          s.raf = 0;
+        }
+      };
+      const onMotion = () => {
+        cancelAnimationFrame(s.raf);
+        s.raf = 0;
+        start();
+      };
       const onLost = (event: Event) => {
         event.preventDefault();
-        lost = true;
-        if (frame) cancelAnimationFrame(frame);
-        frame = 0;
-        animateRef.current = showFallback;
+        s.lost = true;
+        cancelAnimationFrame(s.raf);
+        s.raf = 0;
+        const T = target();
+        if (T) setFallback(T);
       };
-      canvas.addEventListener('webglcontextlost', onLost);
-      const observer = new IntersectionObserver(([entry]) => {
-        visible = !!entry?.isIntersecting;
-        if (!visible && frame) {
-          cancelAnimationFrame(frame);
-          frame = 0;
+      const io = new IntersectionObserver(([entry]) => {
+        s.visible = !!entry?.isIntersecting;
+        if (s.visible) start();
+        else {
+          cancelAnimationFrame(s.raf);
+          s.raf = 0;
         }
       });
-      observer.observe(canvas);
+      io.observe(nav);
+      document.addEventListener('visibilitychange', onVisibility);
+      motion.addEventListener('change', onMotion);
+      canvas.addEventListener('webglcontextlost', onLost);
+      resize();
+      draw();
+      start();
       return () => {
-        animateRef.current = null;
-        if (frame) cancelAnimationFrame(frame);
-        observer.disconnect();
+        moveRef.current = null;
+        redrawRef.current = null;
+        cancelAnimationFrame(s.raf);
+        ro.disconnect();
+        io.disconnect();
+        document.removeEventListener('visibilitychange', onVisibility);
+        motion.removeEventListener('change', onMotion);
         canvas.removeEventListener('webglcontextlost', onLost);
-        gl.deleteBuffer(buffer);
-        gl.deleteProgram(program);
-        gl.deleteShader(vs);
-        gl.deleteShader(fs);
+        if (gl) {
+          if (buffer) gl.deleteBuffer(buffer);
+          if (program) gl.deleteProgram(program);
+          shaders.forEach((shader) => gl.deleteShader(shader));
+        }
       };
     }, []);
-
     return (
-      <>
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 1,
+        }}
+      >
         <canvas
           ref={canvasRef}
-          aria-hidden="true"
           style={{
             position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
+            left: -PAD,
+            top: -PAD,
+            display: 'block',
             pointerEvents: 'none',
-            zIndex: 1,
           }}
         />
         {fallback && (
           <span
-            key={fallback.key}
-            aria-hidden="true"
-            className="sidebar-water-fallback"
-            style={
-              {
-                position: 'absolute',
-                left: fallback.left,
-                top: fallback.to - fallback.height / 2,
-                width: fallback.width,
-                height: fallback.height,
-                borderRadius: 14,
-                pointerEvents: 'none',
-                zIndex: 1,
-                background:
-                  'radial-gradient(ellipse at 30% 0%, rgba(255,255,255,.35), transparent 60%), rgba(140,200,255,.18)',
-                boxShadow:
-                  'inset 0 1px 1px rgba(255,255,255,.55), inset 0 0 0 1px rgba(255,255,255,.22)',
-                '--water-from': `${fallback.from - fallback.to}px`,
-                animation: 'sidebar-water-travel 750ms ease-out forwards',
-              } as React.CSSProperties
-            }
+            className="sidebar-water-pool"
+            style={{
+              position: 'absolute',
+              left: fallback.x - fallback.w - PAD,
+              top: fallback.y - fallback.h - PAD,
+              width: fallback.w * 2,
+              height: fallback.h * 2,
+              borderRadius: RADIUS,
+              background: light
+                ? 'radial-gradient(120% 90% at 30% 0%,rgba(255,255,255,.7),transparent 55%),rgba(255,255,255,.34)'
+                : 'radial-gradient(120% 90% at 30% 0%,rgba(255,255,255,.3),transparent 55%),rgba(140,200,255,.18)',
+              boxShadow:
+                'inset 0 1px 1px rgba(255,255,255,.95),inset 0 -2px 8px rgba(0,162,255,.2),inset 0 0 0 1px rgba(255,255,255,.55)',
+              transition:
+                'top 500ms cubic-bezier(.3,1.3,.4,1),width 500ms,height 500ms',
+            }}
           />
         )}
         <style>
           {
-            '@keyframes sidebar-water-travel{0%{opacity:0;transform:translateY(var(--water-from))}15%{opacity:1}75%{opacity:1;transform:translateY(0)}100%{opacity:0}}@media(prefers-reduced-motion:reduce){.sidebar-water-fallback{animation:sidebar-water-static 250ms forwards!important}}@keyframes sidebar-water-static{0%{opacity:1}100%{opacity:0}}'
+            '@media(prefers-reduced-motion:reduce){.sidebar-water-pool{transition:none!important}}'
           }
         </style>
-      </>
+      </div>
     );
   },
 );

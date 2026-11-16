@@ -72,23 +72,17 @@
   isolation: isolate;
 }
 .stitch-desktop .pc-sidebar-nav button[data-preview-selected='true'] {
-  position: relative;
-  border-radius: 999px;
   color: #f1f7ff;
-  border: 1px solid rgb(255 255 255 / 55%);
-  background:
-    radial-gradient(
-      120% 140% at 30% 0%,
-      rgb(255 255 255 / 55%),
-      transparent 55%
-    ),
-    rgb(140 200 255 / 24%);
-  box-shadow:
-    inset 0 1px 1px rgb(255 255 255 / 90%),
-    inset 0 -2px 6px rgb(0 162 255 / 22%),
-    inset 0 0 0 1px rgb(255 255 255 / 45%),
-    0 6px 16px -6px rgb(0 70 140 / 45%);
-  backdrop-filter: blur(10px) saturate(1.2);
+}
+.stitch-desktop .pc-sidebar-nav > button {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+.stitch-desktop.light-theme
+  .pc-sidebar-nav
+  button[data-preview-selected='true'] {
+  color: #0b132b;
 }
 .stitch-desktop .pc-workspace {
   min-width: 0;
