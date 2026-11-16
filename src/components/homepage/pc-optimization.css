@@ -120,6 +120,14 @@
 }
 .stitch-desktop .pc-workspace .nimbus-nav {
   flex-shrink: 0;
+  padding: 3px;
+}
+.stitch-desktop .pc-workspace .nimbus-nav .nimbus-item {
+  height: 26px;
+}
+.stitch-desktop .pc-workspace .nimbus-nav .nimbus-drop {
+  top: 3px;
+  bottom: 3px;
 }
 .stitch-desktop .pc-sheen-button {
   position: relative;
