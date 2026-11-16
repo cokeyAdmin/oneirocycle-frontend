@@ -26,6 +26,27 @@
 .stitch-desktop #desktop-main-sidebar {
   height: 100%;
   overflow: hidden;
+  background-color: color-mix(
+    in srgb,
+    var(--bg-sidebar) 82%,
+    transparent
+  ) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: inset -1px 0 0 rgb(255 255 255 / 12%);
+  transition:
+    width 400ms cubic-bezier(0.32, 0.72, 0, 1),
+    border-color 400ms ease,
+    box-shadow 400ms ease;
+}
+.stitch-desktop #desktop-main-sidebar[data-collapsed='true'] {
+  border-color: transparent !important;
+  box-shadow: inset -1px 0 0 transparent;
+}
+@media (prefers-reduced-motion: reduce) {
+  .stitch-desktop #desktop-main-sidebar {
+    transition: none;
+  }
 }
 .stitch-desktop .pc-sidebar-content {
   min-height: 0;
@@ -85,6 +106,40 @@
 .stitch-desktop .pc-workspace .nimbus-nav {
   flex-shrink: 0;
 }
+.stitch-desktop .pc-sheen-button {
+  position: relative;
+  background:
+    linear-gradient(
+      45deg,
+      #ffffff26,
+      transparent 24%,
+      transparent 76%,
+      #ffffff26
+    ),
+    #ffffff0d;
+  backdrop-filter: blur(5px);
+  box-shadow:
+    inset 2px -2px 1px -1px #ffffffa6,
+    inset -2px 2px 1px -1px #ffffffa6,
+    inset 0 0 2px #000000cc,
+    0 4px 8px #00000033;
+  transition:
+    transform 250ms,
+    box-shadow 250ms,
+    filter 250ms;
+}
+.stitch-desktop .pc-sheen-button:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .stitch-desktop .pc-sheen-button {
+    transition: none;
+  }
+  .stitch-desktop .pc-sheen-button:hover {
+    transform: none;
+  }
+}
 @media (min-width: 1024px) {
   .stitch-desktop #desktop-main-sidebar:not([data-collapsed='true']) {
     width: 280px;
@@ -108,14 +163,14 @@
 }
 .stitch-desktop .pc-prompt {
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   position: relative;
   --prompt-text-height: 68px;
   --prompt-actions-height: 64px;
   transition: max-width 0.4s var(--pc-spring);
 }
 .stitch-desktop .pc-prompt[data-expanded='true'] {
-  max-width: 480px;
+  max-width: 600px;
 }
 .stitch-desktop #desktop-prompt-container.pc-prompt-card {
   position: relative;

@@ -3,6 +3,8 @@
 import { LiquidNavbar } from '../ui/liquid-glass-navbar';
 import { GlassIconReveal } from '../ui/liquid-glass-logo-reveal';
 import { LiquidText } from '../ui/liquid-text';
+import { LiquidToggle, NimbusToggleIcons } from '../ui/liquid-glass-toggle';
+import { ParticleTitle } from '../ui/particle-title';
 import { DesktopPromptInput } from './desktop-prompt-input';
 import { useStitchHomepage } from './use-stitch-homepage';
 import { SourceNotice } from './homepage-primitives';
@@ -21,6 +23,7 @@ export function DesktopHomepage() {
     dismissNotice,
     floating,
     light,
+    setLight,
     menu,
     model,
     notice,
@@ -473,8 +476,19 @@ export function DesktopHomepage() {
             {'\n'}
             {'\n'}
             <div className="flex items-center space-x-3 text-xs">
+              <LiquidToggle
+                checked={!light}
+                onCheckedChange={(checked) => setLight(!checked)}
+                tone={light ? 'light' : 'dark'}
+                icons={{
+                  off: NimbusToggleIcons.sun,
+                  on: NimbusToggleIcons.moon,
+                }}
+                label="切换亮暗模式"
+                size={28}
+              />
               <button
-                className="relative w-8 h-8 rounded-full liquid-glass border border-white/10 hover:border-white/30 hover:bg-white/10 flex items-center justify-center text-neutral-300 hover:text-white transition-all shadow-sm active:scale-95 group"
+                className="pc-sheen-button relative w-8 h-8 rounded-full liquid-glass border border-white/10 hover:border-white/30 hover:bg-white/10 flex items-center justify-center text-neutral-300 hover:text-white transition-all shadow-sm active:scale-95 group"
                 title="消息通知"
                 id="desktop-notification-btn"
                 type="button"
@@ -499,7 +513,7 @@ export function DesktopHomepage() {
                 <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(76,215,246,0.9)] animate-pulse"></span>
               </button>
               <div
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-full liquid-glass border text-xs font-medium cursor-pointer hover:border-white/30 transition-colors"
+                className="pc-sheen-button flex items-center space-x-2 px-3 py-1.5 rounded-full liquid-glass border text-xs font-medium cursor-pointer hover:border-white/30 transition-colors"
                 role="button"
                 data-stitch-action="unavailable"
                 tabIndex={0}
@@ -527,11 +541,10 @@ export function DesktopHomepage() {
               {'\n'}
               <div className="text-center space-y-2">
                 {'\n'}
-                <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-white">
-                  {
-                    '\n          OneiroCycle 环梦篇章，一站式AIGC创作平台\n        '
-                  }
-                </h1>
+                <ParticleTitle
+                  text="OneiroCycle 环梦篇章，一站式AIGC创作平台"
+                  light={light}
+                />
                 {'\n\n'}
               </div>
               {'\n'}
