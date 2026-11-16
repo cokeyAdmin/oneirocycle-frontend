@@ -67,6 +67,10 @@
   min-height: 0;
   overflow: hidden;
 }
+.stitch-desktop .pc-sidebar-nav {
+  position: relative;
+  isolation: isolate;
+}
 .stitch-desktop .pc-workspace {
   min-width: 0;
   min-height: 0;

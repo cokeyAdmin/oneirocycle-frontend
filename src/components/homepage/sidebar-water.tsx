@@ -1,6 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 
 /* Water shader adapted from the user-provided Nimbus UI Liquid Accordion. */
 const VERT = `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
@@ -55,259 +61,296 @@ void main(){
 }`;
 
 interface SidebarWaterProps {
-  collapsed: boolean;
   light: boolean;
 }
 
-/** A short glass-water ripple along the moving edge of the existing sidebar. */
-export function SidebarWater({ collapsed, light }: SidebarWaterProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const stateRef = useRef({ collapsed, light });
-  const animateRef = useRef<(() => void) | null>(null);
-  const [fallbackKey, setFallbackKey] = useState(0);
+export interface SidebarWaterHandle {
+  moveTo: (button: HTMLElement) => void;
+}
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const gl = canvas.getContext('webgl', {
-      alpha: true,
-      premultipliedAlpha: true,
-      antialias: false,
-    });
-    if (!gl) {
-      animateRef.current = () => {
-        if (!reduce.matches) setFallbackKey((key) => key + 1);
-      };
-      return () => {
-        animateRef.current = null;
-      };
-    }
-    function compile(type: number, source: string) {
-      const shader = gl!.createShader(type);
-      if (!shader) return null;
-      gl!.shaderSource(shader, source);
-      gl!.compileShader(shader);
-      if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
-        gl!.deleteShader(shader);
-        return null;
-      }
-      return shader;
-    }
-    const vs = compile(gl.VERTEX_SHADER, VERT);
-    const fs = compile(gl.FRAGMENT_SHADER, FRAG);
-    const program = gl.createProgram();
-    if (!vs || !fs || !program) {
-      if (vs) gl.deleteShader(vs);
-      if (fs) gl.deleteShader(fs);
-      if (program) gl.deleteProgram(program);
-      animateRef.current = () => {
-        if (!reduce.matches) setFallbackKey((key) => key + 1);
-      };
-      return () => {
-        animateRef.current = null;
-      };
-    }
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      gl.deleteProgram(program);
-      gl.deleteShader(vs);
-      gl.deleteShader(fs);
-      animateRef.current = () => {
-        if (!reduce.matches) setFallbackKey((key) => key + 1);
-      };
-      return () => {
-        animateRef.current = null;
-      };
-    }
-    gl.useProgram(program);
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 3, -1, -1, 3]),
-      gl.STATIC_DRAW,
+/** A temporary water transition between the current and requested menu items. */
+export const SidebarWater = forwardRef<SidebarWaterHandle, SidebarWaterProps>(
+  function SidebarWater({ light }, ref) {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const lightRef = useRef(light);
+    const animateRef = useRef<((button: HTMLElement) => void) | null>(null);
+    const [fallback, setFallback] = useState<{
+      from: number;
+      to: number;
+      left: number;
+      width: number;
+      height: number;
+      key: number;
+    } | null>(null);
+    useImperativeHandle(
+      ref,
+      () => ({ moveTo: (button) => animateRef.current?.(button) }),
+      [],
     );
-    const attrib = gl.getAttribLocation(program, 'a');
-    gl.enableVertexAttribArray(attrib);
-    gl.vertexAttribPointer(attrib, 2, gl.FLOAT, false, 0, 0);
-    const uniform = (name: string) => gl.getUniformLocation(program, name);
-    const u = {
-      res: uniform('uRes'),
-      dpr: uniform('uDpr'),
-      time: uniform('uTime'),
-      card: uniform('uCard'),
-      box: uniform('uBox[0]'),
-      boxR: uniform('uBoxR[0]'),
-      sat: uniform('uSat[0]'),
-      rip: uniform('uRip[0]'),
-      mouse: uniform('uMouse'),
-      front: uniform('uFront'),
-      dark: uniform('uDark'),
-      amb: uniform('uAmb'),
-    };
-    let frame = 0;
-    let started = 0;
-    let lost = false;
-    let visible = true;
-    let previousWidth = 0;
-    const render = (now: number) => {
-      frame = 0;
-      if (
-        lost ||
-        !visible ||
-        reduce.matches ||
-        document.visibilityState !== 'visible'
-      )
-        return;
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      if (!width || !height) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-      const pixelWidth = Math.max(1, Math.round(width * dpr));
-      const pixelHeight = Math.max(1, Math.round(height * dpr));
-      if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
-        canvas.width = pixelWidth;
-        canvas.height = pixelHeight;
-      }
-      const elapsed = (now - started) / 1000;
-      const progress = Math.min(1, elapsed / 0.75);
-      const strength = Math.sin(Math.PI * progress);
-      const drift = Math.min(
-        24,
-        Math.abs(width - previousWidth) * 2 + strength * 14,
-      );
-      previousWidth = width;
-      const edge = Math.max(8, width - 10);
-      gl.viewport(0, 0, pixelWidth, pixelHeight);
-      gl.uniform2f(u.res, width, height);
-      gl.uniform1f(u.dpr, dpr);
-      gl.uniform1f(u.time, elapsed);
-      gl.uniform4f(u.card, 0, 0, width, height);
-      gl.uniform4fv(
-        u.box,
-        new Float32Array([
-          edge - drift * 0.15,
-          height * 0.5,
-          5 + strength * 4,
-          Math.max(4, height * 0.47),
-          edge - drift,
-          height * 0.5,
-          Math.max(0, strength * 5),
-          Math.max(4, height * 0.42),
-        ]),
-      );
-      gl.uniform1fv(u.boxR, new Float32Array([8, 8]));
-      const sats = new Float32Array(16);
-      for (let i = 0; i < 3; i++) {
-        sats.set(
-          [
-            edge - drift * (0.5 + i * 0.3),
-            height * (0.32 + i * 0.18),
-            strength * (4 - i * 0.6),
-            0,
-          ],
-          i * 4,
-        );
-      }
-      gl.uniform4fv(u.sat, sats);
-      const ripples = new Float32Array(24);
-      ripples.set([edge, height * 0.5, elapsed, strength * 0.7]);
-      gl.uniform4fv(u.rip, ripples);
-      gl.uniform3f(u.mouse, 0, 0, 0);
-      gl.uniform3f(u.front, height * 0.5, strength * 2, 0);
-      gl.uniform1f(u.dark, stateRef.current.light ? 0 : 1);
-      gl.uniform1f(u.amb, strength * 0.5);
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-      if (progress < 1) frame = requestAnimationFrame(render);
-      else gl.clear(gl.COLOR_BUFFER_BIT);
-    };
-    const start = () => {
-      if (frame) cancelAnimationFrame(frame);
-      frame = 0;
-      if (reduce.matches || lost || !visible) return;
-      started = performance.now();
-      previousWidth = canvas.clientWidth;
-      frame = requestAnimationFrame(render);
-    };
-    animateRef.current = start;
-    const onLost = (event: Event) => {
-      event.preventDefault();
-      lost = true;
-      if (frame) cancelAnimationFrame(frame);
-      frame = 0;
-      animateRef.current = () => {
-        if (!reduce.matches) setFallbackKey((key) => key + 1);
+    useEffect(() => {
+      lightRef.current = light;
+    }, [light]);
+
+    useEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const getGeometry = (button: HTMLElement) => {
+        const root = canvas.getBoundingClientRect();
+        const target = button.getBoundingClientRect();
+        const first = button.closest('nav')?.querySelector('button');
+        const origin = first?.getBoundingClientRect() ?? target;
+        return {
+          from: origin.top - root.top + origin.height / 2,
+          to: target.top - root.top + target.height / 2,
+          left: target.left - root.left,
+          width: target.width,
+          height: target.height,
+        };
       };
-    };
-    canvas.addEventListener('webglcontextlost', onLost);
-    const observer = new IntersectionObserver(([entry]) => {
-      visible = !!entry?.isIntersecting;
-      if (!visible && frame) {
-        cancelAnimationFrame(frame);
-        frame = 0;
+      const showFallback = (button: HTMLElement) => {
+        const geometry = getGeometry(button);
+        setFallback({ ...geometry, key: Date.now() });
+      };
+      const gl = canvas.getContext('webgl', {
+        alpha: true,
+        premultipliedAlpha: true,
+        antialias: false,
+      });
+      if (!gl) {
+        animateRef.current = showFallback;
+        return () => {
+          animateRef.current = null;
+        };
       }
-    });
-    observer.observe(canvas);
-    return () => {
-      animateRef.current = null;
-      if (frame) cancelAnimationFrame(frame);
-      observer.disconnect();
-      canvas.removeEventListener('webglcontextlost', onLost);
-      gl.deleteBuffer(buffer);
-      gl.deleteProgram(program);
-      gl.deleteShader(vs);
-      gl.deleteShader(fs);
-    };
-  }, []);
+      function compile(type: number, source: string) {
+        const shader = gl!.createShader(type);
+        if (!shader) return null;
+        gl!.shaderSource(shader, source);
+        gl!.compileShader(shader);
+        if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
+          gl!.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+      const vs = compile(gl.VERTEX_SHADER, VERT);
+      const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+      const program = gl.createProgram();
+      if (!vs || !fs || !program) {
+        if (vs) gl.deleteShader(vs);
+        if (fs) gl.deleteShader(fs);
+        if (program) gl.deleteProgram(program);
+        animateRef.current = showFallback;
+        return () => {
+          animateRef.current = null;
+        };
+      }
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        gl.deleteProgram(program);
+        gl.deleteShader(vs);
+        gl.deleteShader(fs);
+        animateRef.current = showFallback;
+        return () => {
+          animateRef.current = null;
+        };
+      }
+      gl.useProgram(program);
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 3, -1, -1, 3]),
+        gl.STATIC_DRAW,
+      );
+      const attrib = gl.getAttribLocation(program, 'a');
+      gl.enableVertexAttribArray(attrib);
+      gl.vertexAttribPointer(attrib, 2, gl.FLOAT, false, 0, 0);
+      const uniform = (name: string) => gl.getUniformLocation(program, name);
+      const u = {
+        res: uniform('uRes'),
+        dpr: uniform('uDpr'),
+        time: uniform('uTime'),
+        card: uniform('uCard'),
+        box: uniform('uBox[0]'),
+        boxR: uniform('uBoxR[0]'),
+        sat: uniform('uSat[0]'),
+        rip: uniform('uRip[0]'),
+        mouse: uniform('uMouse'),
+        front: uniform('uFront'),
+        dark: uniform('uDark'),
+        amb: uniform('uAmb'),
+      };
+      let frame = 0;
+      let started = 0;
+      let lost = false;
+      let visible = true;
+      let geometry = { from: 0, to: 0, left: 0, width: 0, height: 0 };
+      const render = (now: number) => {
+        frame = 0;
+        if (lost || !visible || document.visibilityState !== 'visible') return;
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        if (!width || !height) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+        const pixelWidth = Math.max(1, Math.round(width * dpr));
+        const pixelHeight = Math.max(1, Math.round(height * dpr));
+        if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+          canvas.width = pixelWidth;
+          canvas.height = pixelHeight;
+        }
+        const elapsed = (now - started) / 1000;
+        const progress = Math.min(1, elapsed / (reduce.matches ? 0.01 : 0.75));
+        const strength = Math.sin(Math.PI * progress);
+        const smooth = (x: number) => {
+          const t = Math.min(1, Math.max(0, x));
+          return t * t * (3 - 2 * t);
+        };
+        const lead =
+          geometry.from +
+          (geometry.to - geometry.from) * smooth(progress * 1.6);
+        const tail =
+          geometry.from +
+          (geometry.to - geometry.from) * smooth((progress - 0.12) * 1.6);
+        const center = geometry.left + geometry.width / 2;
+        gl.viewport(0, 0, pixelWidth, pixelHeight);
+        gl.uniform2f(u.res, width, height);
+        gl.uniform1f(u.dpr, dpr);
+        gl.uniform1f(u.time, elapsed);
+        gl.uniform4f(u.card, 0, 0, width, height);
+        gl.uniform4fv(
+          u.box,
+          new Float32Array([
+            center,
+            lead,
+            Math.max(1, geometry.width / 2 - 2),
+            Math.max(1, geometry.height / 2 - 2),
+            center,
+            tail,
+            Math.max(1, geometry.width / 2 - 4),
+            Math.max(1, geometry.height / 2 - 3),
+          ]),
+        );
+        gl.uniform1fv(u.boxR, new Float32Array([14, 14]));
+        const sats = new Float32Array(16);
+        for (let i = 0; i < 3; i++) {
+          sats.set(
+            [
+              center + (i - 1) * geometry.width * 0.16,
+              lead + (tail - lead) * (0.25 + i * 0.25),
+              strength * (4 - i * 0.6),
+              0,
+            ],
+            i * 4,
+          );
+        }
+        gl.uniform4fv(u.sat, sats);
+        const ripples = new Float32Array(24);
+        ripples.set([
+          center,
+          geometry.to,
+          Math.max(0, elapsed - 0.45),
+          progress > 0.6 ? strength * 0.7 : 0,
+        ]);
+        gl.uniform4fv(u.rip, ripples);
+        gl.uniform3f(u.mouse, 0, 0, 0);
+        gl.uniform3f(u.front, lead, strength * 2, 0);
+        gl.uniform1f(u.dark, lightRef.current ? 0 : 1);
+        gl.uniform1f(u.amb, strength * 0.5);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        if (progress < 1) frame = requestAnimationFrame(render);
+        else gl.clear(gl.COLOR_BUFFER_BIT);
+      };
+      const start = (button: HTMLElement) => {
+        if (frame) cancelAnimationFrame(frame);
+        frame = 0;
+        if (lost || !visible) {
+          showFallback(button);
+          return;
+        }
+        geometry = getGeometry(button);
+        started = performance.now();
+        frame = requestAnimationFrame(render);
+      };
+      animateRef.current = start;
+      const onLost = (event: Event) => {
+        event.preventDefault();
+        lost = true;
+        if (frame) cancelAnimationFrame(frame);
+        frame = 0;
+        animateRef.current = showFallback;
+      };
+      canvas.addEventListener('webglcontextlost', onLost);
+      const observer = new IntersectionObserver(([entry]) => {
+        visible = !!entry?.isIntersecting;
+        if (!visible && frame) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      });
+      observer.observe(canvas);
+      return () => {
+        animateRef.current = null;
+        if (frame) cancelAnimationFrame(frame);
+        observer.disconnect();
+        canvas.removeEventListener('webglcontextlost', onLost);
+        gl.deleteBuffer(buffer);
+        gl.deleteProgram(program);
+        gl.deleteShader(vs);
+        gl.deleteShader(fs);
+      };
+    }, []);
 
-  useEffect(() => {
-    if (stateRef.current.collapsed !== collapsed) animateRef.current?.();
-    stateRef.current = { collapsed, light };
-  }, [collapsed, light]);
-
-  return (
-    <>
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none',
-          zIndex: 1,
-        }}
-      />
-      {fallbackKey > 0 && (
-        <span
-          key={fallbackKey}
+    return (
+      <>
+        <canvas
+          ref={canvasRef}
           aria-hidden="true"
-          className="sidebar-water-fallback"
           style={{
             position: 'absolute',
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: 14,
+            inset: 0,
+            width: '100%',
+            height: '100%',
             pointerEvents: 'none',
             zIndex: 1,
-            background:
-              'linear-gradient(90deg, transparent, rgba(170,220,255,.26), transparent)',
-            animation: 'sidebar-water-flash 750ms ease-out forwards',
           }}
         />
-      )}
-      <style>
-        {
-          '@keyframes sidebar-water-flash{0%,100%{opacity:0}45%{opacity:1}}@media(prefers-reduced-motion:reduce){.sidebar-water-fallback{animation:none!important;opacity:0}}'
-        }
-      </style>
-    </>
-  );
-}
+        {fallback && (
+          <span
+            key={fallback.key}
+            aria-hidden="true"
+            className="sidebar-water-fallback"
+            style={
+              {
+                position: 'absolute',
+                left: fallback.left,
+                top: fallback.to - fallback.height / 2,
+                width: fallback.width,
+                height: fallback.height,
+                borderRadius: 14,
+                pointerEvents: 'none',
+                zIndex: 1,
+                background:
+                  'radial-gradient(ellipse at 30% 0%, rgba(255,255,255,.35), transparent 60%), rgba(140,200,255,.18)',
+                boxShadow:
+                  'inset 0 1px 1px rgba(255,255,255,.55), inset 0 0 0 1px rgba(255,255,255,.22)',
+                '--water-from': `${fallback.from - fallback.to}px`,
+                animation: 'sidebar-water-travel 750ms ease-out forwards',
+              } as React.CSSProperties
+            }
+          />
+        )}
+        <style>
+          {
+            '@keyframes sidebar-water-travel{0%{opacity:0;transform:translateY(var(--water-from))}15%{opacity:1}75%{opacity:1;transform:translateY(0)}100%{opacity:0}}@media(prefers-reduced-motion:reduce){.sidebar-water-fallback{animation:sidebar-water-static 250ms forwards!important}}@keyframes sidebar-water-static{0%{opacity:1}100%{opacity:0}}'
+          }
+        </style>
+      </>
+    );
+  },
+);

@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef } from 'react';
 import { LiquidNavbar } from '../ui/liquid-glass-navbar';
 import { GlassIconReveal } from '../ui/liquid-glass-logo-reveal';
 import { LiquidText } from '../ui/liquid-text';
@@ -8,9 +9,10 @@ import { ParticleTitle } from '../ui/particle-title';
 import { DesktopPromptInput } from './desktop-prompt-input';
 import { useStitchHomepage } from './use-stitch-homepage';
 import { SourceNotice } from './homepage-primitives';
-import { SidebarWater } from './sidebar-water';
+import { SidebarWater, type SidebarWaterHandle } from './sidebar-water';
 
 export function DesktopHomepage() {
+  const waterRef = useRef<SidebarWaterHandle>(null);
   const {
     category,
     setCategory,
@@ -143,7 +145,6 @@ export function DesktopHomepage() {
               : 'w-20 md:w-64 border-r flex flex-col justify-between flex-shrink-0 transition-all duration-300 h-full relative z-50 overflow-hidden'
           }
         >
-          <SidebarWater collapsed={collapsed} light={light} />
           <div className="pc-sidebar-content flex-1 py-5 px-3 space-y-6">
             <div
               className="flex items-center justify-between px-2 py-1 relative"
@@ -231,7 +232,16 @@ export function DesktopHomepage() {
                 </button>
               )}
             </div>
-            <nav className="space-y-1.5 font-medium text-sm">
+            <nav
+              className="pc-sidebar-nav space-y-1.5 font-medium text-sm"
+              onClickCapture={(event) => {
+                if (!(event.target instanceof Element)) return;
+                const button = event.target.closest('button');
+                if (button && event.currentTarget.contains(button))
+                  waterRef.current?.moveTo(button);
+              }}
+            >
+              <SidebarWater ref={waterRef} light={light} />
               <button
                 className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/[0.08] text-white border border-white/10 shadow-sm transition-all"
                 type="button"
