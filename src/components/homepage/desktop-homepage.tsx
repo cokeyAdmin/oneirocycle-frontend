@@ -8,6 +8,7 @@ import { ParticleTitle } from '../ui/particle-title';
 import { DesktopPromptInput } from './desktop-prompt-input';
 import { useStitchHomepage } from './use-stitch-homepage';
 import { SourceNotice } from './homepage-primitives';
+import { SidebarWater } from './sidebar-water';
 
 export function DesktopHomepage() {
   const {
@@ -142,6 +143,7 @@ export function DesktopHomepage() {
               : 'w-20 md:w-64 border-r flex flex-col justify-between flex-shrink-0 transition-all duration-300 h-full relative z-50 overflow-hidden'
           }
         >
+          <SidebarWater collapsed={collapsed} light={light} />
           <div className="pc-sidebar-content flex-1 py-5 px-3 space-y-6">
             <div
               className="flex items-center justify-between px-2 py-1 relative"
