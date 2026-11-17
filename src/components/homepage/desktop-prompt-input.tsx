@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -35,6 +36,16 @@ export function DesktopPromptInput({
 }: DesktopPromptInputProps) {
   const root = useRef<HTMLDivElement>(null);
   const [fades, setFades] = useState({ top: false, bottom: false });
+  const [listening, setListening] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    if (!listening) return;
+    const timer = window.setInterval(
+      () => setSeconds((time) => time + 1),
+      1000,
+    );
+    return () => window.clearInterval(timer);
+  }, [listening]);
   const updateFades = () => {
     const input = inputRef.current;
     if (input)
@@ -159,12 +170,34 @@ export function DesktopPromptInput({
         </button>
         <button
           className="pc-prompt-send"
+          data-listening={listening}
           type="button"
-          title={value.trim() ? '快速生成' : '语音输入'}
-          aria-label={value.trim() ? '快速生成' : '语音输入'}
-          onClick={onUnavailable}
+          title={
+            listening
+              ? '停止录音动效演示'
+              : value.trim()
+                ? '快速生成'
+                : '语音动效演示'
+          }
+          aria-label={
+            listening
+              ? '停止录音动效演示'
+              : value.trim()
+                ? '快速生成'
+                : '语音动效演示'
+          }
+          onClick={() => {
+            if (listening) {
+              setListening(false);
+              setSeconds(0);
+            } else if (value.trim()) onUnavailable();
+            else setListening(true);
+          }}
         >
-          <span data-visible={!!value.trim()} className="pc-prompt-action-icon">
+          <span
+            data-visible={!!value.trim() && !listening}
+            className="pc-prompt-action-icon"
+          >
             <svg
               width="14"
               height="14"
@@ -179,7 +212,10 @@ export function DesktopPromptInput({
               <path d="M7 12V2M7 2 2.5 6.5M7 2l4.5 4.5" />
             </svg>
           </span>
-          <span data-visible={!value.trim()} className="pc-prompt-action-icon">
+          <span
+            data-visible={!value.trim() && !listening}
+            className="pc-prompt-action-icon"
+          >
             <svg
               width="14"
               height="14"
@@ -194,6 +230,23 @@ export function DesktopPromptInput({
               <path d="M2.75 6.5V7a4.25 4.25 0 0 0 8.5 0v-.5M7 11.25V13" />
             </svg>
           </span>
+          {listening && (
+            <span className="pc-voice-demo" aria-hidden="true">
+              <span className="pc-voice-stop" />
+              <span className="pc-voice-bars">
+                {Array.from({ length: 12 }, (_, index) => (
+                  <span
+                    key={index}
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  />
+                ))}
+              </span>
+              <span>
+                {String(Math.floor(seconds / 60)).padStart(2, '0')}:
+                {String(seconds % 60).padStart(2, '0')}
+              </span>
+            </span>
+          )}
         </button>
       </div>
     </div>

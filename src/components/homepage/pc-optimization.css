@@ -24,12 +24,76 @@
   overflow: hidden;
 }
 .stitch-desktop #desktop-main-sidebar {
-  height: 100%;
+  height: calc(100% - 16px);
+  margin: 8px;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 26px;
   overflow: hidden;
+  background-color: color-mix(
+    in srgb,
+    var(--bg-sidebar) 82%,
+    transparent
+  ) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow:
+    inset 1px 1px 0 -0.5px rgb(255 255 255 / 45%),
+    inset -1px -1px 0 -0.5px rgb(255 255 255 / 22%),
+    inset 0 0 12px -4px rgb(255 255 255 / 22%),
+    0 12px 36px -8px rgb(0 0 0 / 50%);
+  transition:
+    width 400ms cubic-bezier(0.32, 0.72, 0, 1),
+    border-color 400ms ease,
+    box-shadow 400ms ease,
+    background-color 400ms ease;
+}
+.stitch-desktop #desktop-main-sidebar::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 16px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 9%));
+  opacity: 0.65;
+  transition: opacity 400ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.stitch-desktop #desktop-main-sidebar[data-collapsed='true'] {
+  border-color: rgb(255 255 255 / 16%) !important;
+}
+.stitch-desktop #desktop-main-sidebar[data-collapsed='true']::after {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .stitch-desktop #desktop-main-sidebar,
+  .stitch-desktop #desktop-main-sidebar::after {
+    transition: none;
+  }
 }
 .stitch-desktop .pc-sidebar-content {
   min-height: 0;
   overflow: hidden;
+}
+.stitch-desktop #desktop-main-sidebar > div:last-child {
+  background: transparent !important;
+  border-color: transparent !important;
+  backdrop-filter: none !important;
+}
+.stitch-desktop .pc-sidebar-nav {
+  position: relative;
+  isolation: isolate;
+}
+.stitch-desktop .pc-sidebar-nav button[data-preview-selected='true'] {
+  color: #f1f7ff;
+}
+.stitch-desktop .pc-sidebar-nav > button {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+.stitch-desktop.light-theme
+  .pc-sidebar-nav
+  button[data-preview-selected='true'] {
+  color: #0b132b;
 }
 .stitch-desktop .pc-workspace {
   min-width: 0;
@@ -84,6 +148,48 @@
 }
 .stitch-desktop .pc-workspace .nimbus-nav {
   flex-shrink: 0;
+  padding: 3px;
+}
+.stitch-desktop .pc-workspace .nimbus-nav .nimbus-item {
+  height: 26px;
+}
+.stitch-desktop .pc-workspace .nimbus-nav .nimbus-drop {
+  top: 3px;
+  bottom: 3px;
+}
+.stitch-desktop .pc-sheen-button {
+  position: relative;
+  background:
+    linear-gradient(
+      45deg,
+      #ffffff26,
+      transparent 24%,
+      transparent 76%,
+      #ffffff26
+    ),
+    #ffffff0d;
+  backdrop-filter: blur(5px);
+  box-shadow:
+    inset 2px -2px 1px -1px #ffffffa6,
+    inset -2px 2px 1px -1px #ffffffa6,
+    inset 0 0 2px #000000cc,
+    0 4px 8px #00000033;
+  transition:
+    transform 250ms,
+    box-shadow 250ms,
+    filter 250ms;
+}
+.stitch-desktop .pc-sheen-button:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .stitch-desktop .pc-sheen-button {
+    transition: none;
+  }
+  .stitch-desktop .pc-sheen-button:hover {
+    transform: none;
+  }
 }
 @media (min-width: 1024px) {
   .stitch-desktop #desktop-main-sidebar:not([data-collapsed='true']) {
@@ -108,14 +214,14 @@
 }
 .stitch-desktop .pc-prompt {
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   position: relative;
   --prompt-text-height: 68px;
   --prompt-actions-height: 64px;
   transition: max-width 0.4s var(--pc-spring);
 }
 .stitch-desktop .pc-prompt[data-expanded='true'] {
-  max-width: 480px;
+  max-width: 600px;
 }
 .stitch-desktop #desktop-prompt-container.pc-prompt-card {
   position: relative;
@@ -286,10 +392,60 @@
   color: var(--pc-surface);
   transition:
     opacity 0.2s,
-    transform 0.2s;
+    transform 0.2s,
+    width 0.4s,
+    border-radius 0.4s;
 }
 .stitch-desktop .pc-prompt-send:hover {
   opacity: 0.85;
+}
+.stitch-desktop .pc-prompt-send[data-listening='true'] {
+  width: 150px;
+  border-radius: 999px;
+}
+.stitch-desktop .pc-voice-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.stitch-desktop .pc-voice-stop {
+  width: 10px;
+  height: 10px;
+  background: currentColor;
+  border-radius: 2px;
+  animation: pc-voice-spin 2s ease-in-out infinite;
+}
+.stitch-desktop .pc-voice-bars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 16px;
+}
+.stitch-desktop .pc-voice-bars span {
+  width: 2px;
+  height: 3px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: pc-voice-wave 1s ease-in-out infinite;
+}
+@keyframes pc-voice-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pc-voice-wave {
+  50% {
+    height: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stitch-desktop .pc-voice-stop,
+  .stitch-desktop .pc-voice-bars span {
+    animation: none;
+  }
 }
 .stitch-desktop .pc-prompt-send:active {
   transform: scale(0.95);

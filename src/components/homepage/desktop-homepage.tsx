@@ -1,13 +1,19 @@
 'use client';
 
+import { useRef, useState } from 'react';
 import { LiquidNavbar } from '../ui/liquid-glass-navbar';
 import { GlassIconReveal } from '../ui/liquid-glass-logo-reveal';
 import { LiquidText } from '../ui/liquid-text';
+import { LiquidToggle, NimbusToggleIcons } from '../ui/liquid-glass-toggle';
+import { ParticleTitle } from '../ui/particle-title';
 import { DesktopPromptInput } from './desktop-prompt-input';
 import { useStitchHomepage } from './use-stitch-homepage';
 import { SourceNotice } from './homepage-primitives';
+import { SidebarWater, type SidebarWaterHandle } from './sidebar-water';
 
 export function DesktopHomepage() {
+  const waterRef = useRef<SidebarWaterHandle>(null);
+  const [menuHighlight, setMenuHighlight] = useState('首页');
   const {
     category,
     setCategory,
@@ -15,11 +21,13 @@ export function DesktopHomepage() {
     closePrompt,
     unavailable,
     collapsed,
+    setCollapsed,
     creationType,
     dismissMenus,
     dismissNotice,
     floating,
     light,
+    setLight,
     menu,
     model,
     notice,
@@ -147,13 +155,18 @@ export function DesktopHomepage() {
                 <button
                   type="button"
                   className="pc-sidebar-logo"
-                  aria-label="重播 Logo 动画"
+                  aria-label={
+                    collapsed ? '展开侧边栏并重播 Logo 动画' : '重播 Logo 动画'
+                  }
+                  aria-expanded={!collapsed}
+                  aria-controls="desktop-main-sidebar"
                   onClick={(event) => {
                     event.stopPropagation();
                     if (event.target === event.currentTarget)
                       event.currentTarget
                         .querySelector<HTMLElement>('[role="img"]')
                         ?.click();
+                    if (collapsed) setCollapsed(false);
                   }}
                 >
                   <GlassIconReveal
@@ -184,38 +197,53 @@ export function DesktopHomepage() {
                   />
                 </div>
               </div>
-              <button
-                id="desktop-sidebar-collapse-toggle"
-                className="sidebar-label hidden md:flex w-7 h-7 rounded-lg liquid-glass hover:bg-white/10 items-center justify-center text-neutral-400 hover:text-white transition-all duration-200 border border-white/10 active:scale-95 flex-shrink-0"
-                title="收起侧边栏"
-                type="button"
-                data-stitch-action="sidebar"
-                aria-expanded={!collapsed}
-                aria-label={collapsed ? '展开侧边栏' : '收起侧边栏'}
-                onClick={onClick}
-              >
-                <svg
-                  id="desktop-sidebar-toggle-icon"
-                  className="w-4 h-4 transition-transform duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
+              {!collapsed && (
+                <button
+                  id="desktop-sidebar-collapse-toggle"
+                  className="sidebar-label hidden md:flex w-7 h-7 rounded-lg liquid-glass hover:bg-white/10 items-center justify-center text-neutral-400 hover:text-white transition-all duration-200 border border-white/10 active:scale-95 flex-shrink-0"
+                  title="收起侧边栏"
+                  type="button"
+                  data-stitch-action="sidebar"
+                  aria-expanded={!collapsed}
+                  aria-label={collapsed ? '展开侧边栏' : '收起侧边栏'}
+                  onClick={onClick}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.8"
-                    d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-                  ></path>
-                </svg>
-              </button>
+                  <svg
+                    id="desktop-sidebar-toggle-icon"
+                    className="w-4 h-4 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.8"
+                      d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+                    ></path>
+                  </svg>
+                </button>
+              )}
             </div>
-            <nav className="space-y-1.5 font-medium text-sm">
+            <nav
+              className="pc-sidebar-nav space-y-1.5 font-medium text-sm"
+              onClickCapture={(event) => {
+                if (!(event.target instanceof Element)) return;
+                const button = event.target.closest('button');
+                if (button && event.currentTarget.contains(button)) {
+                  waterRef.current?.moveTo(button);
+                  setMenuHighlight(button.getAttribute('aria-label') || '首页');
+                }
+              }}
+            >
+              <SidebarWater ref={waterRef} light={light} />
               <button
-                className="flex items-center gap-3 px-3 py-2 rounded-xl bg-white/[0.08] text-white border border-white/10 shadow-sm transition-all"
+                className="flex items-center gap-3 px-3 py-2 rounded-xl text-white transition-all"
                 type="button"
                 aria-label="首页"
+                data-preview-selected={menuHighlight === '首页'}
+                aria-current="page"
                 data-stitch-action="home"
                 onClick={onClick}
               >
@@ -244,6 +272,7 @@ export function DesktopHomepage() {
                 className="flex items-center gap-3 px-3 py-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/[0.04] transition-all"
                 type="button"
                 aria-label="创作图片"
+                data-preview-selected={menuHighlight === '创作图片'}
                 data-stitch-action="unavailable"
                 onClick={onClick}
               >
@@ -272,6 +301,7 @@ export function DesktopHomepage() {
                 className="flex items-center gap-3 px-3 py-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/[0.04] transition-all"
                 type="button"
                 aria-label="创作视频"
+                data-preview-selected={menuHighlight === '创作视频'}
                 data-stitch-action="unavailable"
                 onClick={onClick}
               >
@@ -300,6 +330,7 @@ export function DesktopHomepage() {
                 className="flex items-center gap-3 px-3 py-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/[0.04] transition-all"
                 type="button"
                 aria-label="无限画布"
+                data-preview-selected={menuHighlight === '无限画布'}
                 data-stitch-action="unavailable"
                 onClick={onClick}
               >
@@ -328,6 +359,7 @@ export function DesktopHomepage() {
                 className="flex items-center gap-3 px-3 py-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/[0.04] transition-all"
                 type="button"
                 aria-label="我的资产"
+                data-preview-selected={menuHighlight === '我的资产'}
                 data-stitch-action="unavailable"
                 onClick={onClick}
               >
@@ -352,14 +384,12 @@ export function DesktopHomepage() {
                   {'我的资产'}
                 </span>
               </button>
-              <div className="pt-3 border-t border-white/5 my-2"></div>
             </nav>
           </div>
           <div
-            className="flex-shrink-0 p-3 border-t relative z-50 bg-[#0e0f14]/95 w-full"
+            className="flex-shrink-0 p-3 relative z-50 bg-[#0e0f14]/95 w-full"
             style={{
               background: 'rgba(14, 15, 20, 0.95)',
-              borderColor: 'rgba(255, 255, 255, 0.1)',
               backdropFilter: 'blur(20px)',
             }}
           >
@@ -458,8 +488,19 @@ export function DesktopHomepage() {
             {'\n'}
             {'\n'}
             <div className="flex items-center space-x-3 text-xs">
+              <LiquidToggle
+                checked={!light}
+                onCheckedChange={(checked) => setLight(!checked)}
+                tone={light ? 'light' : 'dark'}
+                icons={{
+                  off: NimbusToggleIcons.sun,
+                  on: NimbusToggleIcons.moon,
+                }}
+                label="切换亮暗模式"
+                size={28}
+              />
               <button
-                className="relative w-8 h-8 rounded-full liquid-glass border border-white/10 hover:border-white/30 hover:bg-white/10 flex items-center justify-center text-neutral-300 hover:text-white transition-all shadow-sm active:scale-95 group"
+                className="pc-sheen-button relative w-8 h-8 rounded-full liquid-glass border border-white/10 hover:border-white/30 hover:bg-white/10 flex items-center justify-center text-neutral-300 hover:text-white transition-all shadow-sm active:scale-95 group"
                 title="消息通知"
                 id="desktop-notification-btn"
                 type="button"
@@ -484,7 +525,7 @@ export function DesktopHomepage() {
                 <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(76,215,246,0.9)] animate-pulse"></span>
               </button>
               <div
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-full liquid-glass border text-xs font-medium cursor-pointer hover:border-white/30 transition-colors"
+                className="pc-sheen-button flex items-center space-x-2 px-3 py-1.5 rounded-full liquid-glass border text-xs font-medium cursor-pointer hover:border-white/30 transition-colors"
                 role="button"
                 data-stitch-action="unavailable"
                 tabIndex={0}
@@ -512,11 +553,10 @@ export function DesktopHomepage() {
               {'\n'}
               <div className="text-center space-y-2">
                 {'\n'}
-                <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-white">
-                  {
-                    '\n          OneiroCycle 环梦篇章，一站式AIGC创作平台\n        '
-                  }
-                </h1>
+                <ParticleTitle
+                  text="oneiroCycle 环梦篇章，一站式AIGC创作平台"
+                  light={light}
+                />
                 {'\n\n'}
               </div>
               {'\n'}
