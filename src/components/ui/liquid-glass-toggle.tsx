@@ -79,7 +79,7 @@ const NT_CSS = `
 .nt-water{position:absolute;z-index:-1;pointer-events:none}
 .nimbus-toggle[data-gl="off"] .nt-water{display:none}
 .nt-fill,.nt-knob{display:none;position:absolute;pointer-events:none;border-radius:999px;will-change:transform,width}
-.nimbus-toggle[data-gl="off"] .nt-fill,.nimbus-toggle[data-gl="off"] .nt-knob{display:block}
+.nimbus-toggle[data-gl="off"] .nt-knob{display:block}
 .nt-fill{z-index:-1;left:2px;top:2px;bottom:2px;background:linear-gradient(180deg,#7EE8FF,#00A2FF);opacity:.85}
 .nt-knob{z-index:0;left:0;background:radial-gradient(120% 140% at 30% 0%,rgba(255,255,255,.95),rgba(255,255,255,0) 60%),rgba(240,250,255,.82);
   box-shadow:inset 0 1px 1px #fff,inset 0 -2px 6px rgba(0,162,255,.25),inset 0 0 0 1px rgba(255,255,255,.6),0 4px 10px -3px rgba(0,60,130,.45)}
@@ -108,7 +108,7 @@ float waves(vec2 p){float w=0.;
  for(int i=0;i<6;i++){vec4 R=uRip[i];if(R.w>0.){float x=length(p-R.xy)-R.z*240.;w+=R.w*exp(-R.z*1.7)*sin(x*.3)*exp(-x*x/700.);}}
  vec2 m=p-uMouse.xy;w+=uMouse.z*3.6*exp(-dot(m,m)/1000.);
  w+=uAmb*(sin(p.x*.05+uTime*1.2)*.45+sin(p.x*.13-uTime*.85+p.y*.2)*.25);return w;}
-float H(vec2 p){float dp=pillD(p);return lens(dp,uPill.w*.36)*2.4+lens(fillD(p),9.)*2.2+lens(dropD(p),11.)*7.5+waves(p)*smoothstep(0.,7.,-dp);}
+float H(vec2 p){float dp=pillD(p);return lens(dp,uPill.w*.36)*2.4+lens(dropD(p),11.)*7.5+waves(p)*smoothstep(0.,7.,-dp);}
 float caus(vec2 p,float t){vec2 q=p;float c=0.;for(int i=0;i<3;i++){q+=vec2(sin(q.y*1.1+t),cos(q.x*1.3-t*.7))*.6;c+=1./(1.+16.*abs(sin(q.x)*sin(q.y)));}return c/3.;}
 void main(){
  vec2 p=vec2(gl_FragCoord.x,uRes.y*uDpr-gl_FragCoord.y)/uDpr/uS;
@@ -127,7 +127,7 @@ void main(){
  float cw=caus((p+n.xy*8.)*.09,uTime*.8);
  wc+=vec3(.75,.95,1.)*smoothstep(.55,1.,cw)*.32;
  wc=mix(wc,vec3(1.),fm*(1.-smoothstep(0.,2.5,-fd))*.7);
- float wa=fm*(.78+.1*uDark);
+ float wa=0.;
  vec3 c=wc*wa;float a=wa;
  /* drop shadow */
  float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*pm*(.2+.1*uDark);
