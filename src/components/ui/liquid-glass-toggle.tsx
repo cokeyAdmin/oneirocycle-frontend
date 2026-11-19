@@ -66,10 +66,10 @@ export const NimbusToggleIcons = {
 
 /* ---------- styles ---------- */
 const NT_CSS = `
-.nimbus-toggle{--t-tint:rgba(255,255,255,.18);--t-rim:rgba(255,255,255,.8);--t-ico-off:#E89A12;--t-ico-on:#0B132B;
+.nimbus-toggle{--t-tint:rgba(255,255,255,.08);--t-rim:rgba(255,255,255,.8);--t-ico-off:#E89A12;--t-ico-on:#0B132B;
   position:relative;display:inline-block;flex:none;padding:0;margin:0;border:0;background:none;border-radius:999px;cursor:pointer;isolation:isolate;
   vertical-align:middle;touch-action:pan-y;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;outline:none}
-.nimbus-toggle[data-tone="dark"]{--t-tint:rgba(10,18,40,.32);--t-rim:rgba(255,255,255,.3);--t-ico-off:#FFC24A;--t-ico-on:#EAF4FF}
+.nimbus-toggle[data-tone="dark"]{--t-tint:rgba(255,255,255,.025);--t-rim:rgba(255,255,255,.42);--t-ico-off:#FFC24A;--t-ico-on:#EAF4FF}
 .nimbus-toggle:focus-visible{outline:2px solid #00A2FF;outline-offset:3px}
 .nimbus-toggle:disabled{opacity:.45;cursor:not-allowed}
 .nt-glass{position:absolute;inset:0;border-radius:inherit;z-index:-2;overflow:hidden;background:var(--t-tint);
@@ -83,7 +83,7 @@ const NT_CSS = `
 .nt-fill{z-index:-1;left:2px;top:2px;bottom:2px;background:linear-gradient(180deg,#7EE8FF,#00A2FF);opacity:.85}
 .nt-knob{z-index:0;left:0;background:radial-gradient(120% 140% at 30% 0%,rgba(255,255,255,.95),rgba(255,255,255,0) 60%),rgba(240,250,255,.82);
   box-shadow:inset 0 1px 1px #fff,inset 0 -2px 6px rgba(0,162,255,.25),inset 0 0 0 1px rgba(255,255,255,.6),0 4px 10px -3px rgba(0,60,130,.45)}
-.nimbus-toggle[data-tone="dark"] .nt-knob{background:radial-gradient(120% 140% at 30% 0%,rgba(255,255,255,.55),rgba(255,255,255,0) 60%),rgba(120,180,240,.5);
+.nimbus-toggle[data-tone="dark"] .nt-knob{background:radial-gradient(120% 140% at 30% 0%,rgba(255,255,255,.7),rgba(255,255,255,0) 60%),rgba(210,235,255,.22);
   box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 0 0 1px rgba(255,255,255,.35),0 4px 10px -3px rgba(0,0,0,.6)}
 .nimbus-toggle[data-tone="dark"] .nt-fill{background:linear-gradient(180deg,#2EB8FF,#0060CC)}
 .nt-icon{position:absolute;left:0;top:0;z-index:1;pointer-events:none;will-change:transform}
@@ -142,7 +142,7 @@ void main(){
  float rim=dm*(1.-smoothstep(0.,8.,-dd));
  float cres=dm*smoothstep(.12,.55,dot(n.xy,normalize(vec2(.55,.85))))*smoothstep(0.,3.,-dd);
  float body=.5+.5*clamp(-n.y*3.,-1.,1.);
- float da=dm*(mix(.62,.76,uDark)+.18*body);vec3 dc=mix(tint,vec3(1.),body*.6);
+ float da=dm*(mix(.34,.28,uDark)+.14*body);vec3 dc=mix(tint,vec3(1.),body*.6);
  float la=rim*.3;vec3 lc=mix(vec3(0.,.42,.78),vec3(.1,.55,.95),uDark);dc=lc*la+dc*da*(1.-la);da=la+da*(1.-la);
  la=clamp(cres*.7+smoothstep(.6,1.,cs)*.28*th*dm,0.,1.);dc=vec3(1.)*la+dc*(1.-la);da=la+da*(1.-la);
  la=clamp(dm*(spec*1.2+spec2*.5),0.,1.);dc=vec3(1.)*la+dc*(1.-la);da=la+da*(1.-la);
