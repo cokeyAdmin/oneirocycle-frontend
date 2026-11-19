@@ -67,17 +67,6 @@ body {
 .stitch-mobile input[type='search']::-webkit-search-cancel-button {
   display: none;
 }
-@media (min-width: 768px) and (max-width: 1023px) {
-  .stitch-desktop #desktop-main-sidebar {
-    width: 80px;
-  }
-  .stitch-desktop .sidebar-label {
-    display: none;
-  }
-  .stitch-desktop #desktop-sidebar-collapse-toggle {
-    display: flex;
-  }
-}
 @media (max-width: 767px) {
   html,
   body {

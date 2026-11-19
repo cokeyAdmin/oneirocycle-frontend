@@ -97,12 +97,6 @@
   justify-content: center;
   gap: 0;
 }
-@media (min-width: 768px) and (max-width: 1023px) {
-  .stitch-desktop #desktop-main-sidebar .pc-sidebar-nav > button {
-    justify-content: center;
-    gap: 0;
-  }
-}
 .stitch-desktop.light-theme
   .pc-sidebar-nav
   button[data-preview-selected='true'] {
