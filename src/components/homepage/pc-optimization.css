@@ -143,7 +143,7 @@
   pointer-events: none;
 }
 .stitch-desktop .pc-project-name {
-  width: 148px;
+  width: 100%;
   min-height: 45px;
   font-size: 28px;
 }
@@ -152,6 +152,14 @@
 }
 .stitch-desktop #desktop-sidebar-header-wrapper > div {
   gap: 8px;
+}
+.stitch-desktop #desktop-sidebar-collapse-toggle {
+  width: 22px;
+  height: 22px;
+}
+.stitch-desktop #desktop-sidebar-toggle-icon {
+  width: 12px;
+  height: 12px;
 }
 .stitch-desktop .pc-workspace .nimbus-nav {
   flex-shrink: 0;
@@ -505,7 +513,8 @@
 
 .stitch-desktop .sidebar-label:has(.pc-project-name) {
   width: 148px;
-  flex: none;
+  flex: 0 1 148px;
+  min-width: 0;
 }
 .stitch-desktop .nimbus-nav .nimbus-item {
   padding: 0 14px;
