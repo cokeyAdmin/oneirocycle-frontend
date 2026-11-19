@@ -83,8 +83,6 @@ const NT_CSS = `
 .nt-fill{z-index:-1;left:2px;top:2px;bottom:2px;background:linear-gradient(180deg,#7EE8FF,#00A2FF);opacity:.85}
 .nt-knob{z-index:0;left:0;background:radial-gradient(120% 140% at 30% 0%,rgba(255,255,255,.95),rgba(255,255,255,0) 60%),rgba(240,250,255,.82);
   box-shadow:inset 0 1px 1px #fff,inset 0 -2px 6px rgba(0,162,255,.25),inset 0 0 0 1px rgba(255,255,255,.6),0 4px 10px -3px rgba(0,60,130,.45)}
-.nimbus-toggle[data-tone="dark"] .nt-knob{background:radial-gradient(120% 140% at 30% 0%,rgba(255,255,255,.9),rgba(255,255,255,0) 60%),rgba(225,242,255,.32);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.9),inset 0 0 0 1px rgba(255,255,255,.5),0 4px 10px -3px rgba(0,0,0,.6)}
 .nimbus-toggle[data-tone="dark"] .nt-fill{background:linear-gradient(180deg,#2EB8FF,#0060CC)}
 .nt-icon{position:absolute;left:0;top:0;z-index:1;pointer-events:none;will-change:transform}
 .nt-icon>span{position:absolute;inset:0;display:block}
@@ -138,12 +136,12 @@ void main(){
  /* the drop */
  float th=lens(dd,11.);
  float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
- vec3 tint=mix(vec3(.86,.96,1.),vec3(.80,.92,1.),uDark);
+ vec3 tint=vec3(.86,.96,1.);
  float rim=dm*(1.-smoothstep(0.,8.,-dd));
  float cres=dm*smoothstep(.12,.55,dot(n.xy,normalize(vec2(.55,.85))))*smoothstep(0.,3.,-dd);
  float body=.5+.5*clamp(-n.y*3.,-1.,1.);
- float da=dm*(mix(.34,.40,uDark)+.14*body);vec3 dc=mix(tint,vec3(1.),body*.7);
- float la=rim*.3;vec3 lc=mix(vec3(0.,.42,.78),vec3(.1,.55,.95),uDark);dc=lc*la+dc*da*(1.-la);da=la+da*(1.-la);
+ float da=dm*(.34+.14*body);vec3 dc=mix(tint,vec3(1.),body*.7);
+ float la=rim*.3;vec3 lc=vec3(0.,.42,.78);dc=lc*la+dc*da*(1.-la);da=la+da*(1.-la);
  la=clamp(cres*.7+smoothstep(.6,1.,cs)*.28*th*dm,0.,1.);dc=vec3(1.)*la+dc*(1.-la);da=la+da*(1.-la);
  la=clamp(dm*(spec*1.2+spec2*.5),0.,1.);dc=vec3(1.)*la+dc*(1.-la);da=la+da*(1.-la);
  la=dm*smoothstep(-2.,0.,dd)*.4;dc=mix(vec3(1.),irid,.35)*la+dc*(1.-la);da=la+da*(1.-la);
