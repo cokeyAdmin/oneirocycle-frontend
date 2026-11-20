@@ -122,20 +122,44 @@ export function DesktopPromptInput({
           }
           tabIndex={open ? -1 : 0}
         >
-          <span
+          <svg
             key={creationType}
             className="pc-prompt-mode-icon"
             aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
-            {creationType === 'Agent 模式'
-              ? '✦'
-              : creationType === '视频生成'
-                ? '▶'
-                : '▧'}
-          </span>
-          <span aria-hidden="true" className="pc-prompt-mode-arrows">
-            ⌃⌄
-          </span>
+            {creationType === 'Agent 模式' ? (
+              <path d="M9 3l1.85 5.15L16 10l-5.15 1.85L9 17l-1.85-5.15L2 10l5.15-1.85L9 3Zm9 10 1.05 2.95L22 17l-2.95 1.05L18 21l-1.05-2.95L14 17l2.95-1.05L18 13Zm0-10v5m-2.5-2.5h5" />
+            ) : creationType === '视频生成' ? (
+              <>
+                <rect x="2" y="6" width="13" height="12" rx="2.5" />
+                <path d="m15 10 5.5-3v10L15 14" />
+              </>
+            ) : (
+              <>
+                <rect x="3" y="3" width="18" height="18" rx="4" />
+                <circle cx="9" cy="9" r="1.5" />
+                <path d="m4 17 4-4 3 3 4-5 5 6" />
+              </>
+            )}
+          </svg>
+          <svg
+            aria-hidden="true"
+            className="pc-prompt-mode-arrows"
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.25"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m3.75 4.5 2.25-2.25 2.25 2.25m-4.5 3 2.25 2.25 2.25-2.25" />
+          </svg>
         </button>
         <button
           ref={(node) => {
