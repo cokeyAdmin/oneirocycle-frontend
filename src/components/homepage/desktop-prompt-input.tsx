@@ -10,6 +10,8 @@ import {
 } from 'react';
 
 interface DesktopPromptInputProps {
+  creationType: string;
+  onModeChange: (mode: string) => void;
   open: boolean;
   value: string;
   onChange: (value: string) => void;
@@ -23,6 +25,8 @@ interface DesktopPromptInputProps {
 }
 
 export function DesktopPromptInput({
+  creationType,
+  onModeChange,
   open,
   value,
   onChange,
@@ -38,6 +42,13 @@ export function DesktopPromptInput({
   const [fades, setFades] = useState({ top: false, bottom: false });
   const [listening, setListening] = useState(false);
   const [seconds, setSeconds] = useState(0);
+  const modes = ['Agent 模式', '图片生成', '视频生成'];
+  const placeholder =
+    creationType === 'Agent 模式'
+      ? '输入想法，和 Agent 一起创作…'
+      : creationType === '视频生成'
+        ? '描述你想生成的视频…'
+        : '描述你想生成的图片…';
   useEffect(() => {
     if (!listening) return;
     const timer = window.setInterval(
@@ -99,6 +110,34 @@ export function DesktopPromptInput({
         className="pc-prompt-card"
       >
         <button
+          type="button"
+          className="pc-prompt-mode"
+          aria-label={`当前${creationType}，点击切换模式`}
+          title={`当前${creationType}，点击切换模式`}
+          onClick={() =>
+            onModeChange(
+              modes[(modes.indexOf(creationType) + 1) % modes.length] ??
+                modes[0]!,
+            )
+          }
+          tabIndex={open ? -1 : 0}
+        >
+          <span
+            key={creationType}
+            className="pc-prompt-mode-icon"
+            aria-hidden="true"
+          >
+            {creationType === 'Agent 模式'
+              ? '✦'
+              : creationType === '视频生成'
+                ? '▶'
+                : '▧'}
+          </span>
+          <span aria-hidden="true" className="pc-prompt-mode-arrows">
+            ⌃⌄
+          </span>
+        </button>
+        <button
           ref={(node) => {
             triggerRef.current = node;
           }}
@@ -111,7 +150,9 @@ export function DesktopPromptInput({
           tabIndex={open ? -1 : 0}
           onClick={onExpand}
         >
-          输入想法，和 Agent 一起创作…
+          <span key={creationType} className="pc-prompt-mode-placeholder">
+            {placeholder}
+          </span>
         </button>
         <div className="pc-prompt-text-area" inert={!open}>
           <textarea

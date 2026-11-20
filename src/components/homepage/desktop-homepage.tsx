@@ -23,6 +23,7 @@ export function DesktopHomepage() {
     collapsed,
     setCollapsed,
     creationType,
+    setCreationType,
     dismissMenus,
     dismissNotice,
     floating,
@@ -721,6 +722,8 @@ export function DesktopHomepage() {
               </div>
               <section className="pc-prompt-section">
                 <DesktopPromptInput
+                  creationType={creationType}
+                  onModeChange={setCreationType}
                   open={open}
                   value={prompt}
                   onChange={setPrompt}
@@ -749,7 +752,7 @@ export function DesktopHomepage() {
                           className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 hover:bg-cyan-500/30 font-medium text-xs transition-colors shadow-sm active:scale-95"
                           type="button"
                           aria-haspopup="menu"
-                          aria-label="图片生成"
+                          aria-label={creationType}
                           data-stitch-action="type-menu"
                           aria-expanded={menu === 'type'}
                           onClick={onClick}

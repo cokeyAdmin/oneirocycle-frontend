@@ -262,7 +262,7 @@
 }
 .stitch-desktop .pc-prompt-trigger {
   position: absolute;
-  inset: 0 44px 0 0;
+  inset: 0 44px 0 44px;
   border: 0;
   padding: 0 16px;
   border-radius: 24px;
@@ -277,6 +277,56 @@
   transition:
     opacity 0.3s,
     transform 0.4s var(--pc-spring);
+}
+.stitch-desktop .pc-prompt-mode {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--pc-hover);
+  color: var(--pc-foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.stitch-desktop .pc-prompt-mode-icon,
+.stitch-desktop .pc-prompt-mode-placeholder {
+  display: inline-block;
+  animation: pc-mode-appear 0.35s ease both;
+}
+.stitch-desktop .pc-prompt-mode-arrows {
+  font-size: 9px;
+  line-height: 0.7;
+}
+.stitch-desktop .pc-prompt[data-expanded='true'] .pc-prompt-mode {
+  opacity: 0;
+  pointer-events: none;
+}
+@keyframes pc-mode-appear {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stitch-desktop .pc-prompt-mode-icon,
+  .stitch-desktop .pc-prompt-mode-placeholder {
+    animation: none;
+  }
 }
 .stitch-desktop .pc-prompt[data-expanded='true'] .pc-prompt-trigger {
   opacity: 0;
