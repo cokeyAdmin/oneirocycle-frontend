@@ -266,9 +266,11 @@ export function DesktopPromptInput({
           onClick={() => {
             if (listening) {
               setListening(false);
-              setSeconds(0);
             } else if (value.trim()) onUnavailable();
-            else setListening(true);
+            else {
+              setSeconds(0);
+              setListening(true);
+            }
           }}
         >
           <span
@@ -307,23 +309,21 @@ export function DesktopPromptInput({
               <path d="M2.75 6.5V7a4.25 4.25 0 0 0 8.5 0v-.5M7 11.25V13" />
             </svg>
           </span>
-          {listening && (
-            <span className="pc-voice-demo" aria-hidden="true">
-              <span className="pc-voice-stop" />
-              <span className="pc-voice-bars">
-                {Array.from({ length: 12 }, (_, index) => (
-                  <span
-                    key={index}
-                    style={{ animationDelay: `${index * 0.05}s` }}
-                  />
-                ))}
-              </span>
-              <span>
-                {String(Math.floor(seconds / 60)).padStart(2, '0')}:
-                {String(seconds % 60).padStart(2, '0')}
-              </span>
+          <span className="pc-voice-demo" aria-hidden="true">
+            <span className="pc-voice-stop" />
+            <span className="pc-voice-bars">
+              {Array.from({ length: 12 }, (_, index) => (
+                <span
+                  key={index}
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                />
+              ))}
             </span>
-          )}
+            <span className="pc-voice-timer">
+              {String(Math.floor(seconds / 60)).padStart(2, '0')}:
+              {String(seconds % 60).padStart(2, '0')}
+            </span>
+          </span>
         </button>
       </div>
     </div>
