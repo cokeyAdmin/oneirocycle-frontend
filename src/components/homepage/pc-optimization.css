@@ -297,10 +297,36 @@
     opacity 0.2s,
     transform 0.2s;
 }
-.stitch-desktop .pc-prompt-mode-icon,
-.stitch-desktop .pc-prompt-mode-placeholder {
+.stitch-desktop .pc-prompt-mode-icon {
   display: inline-block;
   animation: pc-mode-appear 0.35s ease both;
+}
+.stitch-desktop .pc-prompt-mode-character {
+  display: inline-block;
+  animation: pc-mode-character-hop 0.48s both;
+}
+@keyframes pc-mode-character-hop {
+  0% {
+    opacity: 0;
+    filter: blur(3px);
+    transform: perspective(120px) translateY(8px) rotateX(80deg);
+    animation-timing-function: cubic-bezier(0.15, 0.7, 0.25, 1);
+  }
+  46% {
+    opacity: 1;
+    filter: blur(0);
+    transform: perspective(120px) translateY(-3px) rotateX(-12deg);
+    animation-timing-function: ease-in-out;
+  }
+  72% {
+    transform: perspective(120px) translateY(1px) rotateX(4deg);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
 }
 .stitch-desktop .pc-prompt-mode-arrows {
   font-size: 9px;
@@ -324,7 +350,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .stitch-desktop .pc-prompt-mode-icon,
-  .stitch-desktop .pc-prompt-mode-placeholder {
+  .stitch-desktop .pc-prompt-mode-character {
     animation: none;
   }
 }

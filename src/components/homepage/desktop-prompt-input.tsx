@@ -150,8 +150,20 @@ export function DesktopPromptInput({
           tabIndex={open ? -1 : 0}
           onClick={onExpand}
         >
-          <span key={creationType} className="pc-prompt-mode-placeholder">
-            {placeholder}
+          <span
+            key={creationType}
+            className="pc-prompt-mode-placeholder"
+            aria-hidden="true"
+          >
+            {Array.from(placeholder, (character, index) => (
+              <span
+                key={index}
+                className="pc-prompt-mode-character"
+                style={{ animationDelay: `${index * 15}ms` }}
+              >
+                {character === ' ' ? '\u00a0' : character}
+              </span>
+            ))}
           </span>
         </button>
         <div className="pc-prompt-text-area" inert={!open}>
