@@ -122,7 +122,7 @@ void main(){
  float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*pm*(.2+.1*uDark);
  c=vec3(0.)*sh+c*(1.-sh);a=sh+a*(1.-sh);
  /* glass rim */
- float pa=clamp(pm*(fres*.09+spec*.25+spec2*.2),0.,1.);
+ float pa=clamp(pm*(fres*.09+spec*.25+spec2*.2)*mix(.55,1.,uDark),0.,1.);
  c=vec3(pa)+c*(1.-pa);a=pa+a*(1.-pa);
  /* the drop */
  float th=lens(dd,11.);
