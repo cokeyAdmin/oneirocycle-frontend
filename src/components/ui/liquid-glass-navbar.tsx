@@ -11,7 +11,7 @@
  */
 
 import * as React from 'react';
-import { sheenGlassMaterial } from './sheen-glass-material';
+import { polishedGlassMaterial } from './polished-glass-material';
 
 export type NimbusFx =
   'plane' | 'drop' | 'spin' | 'glow' | 'wave' | 'pop' | 'none';
@@ -177,8 +177,8 @@ void main(){
  c=mix(vec3(1.),irid,.15*fres)*pa+c*(1.-pa);a=pa+a*(1.-pa);
  float th=lens(dd,11.);
  float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
- vec2 sheenCenter=uBlob[0].xy;vec2 sheenHalf=vec2(uBlob[0].z+uBlob[0].w,uBlob[0].w*uSy[0]);
- ${sheenGlassMaterial}
+ float glassCenterY=uBlob[0].y;float glassHalfHeight=uBlob[0].w*uSy[0];
+ ${polishedGlassMaterial}
  c=dc+c*(1.-da);a=da+a*(1.-da);
  gl_FragColor=vec4(c,a);
 }`;
