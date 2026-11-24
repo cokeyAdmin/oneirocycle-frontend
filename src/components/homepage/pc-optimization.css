@@ -247,14 +247,14 @@
 }
 .stitch-desktop .pc-prompt {
   width: 100%;
-  max-width: 400px;
+  max-width: 540px;
   position: relative;
   --prompt-text-height: 68px;
   --prompt-actions-height: 64px;
   transition: max-width 0.4s var(--pc-spring);
 }
 .stitch-desktop .pc-prompt[data-expanded='true'] {
-  max-width: 600px;
+  max-width: 720px;
 }
 .stitch-desktop #desktop-prompt-container.pc-prompt-card {
   position: relative;
