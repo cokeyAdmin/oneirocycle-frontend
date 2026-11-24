@@ -7,6 +7,7 @@ import { LiquidText } from '../ui/liquid-text';
 import { LiquidToggle, NimbusToggleIcons } from '../ui/liquid-glass-toggle';
 import { ParticleTitle } from '../ui/particle-title';
 import { DesktopPromptInput } from './desktop-prompt-input';
+import { DesktopWorkspaceBackground } from './desktop-workspace-background';
 import { useStitchHomepage } from './use-stitch-homepage';
 import { SourceNotice } from './homepage-primitives';
 import { SidebarWater, type SidebarWaterHandle } from './sidebar-water';
@@ -542,7 +543,8 @@ export function DesktopHomepage() {
             </div>
             {'\n'}
           </header>
-          <main
+          <DesktopWorkspaceBackground
+            light={light}
             id="desktop-workspace-scroll-container"
             className="pc-workspace-body"
             onScroll={onScroll}
@@ -2340,7 +2342,7 @@ export function DesktopHomepage() {
               {'\n'}
             </div>
             {'\n'}
-          </main>
+          </DesktopWorkspaceBackground>
         </div>
         {'\n'}
         {'\n'}
