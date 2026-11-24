@@ -40,8 +40,7 @@ void main(){
  float spec=pow(max(dot(reflect(-normalize(vec3(-.45,-.8,.85)),n),V),0.),70.);
  float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
 float dm=smoothstep(1.,-1.,dd);
-float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*(.11+.07*uDark);
- vec3 c=vec3(0.)*sh;float a=sh;
+ vec3 c=vec3(0.);float a=0.;
  float th=lens(dd,11.);
  float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
  vec4 glassBox=int(uFront.z)==1?uBox[1]:uBox[0];
@@ -518,7 +517,7 @@ export const SidebarWater = forwardRef<SidebarWaterHandle, SidebarWaterProps>(
               height: fallback.h * 2,
               borderRadius: RADIUS,
               transition:
-                'top 500ms cubic-bezier(.3,1.3,.4,1),width 500ms,height 500ms',
+                'top 500ms cubic-bezier(.3,1.3,.4,1),width 500ms,height 500ms,box-shadow 400ms cubic-bezier(.25,1,.5,1)',
             }}
           />
         )}

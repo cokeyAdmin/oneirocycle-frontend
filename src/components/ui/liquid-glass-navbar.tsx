@@ -170,8 +170,7 @@ void main(){
  float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
  float fres=clamp((1.-n.z)*4.,0.,1.);
  float pm=smoothstep(1.,-1.,dp);float dm=smoothstep(1.,-1.,dd)*smoothstep(1.,-2.,dp);
- float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*pm*(.11+.07*uDark);
- vec3 c=vec3(0.)*sh;float a=sh;
+ vec3 c=vec3(0.);float a=0.;
  float pa=clamp(pm*(fres*.09+spec*.25+spec2*.2)*mix(.55,1.,uDark),0.,1.);
  c=vec3(pa)+c*(1.-pa);a=pa+a*(1.-pa);
  float th=lens(dd,11.);

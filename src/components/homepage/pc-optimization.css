@@ -1,4 +1,9 @@
 /* CAR-7: approved desktop variants; original mobile composition is unchanged. */
+@property --pc-glass-rim-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: -75deg;
+}
 .stitch-desktop {
   min-height: 0;
   overflow: hidden;
@@ -9,6 +14,7 @@
   --pc-border: #ffffff1a;
   --pc-glass-background: 20 20 20;
   --pc-glass-foreground: 255 255 255;
+  --pc-glass-shadow-color: rgb(0 0 0 / 66%);
   --pc-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .stitch-desktop.light-theme {
@@ -19,6 +25,7 @@
   --pc-border: #0000001a;
   --pc-glass-background: 255 255 255;
   --pc-glass-foreground: 20 20 20;
+  --pc-glass-shadow-color: rgb(0 0 0 / 28%);
 }
 .stitch-desktop #desktop-promo-banner {
   flex-shrink: 0;
@@ -216,7 +223,8 @@
     inset 0 1px 2px rgb(var(--pc-glass-foreground) / 5%),
     inset 0 -1px 2px rgb(var(--pc-glass-background) / 50%),
     inset 0 0 2px 1px rgb(var(--pc-glass-background) / 20%),
-    0 2px 2px -1px rgb(0 0 0 / 18%);
+    0 5px 6px -2px var(--pc-glass-shadow-color);
+  transition: box-shadow 400ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 .stitch-desktop .pc-workspace .nimbus-nav .nimbus-glass::after,
 .stitch-desktop .pc-workspace .nimbus-toggle .nt-glass::after,
@@ -232,7 +240,7 @@
   pointer-events: none;
   background:
     conic-gradient(
-      from -75deg,
+      from var(--pc-glass-rim-angle),
       rgb(var(--pc-glass-foreground) / 50%) 0%,
       transparent 5% 40%,
       rgb(var(--pc-glass-foreground) / 50%) 50%,
@@ -244,6 +252,7 @@
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite: exclude;
+  transition: --pc-glass-rim-angle 500ms ease;
 }
 .stitch-desktop .pc-workspace .nimbus-toggle .nt-glass,
 .stitch-desktop
@@ -268,28 +277,75 @@
   -webkit-backdrop-filter: blur(1.5px);
   backdrop-filter: blur(1.5px);
   transition:
-    filter 250ms,
+    box-shadow 400ms cubic-bezier(0.25, 1, 0.5, 1),
     backdrop-filter 400ms cubic-bezier(0.25, 1, 0.5, 1),
     transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
 }
-.stitch-desktop .pc-header-glass-button:hover {
-  filter: brightness(1.1);
+.stitch-desktop .pc-sidebar-nav canvas {
+  filter: drop-shadow(0 3px 2px var(--pc-glass-shadow-color));
+  transition: filter 400ms cubic-bezier(0.25, 1, 0.5, 1);
 }
-.stitch-desktop.light-theme .pc-workspace .pc-header-glass-button:hover {
-  filter: none;
-  -webkit-backdrop-filter: blur(0.01em);
-  backdrop-filter: blur(0.01em);
-  transform: scale(0.975);
+@media (hover: hover) {
+  .stitch-desktop .pc-workspace .nimbus-nav:hover .nimbus-glass,
+  .stitch-desktop .pc-workspace .nimbus-toggle:hover .nt-glass,
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover,
+  .stitch-desktop
+    .pc-sidebar-nav:has(button[data-preview-selected='true']:hover)
+    .sidebar-water-pool {
+    box-shadow:
+      inset 0 1px 2px rgb(var(--pc-glass-foreground) / 5%),
+      inset 0 -1px 2px rgb(var(--pc-glass-background) / 50%),
+      inset 0 0 2px 1px rgb(var(--pc-glass-background) / 20%),
+      0 0 0 0 transparent;
+  }
+  .stitch-desktop .pc-workspace .nimbus-nav:hover .nimbus-drop,
+  .stitch-desktop .pc-workspace .nimbus-toggle:hover .nt-knob {
+    box-shadow: inset 0 0 2px 1px rgb(var(--pc-glass-background) / 20%);
+  }
+  .stitch-desktop .pc-workspace .nimbus-nav:hover .nimbus-glass::after,
+  .stitch-desktop .pc-workspace .nimbus-toggle:hover .nt-glass::after,
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover::after,
+  .stitch-desktop
+    .pc-sidebar-nav:has(button[data-preview-selected='true']:hover)
+    .sidebar-water-pool::after {
+    --pc-glass-rim-angle: -125deg;
+  }
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover {
+    -webkit-backdrop-filter: blur(0.01em);
+    backdrop-filter: blur(0.01em);
+    transform: scale(0.975);
+  }
+  .stitch-desktop
+    .pc-sidebar-nav:has(button[data-preview-selected='true']:hover)
+    canvas {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+}
+.stitch-desktop .pc-workspace .pc-header-glass-button:active {
+  transform: perspective(240px) rotateX(25deg) scale(0.975);
+}
+.stitch-desktop .pc-workspace .pc-header-glass-button:active::after {
+  --pc-glass-rim-angle: -75deg;
 }
 .stitch-desktop .pc-header-glass-button:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 @media (prefers-reduced-motion: reduce) {
-  .stitch-desktop .pc-workspace .pc-header-glass-button {
+  .stitch-desktop .pc-workspace .pc-header-glass-button,
+  .stitch-desktop .pc-workspace .pc-header-glass-button::after,
+  .stitch-desktop .pc-workspace .nimbus-nav .nimbus-glass,
+  .stitch-desktop .pc-workspace .nimbus-nav .nimbus-glass::after,
+  .stitch-desktop .pc-workspace .nimbus-toggle .nt-glass,
+  .stitch-desktop .pc-workspace .nimbus-toggle .nt-glass::after,
+  .stitch-desktop .pc-workspace .nimbus-nav .nimbus-drop,
+  .stitch-desktop .pc-workspace .nimbus-toggle .nt-knob,
+  .stitch-desktop .pc-sidebar-nav canvas,
+  .stitch-desktop .sidebar-water-pool,
+  .stitch-desktop .sidebar-water-pool::after {
     transition: none;
   }
-  .stitch-desktop.light-theme .pc-workspace .pc-header-glass-button:hover {
+  .stitch-desktop .pc-workspace .pc-header-glass-button:is(:hover, :active) {
     transform: none;
   }
 }
