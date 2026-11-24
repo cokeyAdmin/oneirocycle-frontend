@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { clearGlassMaterial } from '../ui/clear-glass-material';
+import { sheenGlassMaterial } from '../ui/sheen-glass-material';
 
 /* Water shader adapted from the user-provided Nimbus UI Liquid Accordion. */
 const VERT = `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
@@ -48,7 +48,10 @@ float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*(.11+.07*uDark);
  c=mix(vec3(1.),irid,.5*fres)*pa+c*(1.-pa);a=pa+a*(1.-pa);
  float th=lens(dd,11.);
  float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
- ${clearGlassMaterial}
+ int sheenIndex=int(uFront.z);
+ vec4 sheenBox=sheenIndex==1?uBox[1]:uBox[0];
+ vec2 sheenCenter=sheenBox.xy;vec2 sheenHalf=sheenBox.zw;
+ ${sheenGlassMaterial}
  c=dc+c*(1.-da);a=da+a*(1.-da);
  gl_FragColor=vec4(c,a);
 }`;
