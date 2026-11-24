@@ -1,4 +1,9 @@
 /* CAR-7: approved desktop variants; original mobile composition is unchanged. */
+@property --pc-glass-rim-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: -75deg;
+}
 .stitch-desktop {
   min-height: 0;
   overflow: hidden;
@@ -7,6 +12,9 @@
   --pc-muted: #a2a4ad;
   --pc-hover: #ffffff0d;
   --pc-border: #ffffff1a;
+  --pc-glass-background: 20 20 20;
+  --pc-glass-foreground: 255 255 255;
+  --pc-glass-shadow-color: rgb(0 0 0 / 50%);
   --pc-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .stitch-desktop.light-theme {
@@ -15,6 +23,9 @@
   --pc-muted: #62646c;
   --pc-hover: #00000008;
   --pc-border: #0000001a;
+  --pc-glass-background: 255 255 255;
+  --pc-glass-foreground: 20 20 20;
+  --pc-glass-shadow-color: rgb(0 0 0 / 24%);
 }
 .stitch-desktop #desktop-promo-banner {
   flex-shrink: 0;
@@ -90,10 +101,23 @@
   z-index: 2;
   background: transparent;
 }
+.stitch-desktop
+  #desktop-main-sidebar[data-collapsed='true']
+  .pc-sidebar-nav
+  > button {
+  justify-content: center;
+  gap: 0;
+}
 .stitch-desktop.light-theme
   .pc-sidebar-nav
   button[data-preview-selected='true'] {
   color: #0b132b;
+}
+.stitch-desktop.light-theme
+  .pc-sidebar-nav
+  button[data-preview-selected='true']
+  > svg {
+  color: inherit;
 }
 .stitch-desktop .pc-workspace {
   min-width: 0;
@@ -107,6 +131,24 @@
   flex-shrink: 0;
   background: var(--bg-surface) !important;
   gap: 12px;
+}
+.stitch-desktop .pc-workspace-background {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.stitch-desktop .pc-workspace-background-layer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.stitch-desktop .pc-workspace-background-layer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .stitch-desktop .pc-workspace-body {
   flex: 1;
@@ -136,7 +178,7 @@
   pointer-events: none;
 }
 .stitch-desktop .pc-project-name {
-  width: 148px;
+  width: 100%;
   min-height: 45px;
   font-size: 28px;
 }
@@ -145,6 +187,14 @@
 }
 .stitch-desktop #desktop-sidebar-header-wrapper > div {
   gap: 8px;
+}
+.stitch-desktop #desktop-sidebar-collapse-toggle {
+  width: 22px;
+  height: 22px;
+}
+.stitch-desktop #desktop-sidebar-toggle-icon {
+  width: 12px;
+  height: 12px;
 }
 .stitch-desktop .pc-workspace .nimbus-nav {
   flex-shrink: 0;
@@ -157,37 +207,145 @@
   top: 3px;
   bottom: 3px;
 }
-.stitch-desktop .pc-sheen-button {
-  position: relative;
-  background:
-    linear-gradient(
-      45deg,
-      #ffffff26,
-      transparent 24%,
-      transparent 76%,
-      #ffffff26
-    ),
-    #ffffff0d;
-  backdrop-filter: blur(5px);
+.stitch-desktop .pc-workspace .nimbus-nav .nimbus-glass,
+.stitch-desktop .pc-workspace .nimbus-toggle .nt-glass,
+.stitch-desktop .pc-workspace .nimbus-nav .nimbus-drop,
+.stitch-desktop .pc-workspace .nimbus-toggle .nt-knob,
+.stitch-desktop .pc-workspace .pc-header-glass-button,
+.stitch-desktop .sidebar-water-pool {
+  background: linear-gradient(
+    -75deg,
+    rgb(var(--pc-glass-background) / 5%),
+    rgb(var(--pc-glass-background) / 20%),
+    rgb(var(--pc-glass-background) / 5%)
+  );
   box-shadow:
-    inset 2px -2px 1px -1px #ffffffa6,
-    inset -2px 2px 1px -1px #ffffffa6,
-    inset 0 0 2px #000000cc,
-    0 4px 8px #00000033;
-  transition:
-    transform 250ms,
-    box-shadow 250ms,
-    filter 250ms;
+    inset 0 1.5px 2.5px rgb(var(--pc-glass-foreground) / 9%),
+    inset 0 -1.5px 2px rgb(var(--pc-glass-background) / 50%),
+    inset 0 0 2px 2px rgb(var(--pc-glass-background) / 20%),
+    0 3px 4px -1.5px var(--pc-glass-shadow-color);
+  transition: box-shadow 400ms cubic-bezier(0.25, 1, 0.5, 1);
 }
-.stitch-desktop .pc-sheen-button:hover {
-  transform: scale(1.02);
-  filter: brightness(1.1);
+.stitch-desktop .pc-workspace .nimbus-nav .nimbus-glass::after,
+.stitch-desktop .pc-workspace .nimbus-toggle .nt-glass::after,
+.stitch-desktop .pc-workspace .nimbus-nav .nimbus-drop::after,
+.stitch-desktop .pc-workspace .nimbus-toggle .nt-knob::after,
+.stitch-desktop .pc-workspace .pc-header-glass-button::after,
+.stitch-desktop .sidebar-water-pool::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from var(--pc-glass-rim-angle),
+      rgb(var(--pc-glass-foreground) / 42%) 0%,
+      transparent 5% 40%,
+      rgb(var(--pc-glass-foreground) / 42%) 50%,
+      transparent 60% 95%,
+      rgb(var(--pc-glass-foreground) / 42%) 100%
+    ),
+    rgb(var(--pc-glass-background) / 50%);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition: --pc-glass-rim-angle 500ms ease;
+}
+.stitch-desktop .pc-workspace .nimbus-toggle .nt-glass,
+.stitch-desktop
+  .pc-workspace
+  .nimbus-nav:not([data-refract='on'])
+  .nimbus-glass {
+  -webkit-backdrop-filter: blur(1.5px);
+  backdrop-filter: blur(1.5px);
+}
+.stitch-desktop .pc-workspace .nimbus-nav[data-refract='on'] .nimbus-glass {
+  -webkit-backdrop-filter: var(--n-refract) blur(1.5px);
+  backdrop-filter: var(--n-refract) blur(1.5px);
+}
+.stitch-desktop .pc-workspace .pc-header-glass-button {
+  position: relative;
+  flex-shrink: 0;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--pc-foreground);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(1.5px);
+  backdrop-filter: blur(1.5px);
+  transition:
+    box-shadow 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    backdrop-filter 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.stitch-desktop .pc-sidebar-nav canvas {
+  filter: drop-shadow(0 2px 2px var(--pc-glass-shadow-color));
+  transition: filter 400ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+@media (hover: hover) {
+  .stitch-desktop .pc-workspace .nimbus-nav:hover .nimbus-glass,
+  .stitch-desktop .pc-workspace .nimbus-toggle:hover .nt-glass,
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover,
+  .stitch-desktop
+    .pc-sidebar-nav:has(button[data-preview-selected='true']:hover)
+    .sidebar-water-pool {
+    box-shadow:
+      inset 0 1.5px 2.5px rgb(var(--pc-glass-foreground) / 5%),
+      inset 0 -1.5px 2px rgb(var(--pc-glass-background) / 50%),
+      inset 0 0 1px 1px rgb(var(--pc-glass-background) / 40%),
+      0 0 0 0 transparent;
+  }
+  .stitch-desktop .pc-workspace .nimbus-nav:hover .nimbus-drop,
+  .stitch-desktop .pc-workspace .nimbus-toggle:hover .nt-knob {
+    box-shadow: inset 0 0 2px 1px rgb(var(--pc-glass-background) / 20%);
+  }
+  .stitch-desktop .pc-workspace .nimbus-nav:hover .nimbus-glass::after,
+  .stitch-desktop .pc-workspace .nimbus-toggle:hover .nt-glass::after,
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover::after,
+  .stitch-desktop
+    .pc-sidebar-nav:has(button[data-preview-selected='true']:hover)
+    .sidebar-water-pool::after {
+    --pc-glass-rim-angle: -125deg;
+  }
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover {
+    -webkit-backdrop-filter: blur(0.01em);
+    backdrop-filter: blur(0.01em);
+    transform: scale(0.975);
+  }
+  .stitch-desktop
+    .pc-sidebar-nav:has(button[data-preview-selected='true']:hover)
+    canvas {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+}
+.stitch-desktop .pc-workspace .pc-header-glass-button:active {
+  transform: perspective(240px) rotateX(25deg) scale(0.975);
+}
+.stitch-desktop .pc-workspace .pc-header-glass-button:active::after {
+  --pc-glass-rim-angle: -75deg;
+}
+.stitch-desktop .pc-header-glass-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 @media (prefers-reduced-motion: reduce) {
-  .stitch-desktop .pc-sheen-button {
+  .stitch-desktop .pc-workspace .pc-header-glass-button,
+  .stitch-desktop .pc-workspace .pc-header-glass-button::after,
+  .stitch-desktop .pc-workspace .nimbus-nav .nimbus-glass,
+  .stitch-desktop .pc-workspace .nimbus-nav .nimbus-glass::after,
+  .stitch-desktop .pc-workspace .nimbus-toggle .nt-glass,
+  .stitch-desktop .pc-workspace .nimbus-toggle .nt-glass::after,
+  .stitch-desktop .pc-workspace .nimbus-nav .nimbus-drop,
+  .stitch-desktop .pc-workspace .nimbus-toggle .nt-knob,
+  .stitch-desktop .pc-sidebar-nav canvas,
+  .stitch-desktop .sidebar-water-pool,
+  .stitch-desktop .sidebar-water-pool::after {
     transition: none;
   }
-  .stitch-desktop .pc-sheen-button:hover {
+  .stitch-desktop .pc-workspace .pc-header-glass-button:is(:hover, :active) {
     transform: none;
   }
 }
@@ -214,14 +372,14 @@
 }
 .stitch-desktop .pc-prompt {
   width: 100%;
-  max-width: 400px;
+  max-width: 540px;
   position: relative;
   --prompt-text-height: 68px;
   --prompt-actions-height: 64px;
   transition: max-width 0.4s var(--pc-spring);
 }
 .stitch-desktop .pc-prompt[data-expanded='true'] {
-  max-width: 600px;
+  max-width: 720px;
 }
 .stitch-desktop #desktop-prompt-container.pc-prompt-card {
   position: relative;
@@ -247,7 +405,7 @@
 }
 .stitch-desktop .pc-prompt-trigger {
   position: absolute;
-  inset: 0 44px 0 0;
+  inset: 0 44px 0 44px;
   border: 0;
   padding: 0 16px;
   border-radius: 24px;
@@ -262,6 +420,86 @@
   transition:
     opacity 0.3s,
     transform 0.4s var(--pc-spring);
+}
+.stitch-desktop .pc-prompt-mode {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--pc-hover);
+  color: var(--pc-foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.stitch-desktop .pc-prompt-mode-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  animation: pc-mode-appear 0.35s ease both;
+}
+.stitch-desktop .pc-prompt-mode-character {
+  display: inline-block;
+  animation: pc-mode-character-hop 0.48s both;
+}
+@keyframes pc-mode-character-hop {
+  0% {
+    opacity: 0;
+    filter: blur(3px);
+    transform: perspective(120px) translateY(8px) rotateX(80deg);
+    animation-timing-function: cubic-bezier(0.15, 0.7, 0.25, 1);
+  }
+  46% {
+    opacity: 1;
+    filter: blur(0);
+    transform: perspective(120px) translateY(-3px) rotateX(-12deg);
+    animation-timing-function: ease-in-out;
+  }
+  72% {
+    transform: perspective(120px) translateY(1px) rotateX(4deg);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+.stitch-desktop .pc-prompt-mode-arrows {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  color: var(--pc-muted);
+}
+.stitch-desktop .pc-prompt[data-expanded='true'] .pc-prompt-mode {
+  opacity: 0;
+  pointer-events: none;
+}
+@keyframes pc-mode-appear {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stitch-desktop .pc-prompt-mode-icon,
+  .stitch-desktop .pc-prompt-mode-character {
+    animation: none;
+  }
 }
 .stitch-desktop .pc-prompt[data-expanded='true'] .pc-prompt-trigger {
   opacity: 0;
@@ -387,63 +625,101 @@
   width: 32px;
   height: 32px;
   border: 0;
-  border-radius: 50%;
+  border-radius: 999px;
+  padding: 0;
+  overflow: hidden;
   background: var(--pc-foreground);
   color: var(--pc-surface);
   transition:
     opacity 0.2s,
     transform 0.2s,
-    width 0.4s,
-    border-radius 0.4s;
+    width 0.4s ease-in-out;
 }
 .stitch-desktop .pc-prompt-send:hover {
   opacity: 0.85;
 }
 .stitch-desktop .pc-prompt-send[data-listening='true'] {
-  width: 150px;
-  border-radius: 999px;
+  width: 112px;
+}
+.stitch-desktop
+  .pc-prompt-card:has(.pc-prompt-send[data-listening='true'])
+  .pc-prompt-trigger {
+  right: 123px;
 }
 .stitch-desktop .pc-voice-demo {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  justify-content: space-between;
+  width: 112px;
+  height: 100%;
+  padding: 0 9px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
   font-size: 11px;
   font-variant-numeric: tabular-nums;
 }
+.stitch-desktop .pc-prompt-send[data-listening='true'] .pc-voice-demo {
+  opacity: 1;
+}
+.stitch-desktop .pc-voice-timer {
+  min-width: 30px;
+  text-align: center;
+}
 .stitch-desktop .pc-voice-stop {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   background: currentColor;
   border-radius: 2px;
+}
+.stitch-desktop .pc-prompt-send[data-listening='true'] .pc-voice-stop {
   animation: pc-voice-spin 2s ease-in-out infinite;
 }
 .stitch-desktop .pc-voice-bars {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
   height: 16px;
 }
 .stitch-desktop .pc-voice-bars span {
   width: 2px;
-  height: 3px;
+  height: 2px;
   border-radius: 2px;
   background: currentColor;
+}
+.stitch-desktop .pc-prompt-send[data-listening='true'] .pc-voice-bars span {
   animation: pc-voice-wave 1s ease-in-out infinite;
 }
+.stitch-desktop .pc-voice-bars span:nth-child(3n + 1) {
+  --pc-voice-peak: 7px;
+}
+.stitch-desktop .pc-voice-bars span:nth-child(3n + 2) {
+  --pc-voice-peak: 10px;
+}
 @keyframes pc-voice-spin {
+  50% {
+    transform: rotate(180deg);
+  }
   to {
     transform: rotate(360deg);
   }
 }
 @keyframes pc-voice-wave {
-  50% {
-    height: 14px;
+  33% {
+    height: var(--pc-voice-peak, 12px);
+  }
+  66% {
+    height: 5px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .stitch-desktop .pc-voice-stop,
-  .stitch-desktop .pc-voice-bars span {
+  .stitch-desktop .pc-prompt-send {
+    transition: none;
+  }
+  .stitch-desktop .pc-prompt-send .pc-voice-demo {
+    transition: none;
+  }
+  .stitch-desktop .pc-prompt-send[data-listening='true'] .pc-voice-stop,
+  .stitch-desktop .pc-prompt-send[data-listening='true'] .pc-voice-bars span {
     animation: none;
   }
 }
@@ -498,7 +774,8 @@
 
 .stitch-desktop .sidebar-label:has(.pc-project-name) {
   width: 148px;
-  flex: none;
+  flex: 0 1 148px;
+  min-width: 0;
 }
 .stitch-desktop .nimbus-nav .nimbus-item {
   padding: 0 14px;

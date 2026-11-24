@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { polishedGlassMaterial } from '../ui/polished-glass-material';
 
 /* Water shader adapted from the user-provided Nimbus UI Liquid Accordion. */
 const VERT = `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
@@ -38,24 +39,13 @@ void main(){
  vec3 V=vec3(0.,0.,1.);
  float spec=pow(max(dot(reflect(-normalize(vec3(-.45,-.8,.85)),n),V),0.),70.);
  float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
- float fres=clamp((1.-n.z)*4.,0.,1.);
- vec3 irid=.5+.5*cos(6.2831*(vec3(0.,.33,.67)+fres*.85+p.x*.0028+p.y*.0015+uTime*.035));
 float dm=smoothstep(1.,-1.,dd);
-float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*(.11+.07*uDark);
- vec3 c=vec3(0.,.14,.36)*sh;float a=sh;
- float pa=0.;
- c=mix(vec3(1.),irid,.5*fres)*pa+c*(1.-pa);a=pa+a*(1.-pa);
+ vec3 c=vec3(0.);float a=0.;
  float th=lens(dd,11.);
  float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
- vec3 tint=mix(vec3(.80,.95,1.),vec3(.55,.82,1.),uDark);
- float rim=dm*(1.-smoothstep(0.,8.,-dd));
- float cres=dm*smoothstep(.12,.55,dot(n.xy,normalize(vec2(.55,.85))))*smoothstep(0.,3.,-dd);
- float body=.5+.5*clamp(-n.y*3.,-1.,1.);
- float da=dm*(.26+.14*body)*(1.-.35*uDark);vec3 dc=mix(tint,vec3(1.),body*.6);
- float la=rim*.22;vec3 lc=mix(vec3(0.,.42,.78),vec3(.1,.55,.95),uDark);dc=lc*la+dc*da*(1.-la);da=la+da*(1.-la);
- la=clamp(cres*.7+smoothstep(.6,1.,cs)*.28*th*dm,0.,1.);dc=vec3(1.)*la+dc*(1.-la);da=la+da*(1.-la);
- la=clamp(dm*(spec*1.2+spec2*.5),0.,1.);dc=vec3(1.)*la+dc*(1.-la);da=la+da*(1.-la);
- la=dm*smoothstep(-2.,0.,dd)*.4;dc=mix(vec3(1.),irid,.35)*la+dc*(1.-la);da=la+da*(1.-la);
+ vec4 glassBox=int(uFront.z)==1?uBox[1]:uBox[0];
+ vec2 glassCenter=glassBox.xy;vec2 glassHalf=glassBox.zw;
+ ${polishedGlassMaterial}
  c=dc+c*(1.-da);a=da+a*(1.-da);
  gl_FragColor=vec4(c,a);
 }`;
@@ -526,13 +516,8 @@ export const SidebarWater = forwardRef<SidebarWaterHandle, SidebarWaterProps>(
               width: fallback.w * 2,
               height: fallback.h * 2,
               borderRadius: RADIUS,
-              background: light
-                ? 'radial-gradient(120% 90% at 30% 0%,rgba(255,255,255,.7),transparent 55%),rgba(255,255,255,.34)'
-                : 'radial-gradient(120% 90% at 30% 0%,rgba(255,255,255,.3),transparent 55%),rgba(140,200,255,.18)',
-              boxShadow:
-                'inset 0 1px 1px rgba(255,255,255,.95),inset 0 -2px 8px rgba(0,162,255,.2),inset 0 0 0 1px rgba(255,255,255,.55)',
               transition:
-                'top 500ms cubic-bezier(.3,1.3,.4,1),width 500ms,height 500ms',
+                'top 500ms cubic-bezier(.3,1.3,.4,1),width 500ms,height 500ms,box-shadow 400ms cubic-bezier(.25,1,.5,1)',
             }}
           />
         )}

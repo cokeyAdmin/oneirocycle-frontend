@@ -10,6 +10,8 @@ import {
 } from 'react';
 
 interface DesktopPromptInputProps {
+  creationType: string;
+  onModeChange: (mode: string) => void;
   open: boolean;
   value: string;
   onChange: (value: string) => void;
@@ -23,6 +25,8 @@ interface DesktopPromptInputProps {
 }
 
 export function DesktopPromptInput({
+  creationType,
+  onModeChange,
   open,
   value,
   onChange,
@@ -38,6 +42,13 @@ export function DesktopPromptInput({
   const [fades, setFades] = useState({ top: false, bottom: false });
   const [listening, setListening] = useState(false);
   const [seconds, setSeconds] = useState(0);
+  const modes = ['Agent 模式', '图片生成', '视频生成'];
+  const placeholder =
+    creationType === 'Agent 模式'
+      ? '输入想法，和 Agent 一起创作…'
+      : creationType === '视频生成'
+        ? '描述你想生成的视频…'
+        : '描述你想生成的图片…';
   useEffect(() => {
     if (!listening) return;
     const timer = window.setInterval(
@@ -99,6 +110,58 @@ export function DesktopPromptInput({
         className="pc-prompt-card"
       >
         <button
+          type="button"
+          className="pc-prompt-mode"
+          aria-label={`当前${creationType}，点击切换模式`}
+          title={`当前${creationType}，点击切换模式`}
+          onClick={() =>
+            onModeChange(
+              modes[(modes.indexOf(creationType) + 1) % modes.length] ??
+                modes[0]!,
+            )
+          }
+          tabIndex={open ? -1 : 0}
+        >
+          <svg
+            key={creationType}
+            className="pc-prompt-mode-icon"
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {creationType === 'Agent 模式' ? (
+              <path d="M9 3l1.85 5.15L16 10l-5.15 1.85L9 17l-1.85-5.15L2 10l5.15-1.85L9 3Zm9 10 1.05 2.95L22 17l-2.95 1.05L18 21l-1.05-2.95L14 17l2.95-1.05L18 13Zm0-10v5m-2.5-2.5h5" />
+            ) : creationType === '视频生成' ? (
+              <>
+                <rect x="2" y="6" width="13" height="12" rx="2.5" />
+                <path d="m15 10 5.5-3v10L15 14" />
+              </>
+            ) : (
+              <>
+                <rect x="3" y="3" width="18" height="18" rx="4" />
+                <circle cx="9" cy="9" r="1.5" />
+                <path d="m4 17 4-4 3 3 4-5 5 6" />
+              </>
+            )}
+          </svg>
+          <svg
+            aria-hidden="true"
+            className="pc-prompt-mode-arrows"
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.25"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m3.75 4.5 2.25-2.25 2.25 2.25m-4.5 3 2.25 2.25 2.25-2.25" />
+          </svg>
+        </button>
+        <button
           ref={(node) => {
             triggerRef.current = node;
           }}
@@ -111,7 +174,21 @@ export function DesktopPromptInput({
           tabIndex={open ? -1 : 0}
           onClick={onExpand}
         >
-          输入想法，和 Agent 一起创作…
+          <span
+            key={creationType}
+            className="pc-prompt-mode-placeholder"
+            aria-hidden="true"
+          >
+            {Array.from(placeholder, (character, index) => (
+              <span
+                key={index}
+                className="pc-prompt-mode-character"
+                style={{ animationDelay: `${index * 15}ms` }}
+              >
+                {character === ' ' ? '\u00a0' : character}
+              </span>
+            ))}
+          </span>
         </button>
         <div className="pc-prompt-text-area" inert={!open}>
           <textarea
@@ -189,9 +266,11 @@ export function DesktopPromptInput({
           onClick={() => {
             if (listening) {
               setListening(false);
-              setSeconds(0);
             } else if (value.trim()) onUnavailable();
-            else setListening(true);
+            else {
+              setSeconds(0);
+              setListening(true);
+            }
           }}
         >
           <span
@@ -230,23 +309,21 @@ export function DesktopPromptInput({
               <path d="M2.75 6.5V7a4.25 4.25 0 0 0 8.5 0v-.5M7 11.25V13" />
             </svg>
           </span>
-          {listening && (
-            <span className="pc-voice-demo" aria-hidden="true">
-              <span className="pc-voice-stop" />
-              <span className="pc-voice-bars">
-                {Array.from({ length: 12 }, (_, index) => (
-                  <span
-                    key={index}
-                    style={{ animationDelay: `${index * 0.05}s` }}
-                  />
-                ))}
-              </span>
-              <span>
-                {String(Math.floor(seconds / 60)).padStart(2, '0')}:
-                {String(seconds % 60).padStart(2, '0')}
-              </span>
+          <span className="pc-voice-demo" aria-hidden="true">
+            <span className="pc-voice-stop" />
+            <span className="pc-voice-bars">
+              {Array.from({ length: 12 }, (_, index) => (
+                <span
+                  key={index}
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                />
+              ))}
             </span>
-          )}
+            <span className="pc-voice-timer">
+              {String(Math.floor(seconds / 60)).padStart(2, '0')}:
+              {String(seconds % 60).padStart(2, '0')}
+            </span>
+          </span>
         </button>
       </div>
     </div>

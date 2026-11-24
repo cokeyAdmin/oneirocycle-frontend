@@ -307,6 +307,7 @@ export function useStitchHomepage(variant: 'desktop' | 'mobile') {
     menu,
     model,
     creationType,
+    setCreationType,
     prompt,
     setPrompt,
     query,

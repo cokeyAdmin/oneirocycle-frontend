@@ -7,6 +7,7 @@ import { LiquidText } from '../ui/liquid-text';
 import { LiquidToggle, NimbusToggleIcons } from '../ui/liquid-glass-toggle';
 import { ParticleTitle } from '../ui/particle-title';
 import { DesktopPromptInput } from './desktop-prompt-input';
+import { DesktopWorkspaceBackground } from './desktop-workspace-background';
 import { useStitchHomepage } from './use-stitch-homepage';
 import { SourceNotice } from './homepage-primitives';
 import { SidebarWater, type SidebarWaterHandle } from './sidebar-water';
@@ -23,6 +24,7 @@ export function DesktopHomepage() {
     collapsed,
     setCollapsed,
     creationType,
+    setCreationType,
     dismissMenus,
     dismissNotice,
     floating,
@@ -497,10 +499,10 @@ export function DesktopHomepage() {
                   on: NimbusToggleIcons.moon,
                 }}
                 label="切换亮暗模式"
-                size={28}
+                size={32}
               />
               <button
-                className="pc-sheen-button relative w-8 h-8 rounded-full liquid-glass border border-white/10 hover:border-white/30 hover:bg-white/10 flex items-center justify-center text-neutral-300 hover:text-white transition-all shadow-sm active:scale-95 group"
+                className="pc-header-glass-button w-8 flex items-center justify-center"
                 title="消息通知"
                 id="desktop-notification-btn"
                 type="button"
@@ -509,7 +511,7 @@ export function DesktopHomepage() {
                 onClick={onClick}
               >
                 <svg
-                  className="w-4 h-4 text-neutral-300 group-hover:text-white transition-colors"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -524,24 +526,24 @@ export function DesktopHomepage() {
                 </svg>
                 <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(76,215,246,0.9)] animate-pulse"></span>
               </button>
-              <div
-                className="pc-sheen-button flex items-center space-x-2 px-3 py-1.5 rounded-full liquid-glass border text-xs font-medium cursor-pointer hover:border-white/30 transition-colors"
-                role="button"
+              <button
+                className="pc-header-glass-button flex items-center space-x-2 px-3 text-xs font-medium"
+                type="button"
                 data-stitch-action="unavailable"
-                tabIndex={0}
                 onClick={onClick}
               >
-                <span className="text-neutral-400">{'⚡'}</span>
-                <span className="font-bold text-white">{'60'}</span>
-                <span className="text-[10px] text-neutral-300 font-semibold tracking-wider">
+                <span>{'⚡'}</span>
+                <span className="font-bold">{'60'}</span>
+                <span className="text-[10px] font-semibold tracking-wider">
                   {'FREE'}
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/90 animate-pulse"></span>
-              </div>
+              </button>
             </div>
             {'\n'}
           </header>
-          <main
+          <DesktopWorkspaceBackground
+            light={light}
             id="desktop-workspace-scroll-container"
             className="pc-workspace-body"
             onScroll={onScroll}
@@ -721,6 +723,8 @@ export function DesktopHomepage() {
               </div>
               <section className="pc-prompt-section">
                 <DesktopPromptInput
+                  creationType={creationType}
+                  onModeChange={setCreationType}
                   open={open}
                   value={prompt}
                   onChange={setPrompt}
@@ -749,7 +753,7 @@ export function DesktopHomepage() {
                           className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 hover:bg-cyan-500/30 font-medium text-xs transition-colors shadow-sm active:scale-95"
                           type="button"
                           aria-haspopup="menu"
-                          aria-label="图片生成"
+                          aria-label={creationType}
                           data-stitch-action="type-menu"
                           aria-expanded={menu === 'type'}
                           onClick={onClick}
@@ -2337,7 +2341,7 @@ export function DesktopHomepage() {
               {'\n'}
             </div>
             {'\n'}
-          </main>
+          </DesktopWorkspaceBackground>
         </div>
         {'\n'}
         {'\n'}
