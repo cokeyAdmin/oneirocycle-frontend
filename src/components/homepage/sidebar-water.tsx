@@ -39,17 +39,13 @@ void main(){
  vec3 V=vec3(0.,0.,1.);
  float spec=pow(max(dot(reflect(-normalize(vec3(-.45,-.8,.85)),n),V),0.),70.);
  float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
- float fres=clamp((1.-n.z)*4.,0.,1.);
- vec3 irid=.5+.5*cos(6.2831*(vec3(0.,.33,.67)+fres*.85+p.x*.0028+p.y*.0015+uTime*.035));
 float dm=smoothstep(1.,-1.,dd);
 float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*(.11+.07*uDark);
- vec3 c=vec3(0.,.14,.36)*sh;float a=sh;
- float pa=0.;
- c=mix(vec3(1.),irid,.5*fres)*pa+c*(1.-pa);a=pa+a*(1.-pa);
+ vec3 c=vec3(0.)*sh;float a=sh;
  float th=lens(dd,11.);
  float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
  vec4 glassBox=int(uFront.z)==1?uBox[1]:uBox[0];
- float glassCenterY=glassBox.y;float glassHalfHeight=glassBox.w;
+ vec2 glassCenter=glassBox.xy;vec2 glassHalf=glassBox.zw;
  ${polishedGlassMaterial}
  c=dc+c*(1.-da);a=da+a*(1.-da);
  gl_FragColor=vec4(c,a);

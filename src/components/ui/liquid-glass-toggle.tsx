@@ -94,14 +94,13 @@ const NT_CSS = `
 /* ---------- the water shader (Waterline engine + track fill) ---------- */
 const VERT = `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
 const FRAG = `precision highp float;
-uniform vec2 uRes;uniform float uDpr;uniform float uS;uniform float uTime;uniform vec4 uPill;uniform vec4 uFill;
+uniform vec2 uRes;uniform float uDpr;uniform float uS;uniform float uTime;uniform vec4 uPill;
 uniform vec4 uBlob[6];uniform float uSy[6];uniform vec4 uRip[6];uniform vec3 uMouse;uniform float uDark;uniform float uAmb;uniform float uK;
 float sdRB(vec2 p,vec2 b,float r){vec2 q=abs(p)-b+r;return length(max(q,0.))+min(max(q.x,q.y),0.)-r;}
 float sdCap(vec2 p,vec4 B,float sy){p-=B.xy;p.y/=sy;p.x=max(abs(p.x)-B.z,0.);return(length(p)-B.w)*min(1.,sy);}
 float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
 float dropD(vec2 p){float d=1e4;for(int i=0;i<6;i++){if(uBlob[i].w>.5){d=smin(d,sdCap(p,uBlob[i],uSy[i]),uK);}}return d;}
 float pillD(vec2 p){vec2 h=uPill.zw*.5;return sdRB(p-uPill.xy-h,h,h.y);}
-float fillD(vec2 p){float w=(sin(p.y*.3+uTime*5.)+.6*sin(p.y*.17-uTime*3.3))*uFill.y;float f=smin(p.x-uFill.x-w,dropD(p)+3.+(1.-uFill.z)*60.,9.);return max(pillD(p)+2.,f);}
 float lens(float d,float w){float t=clamp(-d/w,0.,1.);return sqrt(1.-(1.-t)*(1.-t));}
 float waves(vec2 p){float w=0.;
  for(int i=0;i<6;i++){vec4 R=uRip[i];if(R.w>0.){float x=length(p-R.xy)-R.z*240.;w+=R.w*exp(-R.z*1.7)*sin(x*.3)*exp(-x*x/700.);}}
@@ -111,33 +110,24 @@ float H(vec2 p){float dp=pillD(p);return lens(dp,uPill.w*.36)*2.4+lens(dropD(p),
 float caus(vec2 p,float t){vec2 q=p;float c=0.;for(int i=0;i<3;i++){q+=vec2(sin(q.y*1.1+t),cos(q.x*1.3-t*.7))*.6;c+=1./(1.+16.*abs(sin(q.x)*sin(q.y)));}return c/3.;}
 void main(){
  vec2 p=vec2(gl_FragCoord.x,uRes.y*uDpr-gl_FragCoord.y)/uDpr/uS;
- float dp=pillD(p);float dd=dropD(p);float fd=fillD(p);
+ float dp=pillD(p);float dd=dropD(p);
  float h0=H(p);vec3 n=normalize(vec3(h0-H(p+vec2(1.,0.)),h0-H(p+vec2(0.,1.)),1.));
  vec3 V=vec3(0.,0.,1.);
  float spec=pow(max(dot(reflect(-normalize(vec3(-.45,-.8,.85)),n),V),0.),70.);
  float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
  float fres=clamp((1.-n.z)*4.,0.,1.);
- vec3 irid=.5+.5*cos(6.2831*(vec3(0.,.33,.67)+fres*.85+p.x*.0028+uTime*.035));
  float pm=smoothstep(1.,-1.,dp);float dm=smoothstep(1.,-1.,dd)*smoothstep(1.,-2.,dp);
- /* water in the track */
- float fm=smoothstep(1.,-1.,fd)*pm;
- float depth=clamp((p.y-uPill.y)/uPill.w,0.,1.);
- vec3 wc=mix(mix(vec3(.50,.93,1.),vec3(0.,.62,1.),depth),mix(vec3(.18,.72,1.),vec3(0.,.36,.80),depth),uDark);
- float cw=caus((p+n.xy*8.)*.09,uTime*.8);
- wc+=vec3(.75,.95,1.)*smoothstep(.55,1.,cw)*.32;
- wc=mix(wc,vec3(1.),fm*(1.-smoothstep(0.,2.5,-fd))*.7);
- float wa=0.;
- vec3 c=wc*wa;float a=wa;
+ vec3 c=vec3(0.);float a=0.;
  /* drop shadow */
  float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*pm*(.2+.1*uDark);
- c=vec3(0.,.14,.36)*sh+c*(1.-sh);a=sh+a*(1.-sh);
+ c=vec3(0.)*sh+c*(1.-sh);a=sh+a*(1.-sh);
  /* glass rim */
- float pa=clamp(pm*(fres*.5+spec*.9+spec2),0.,1.);
- c=mix(vec3(1.),irid,.15*fres)*pa+c*(1.-pa);a=pa+a*(1.-pa);
+ float pa=clamp(pm*(fres*.09+spec*.25+spec2*.2),0.,1.);
+ c=vec3(pa)+c*(1.-pa);a=pa+a*(1.-pa);
  /* the drop */
  float th=lens(dd,11.);
  float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
- float glassCenterY=uBlob[0].y;float glassHalfHeight=uBlob[0].w*uSy[0];
+ vec2 glassCenter=uBlob[0].xy;vec2 glassHalf=vec2(uBlob[0].z+uBlob[0].w,uBlob[0].w*uSy[0]);
  ${polishedGlassMaterial}
  c=dc+c*(1.-da);a=da+a*(1.-da);
  gl_FragColor=vec4(c,a);
@@ -245,7 +235,6 @@ function initGL(canvas: HTMLCanvasElement): GLC | null {
     'uS',
     'uTime',
     'uPill',
-    'uFill',
     'uBlob',
     'uSy',
     'uRip',
@@ -330,11 +319,6 @@ export function LiquidToggle({
       c.uniform1f(u.uS ?? null, S);
       c.uniform1f(u.uTime ?? null, s.time);
       c.uniform4f(u.uPill ?? null, G.PAD / S, G.PAD / S, G.w / S, G.h / S);
-      const amp = s.reduce
-        ? 0
-        : Math.min((Math.abs(s.fill.v) / S) * 0.004, 2.6) + 0.35;
-      const fz = Math.max(0, Math.min(1, (s.fill.x - G.PAD) / G.w));
-      c.uniform4f(u.uFill ?? null, s.fill.x / S, amp, fz, 0);
       const blobs = new Float32Array(24);
       const sy = new Float32Array(6).fill(1);
       blobs.set(

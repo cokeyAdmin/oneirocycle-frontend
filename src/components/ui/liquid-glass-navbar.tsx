@@ -169,15 +169,14 @@ void main(){
  float spec=pow(max(dot(reflect(-normalize(vec3(-.45,-.8,.85)),n),V),0.),70.);
  float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
  float fres=clamp((1.-n.z)*4.,0.,1.);
- vec3 irid=.5+.5*cos(6.2831*(vec3(0.,.33,.67)+fres*.85+p.x*.0028+uTime*.035));
  float pm=smoothstep(1.,-1.,dp);float dm=smoothstep(1.,-1.,dd)*smoothstep(1.,-2.,dp);
  float sh=smoothstep(9.,-9.,dropD(p-vec2(0.,5.)))*(1.-dm)*pm*(.11+.07*uDark);
- vec3 c=vec3(0.,.14,.36)*sh;float a=sh;
- float pa=clamp(pm*(fres*.5+spec*.9+spec2),0.,1.);
- c=mix(vec3(1.),irid,.15*fres)*pa+c*(1.-pa);a=pa+a*(1.-pa);
+ vec3 c=vec3(0.)*sh;float a=sh;
+ float pa=clamp(pm*(fres*.09+spec*.25+spec2*.2),0.,1.);
+ c=vec3(pa)+c*(1.-pa);a=pa+a*(1.-pa);
  float th=lens(dd,11.);
  float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
- float glassCenterY=uBlob[0].y;float glassHalfHeight=uBlob[0].w*uSy[0];
+ vec2 glassCenter=uBlob[0].xy;vec2 glassHalf=vec2(uBlob[0].z+uBlob[0].w,uBlob[0].w*uSy[0]);
  ${polishedGlassMaterial}
  c=dc+c*(1.-da);a=da+a*(1.-da);
  gl_FragColor=vec4(c,a);
