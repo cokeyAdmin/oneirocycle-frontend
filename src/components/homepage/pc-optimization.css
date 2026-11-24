@@ -247,7 +247,7 @@
       transparent 60% 95%,
       rgb(var(--pc-glass-foreground) / 50%) 100%
     ),
-    rgb(var(--pc-glass-background) / 50%);
+    rgb(var(--pc-glass-foreground) / 24%);
   mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
