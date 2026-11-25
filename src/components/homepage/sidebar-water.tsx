@@ -40,7 +40,8 @@ void main(){
  vec3 V=vec3(0.,0.,1.);
  float spec=pow(max(dot(reflect(-normalize(vec3(-.45,-.8,.85)),n),V),0.),70.);
  float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
-float edgeAA=max(.16,.5/min(uDpr.x,uDpr.y));
+ float glassUnit=1.;
+ float edgeAA=.5*glassUnit/min(uDpr.x,uDpr.y);
  float dm=(1.-smoothstep(-edgeAA,edgeAA,dd));
  vec3 c=vec3(0.);float a=0.;
  float th=lens(dd,11.);

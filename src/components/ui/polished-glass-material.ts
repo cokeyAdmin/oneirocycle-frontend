@@ -12,10 +12,9 @@ export const polishedGlassMaterial = `
  float turn=fract((atan(local.x,-local.y)+1.308997)/6.283185);
  float shine=max(1.-smoothstep(0.,.05,min(turn,1.-turn)),
    smoothstep(.40,.50,turn)*(1.-smoothstep(.50,.60,turn)));
- float rim=dm*(1.-smoothstep(.20,.38+edgeAA,abs(dd+.72)));
- float la=rim*mix(.09,.26,uDark);
- dc=vec3(base*la)+dc*(1.-la);da=la+da*(1.-la);
- la=rim*shine*mix(.34,.46,uDark);
+ float rimWidth=.85*glassUnit;
+ float rim=dm*smoothstep(-rimWidth-edgeAA,-rimWidth+edgeAA,dd);
+ float la=rim*(mix(.15,.18,uDark)+shine*mix(.23,.31,uDark));
  dc=vec3(ink*la)+dc*(1.-la);da=la+da*(1.-la);
 
  // Soft upper inner shading gives the edge depth without a continuous hard line.
@@ -24,6 +23,7 @@ export const polishedGlassMaterial = `
  dc=vec3(ink*la)+dc*(1.-la);da=la+da*(1.-la);
 
  // Keep the existing water normals visible without adding a colored rim.
- la=dm*clamp(spec*.25+spec2*.22+smoothstep(.6,1.,cs)*.09*th,0.,1.)*mix(.50,1.,uDark);
+ float inner=dm*smoothstep(rimWidth,rimWidth+1.4*glassUnit,-dd);
+ la=inner*clamp(spec*.25+spec2*.22+smoothstep(.6,1.,cs)*.09*th,0.,1.)*mix(.50,1.,uDark);
  dc=vec3(la)+dc*(1.-la);da=la+da*(1.-la);
 `;

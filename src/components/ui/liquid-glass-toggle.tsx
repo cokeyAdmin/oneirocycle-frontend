@@ -117,8 +117,10 @@ void main(){
  float spec=pow(max(dot(reflect(-normalize(vec3(-.45,-.8,.85)),n),V),0.),70.);
  float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
  float fres=clamp((1.-n.z)*4.,0.,1.);
- float pm=1.-smoothstep(-.5,.5,dp);float edgeAA=max(.16,.5/(min(uDpr.x,uDpr.y)*uS));
- float dm=(1.-smoothstep(-edgeAA,edgeAA,dd))*smoothstep(1.,-2.,dp);
+ float glassUnit=1./uS;
+ float edgeAA=.5*glassUnit/min(uDpr.x,uDpr.y);
+ float pm=1.-smoothstep(-edgeAA,edgeAA,dp);
+ float dm=(1.-smoothstep(-edgeAA,edgeAA,dd))*pm;
  vec3 c=vec3(0.);float a=0.;
  /* glass rim */
  float pa=clamp(pm*(fres*.09+spec*.25+spec2*.2)*mix(.55,1.,uDark),0.,1.);
