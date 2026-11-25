@@ -14,12 +14,13 @@ export const polishedGlassMaterial = `
    smoothstep(.40,.50,turn)*(1.-smoothstep(.50,.60,turn)));
  float rimWidth=.85*glassUnit;
  float rim=dm*smoothstep(-rimWidth-edgeAA,-rimWidth+edgeAA,dd);
- float la=rim*(mix(.15,.18,uDark)+shine*mix(.23,.31,uDark));
+ float la=rim*(mix(.15,.11,uDark)+shine*mix(.23,.38,uDark));
  dc=vec3(ink*la)+dc*(1.-la);da=la+da*(1.-la);
 
- // Soft upper inner shading gives the edge depth without a continuous hard line.
+ // The dark reference has a soft highlight just inside the upper edge.
  float bevel=dm*smoothstep(.3,1.2,-dd)*(1.-smoothstep(1.5,4.5,-dd));
- la=bevel*smoothstep(.08,.58,n.y)*mix(.13,.08,uDark);
+ float bevelSide=mix(n.y,-n.y,uDark);
+ la=bevel*smoothstep(.08,.58,bevelSide)*mix(.13,.14,uDark);
  dc=vec3(ink*la)+dc*(1.-la);da=la+da*(1.-la);
 
  // Keep the existing water normals visible without adding a colored rim.
