@@ -211,7 +211,7 @@
 .stitch-desktop .pc-workspace .nimbus-toggle .nt-glass,
 .stitch-desktop .pc-workspace .nimbus-nav .nimbus-drop,
 .stitch-desktop .pc-workspace .nimbus-toggle .nt-knob,
-.stitch-desktop .pc-workspace .pc-header-glass-button,
+.stitch-desktop .pc-workspace .pc-header-glass-button::before,
 .stitch-desktop .sidebar-water-pool {
   background: linear-gradient(
     -75deg,
@@ -268,17 +268,31 @@
 }
 .stitch-desktop .pc-workspace .pc-header-glass-button {
   position: relative;
+  isolation: isolate;
   flex-shrink: 0;
   height: 32px;
   border: 0;
   border-radius: 999px;
   color: var(--pc-foreground);
   cursor: pointer;
+}
+.stitch-desktop .pc-workspace .pc-header-glass-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
   -webkit-backdrop-filter: blur(1.5px);
   backdrop-filter: blur(1.5px);
   transition:
     box-shadow 400ms cubic-bezier(0.25, 1, 0.5, 1),
     backdrop-filter 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.stitch-desktop .pc-workspace .pc-header-glass-button::after {
+  transition:
+    --pc-glass-rim-angle 500ms ease,
     transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 .stitch-desktop .pc-sidebar-nav canvas {
@@ -288,7 +302,7 @@
 @media (hover: hover) {
   .stitch-desktop .pc-workspace .nimbus-nav:hover .nimbus-glass,
   .stitch-desktop .pc-workspace .nimbus-toggle:hover .nt-glass,
-  .stitch-desktop .pc-workspace .pc-header-glass-button:hover,
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover::before,
   .stitch-desktop
     .pc-sidebar-nav:has(button[data-preview-selected='true']:hover)
     .sidebar-water-pool {
@@ -310,9 +324,12 @@
     .sidebar-water-pool::after {
     --pc-glass-rim-angle: -125deg;
   }
-  .stitch-desktop .pc-workspace .pc-header-glass-button:hover {
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover::before {
     -webkit-backdrop-filter: blur(0.01em);
     backdrop-filter: blur(0.01em);
+  }
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover::before,
+  .stitch-desktop .pc-workspace .pc-header-glass-button:hover::after {
     transform: scale(0.975);
   }
   .stitch-desktop
@@ -321,7 +338,8 @@
     filter: drop-shadow(0 0 0 transparent);
   }
 }
-.stitch-desktop .pc-workspace .pc-header-glass-button:active {
+.stitch-desktop .pc-workspace .pc-header-glass-button:active::before,
+.stitch-desktop .pc-workspace .pc-header-glass-button:active::after {
   transform: perspective(240px) rotateX(25deg) scale(0.975);
 }
 .stitch-desktop .pc-workspace .pc-header-glass-button:active::after {
@@ -332,7 +350,7 @@
   outline-offset: 2px;
 }
 @media (prefers-reduced-motion: reduce) {
-  .stitch-desktop .pc-workspace .pc-header-glass-button,
+  .stitch-desktop .pc-workspace .pc-header-glass-button::before,
   .stitch-desktop .pc-workspace .pc-header-glass-button::after,
   .stitch-desktop .pc-workspace .nimbus-nav .nimbus-glass,
   .stitch-desktop .pc-workspace .nimbus-nav .nimbus-glass::after,
@@ -345,7 +363,12 @@
   .stitch-desktop .sidebar-water-pool::after {
     transition: none;
   }
-  .stitch-desktop .pc-workspace .pc-header-glass-button:is(:hover, :active) {
+  .stitch-desktop
+    .pc-workspace
+    .pc-header-glass-button:is(:hover, :active)::before,
+  .stitch-desktop
+    .pc-workspace
+    .pc-header-glass-button:is(:hover, :active)::after {
     transform: none;
   }
 }

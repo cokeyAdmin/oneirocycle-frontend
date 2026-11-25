@@ -8,11 +8,12 @@ import {
   useState,
 } from 'react';
 import { polishedGlassMaterial } from '../ui/polished-glass-material';
+import { syncGlassCanvasResolution } from '../ui/glass-canvas-resolution';
 
 /* Water shader adapted from the user-provided Nimbus UI Liquid Accordion. */
 const VERT = `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
 const FRAG = `precision highp float;
-uniform vec2 uRes;uniform float uDpr;uniform float uTime;uniform vec4 uCard;
+uniform vec2 uRes;uniform vec2 uDpr;uniform float uTime;uniform vec4 uCard;
 uniform vec4 uBox[2];uniform float uBoxR[2];uniform vec4 uSat[4];uniform vec4 uRip[6];uniform vec3 uMouse;uniform vec3 uFront;
 uniform float uDark;uniform float uAmb;
 float sdRB(vec2 p,vec2 b,float r){vec2 q=abs(p)-b+r;return length(max(q,0.))+min(max(q.x,q.y),0.)-r;}
@@ -32,14 +33,15 @@ float waves(vec2 p){float w=0.;
 float H(vec2 p){float dd=dropD(p);return lens(dd,11.)*7.5+waves(p)*smoothstep(0.,9.,-dd);}
 float caus(vec2 p,float t){vec2 q=p;float c=0.;for(int i=0;i<3;i++){q+=vec2(sin(q.y*1.1+t),cos(q.x*1.3-t*.7))*.6;c+=1./(1.+16.*abs(sin(q.x)*sin(q.y)));}return c/3.;}
 void main(){
- vec2 p=vec2(gl_FragCoord.x,uRes.y*uDpr-gl_FragCoord.y)/uDpr;
+ vec2 p=vec2(gl_FragCoord.x,uRes.y*uDpr.y-gl_FragCoord.y)/uDpr;
  float dp=cardD(p);if(dp>16.){gl_FragColor=vec4(0.);return;}
  float dd=dropD(p);
  float h0=H(p);vec3 n=normalize(vec3(h0-H(p+vec2(1.,0.)),h0-H(p+vec2(0.,1.)),1.));
  vec3 V=vec3(0.,0.,1.);
  float spec=pow(max(dot(reflect(-normalize(vec3(-.45,-.8,.85)),n),V),0.),70.);
  float spec2=pow(max(dot(reflect(-normalize(vec3(.6,.75,.7)),n),V),0.),22.)*.3;
-float dm=smoothstep(1.,-1.,dd);
+float edgeAA=max(.16,.5/min(uDpr.x,uDpr.y));
+ float dm=(1.-smoothstep(-edgeAA,edgeAA,dd));
  vec3 c=vec3(0.);float a=0.;
  float th=lens(dd,11.);
  float cs=caus((p+n.xy*th*18.)*.085,uTime*.9);
@@ -214,11 +216,8 @@ export const SidebarWater = forwardRef<SidebarWaterHandle, SidebarWaterProps>(
         };
       };
       const resize = () => {
-        const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
         const width = nav.clientWidth + PAD * 2,
           height = nav.clientHeight + PAD * 2;
-        canvas.width = Math.max(1, Math.round(width * dpr));
-        canvas.height = Math.max(1, Math.round(height * dpr));
         canvas.style.width = width + 'px';
         canvas.style.height = height + 'px';
         const T = target();
@@ -332,14 +331,16 @@ export const SidebarWater = forwardRef<SidebarWaterHandle, SidebarWaterProps>(
         };
         const hs = shape(head, 0.22),
           ts = shape(tail, 0.5);
-        const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+        const width = nav.clientWidth + PAD * 2;
+        const height = nav.clientHeight + PAD * 2;
+        syncGlassCanvasResolution(canvas, width, height);
         gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform2f(uniforms.uRes ?? null, width, height);
         gl.uniform2f(
-          uniforms.uRes ?? null,
-          nav.clientWidth + PAD * 2,
-          nav.clientHeight + PAD * 2,
+          uniforms.uDpr ?? null,
+          canvas.width / width,
+          canvas.height / height,
         );
-        gl.uniform1f(uniforms.uDpr ?? null, dpr);
         gl.uniform1f(uniforms.uTime ?? null, s.time);
         gl.uniform4f(
           uniforms.uCard ?? null,

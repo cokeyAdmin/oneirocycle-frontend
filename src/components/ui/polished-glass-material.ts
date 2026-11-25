@@ -12,7 +12,7 @@ export const polishedGlassMaterial = `
  float turn=fract((atan(local.x,-local.y)+1.308997)/6.283185);
  float shine=max(1.-smoothstep(0.,.05,min(turn,1.-turn)),
    smoothstep(.40,.50,turn)*(1.-smoothstep(.50,.60,turn)));
- float rim=dm*(1.-smoothstep(.2,1.4,abs(dd+.7)));
+ float rim=dm*(1.-smoothstep(.20,.38+edgeAA,abs(dd+.72)));
  float la=rim*mix(.09,.26,uDark);
  dc=vec3(base*la)+dc*(1.-la);da=la+da*(1.-la);
  la=rim*shine*mix(.34,.46,uDark);
